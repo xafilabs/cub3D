@@ -34,7 +34,7 @@ xcuserdata
 # Debugging stuff
 *.dSYM
 
-# Project minishell stuff
+# Project cub3d stuff
 libft.a
 cub3D
 *test*

@@ -6,20 +6,20 @@
 #    By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 15:25:10 by malaakso          #+#    #+#              #
-#    Updated: 2023/09/28 12:52:42 by malaakso         ###   ########.fr        #
+#    Updated: 2023/09/28 15:18:58 by malaakso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	cub3D
 LIBFT			=	libft.a
-MINILIBX		=	libmlx.a
+MINILIBX		=	build/libmlx42.a
 COMPILER		=	cc
 
 H_FOLDER		=	includes
 C_FOLDER		=	src
 OBJ_FOLDER		=	obj
 LIBFT_FOLDER	=	libft
-MINILIBX_FOLDER	=	minilibx
+MINILIBX_FOLDER	=	MLX42
 FOLDER_LIST		=	$(H_FOLDER) $(C_FOLDER) $(OBJ_FOLDER) \
 					$(LIBFT_FOLDER) $(MINILIBX_FOLDER)
 
@@ -33,7 +33,7 @@ OBJ_PATHS		=	$(addprefix $(OBJ_FOLDER)/, \
 					$(patsubst %.c, %.o, $(C_FILES)))
 
 C_FLAGS_OBJ		=	-Wall -Wextra -Werror
-C_FLAGS_NAME	=	$(C_FLAGS_OBJ) -lm -framework OpenGL -framework AppKit
+C_FLAGS_NAME	=	$(C_FLAGS_OBJ) -lm -framework Cocoa -framework OpenGL -framework IOKit
 
 .PHONY: all
 all: $(NAME)
