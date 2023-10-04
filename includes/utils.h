@@ -19,6 +19,8 @@
 # include "../libft/libft.h"
 # include "../includes/file_validation.h"
 
+# define NULL ((void *) 0);
+
 typedef enum e_return_value
 {
 	SUCCESS,
@@ -35,6 +37,6 @@ typedef enum e_bool
 }			t_bool;
 
 void			initialize_struct(void *structure_pointer);
-t_return_value	validate_cub_file(t_file_data file_data, char **path_to_file);
+t_return_value	validate_cub_file(t_file_data file_data, const char **path_to_file);
 
 #endif
