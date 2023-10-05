@@ -15,6 +15,7 @@
 
 # include <stddef.h>
 # include <stdio.h>
+# include <fcntl.h>
 
 # include "../libft/libft.h"
 # include "../includes/file_validation.h"
@@ -27,6 +28,8 @@ typedef enum e_return_value
 	FAILURE,
 	MALLOC_FAIL,
 	NEED_MAP_CUB_FILE,
+	FILE_NOT_VALID,
+	FILE_CONTENT_NOT_VALID,
 	INVALID_ARGUMENT,
 }						t_return_value;
 
