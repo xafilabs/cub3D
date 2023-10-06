@@ -28,18 +28,19 @@ typedef enum e_return_value
 	FAILURE,
 	MALLOC_FAIL,
 	NEED_MAP_CUB_FILE,
+	FILE_OPEN_ERROR,
 	FILE_NOT_VALID,
 	FILE_CONTENT_NOT_VALID,
 	INVALID_ARGUMENT,
 }						t_return_value;
 
-typedef enum e_bool
-{
-	FALSE,
-	TRUE
-}			t_bool;
+//typedef enum e_bool
+//{
+	//FALSE,
+	//TRUE
+//}			t_bool;
 
 void			initialize_struct(void *structure_pointer);
-t_return_value	validate_cub_file(t_file_data file_data, const char **path_to_file);
+t_return_value	validate_cub_file(t_file_data *file_data, const char **path_to_file);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/05 14:15:42 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/06 11:36:07 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ typedef struct s_file_data
 	char			*so_texture;
 	char			*we_texture;
 	char			*ea_texture;
-	char			*map_content;
+	char			*file_content_as_string;
+	int				file_descriptor;
 	t_color			floor_color;
 	t_color			ceiling_color;
 	t_return_value	return_value;
