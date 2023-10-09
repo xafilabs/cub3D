@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/04 17:16:26 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/09 11:26:53 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,18 @@
 int	main(int argc, char **argv)
 {
 	t_file_data		file_data;
-	t_return_value	return_value;
 
-	return_value = SUCCESS;
 	if (argc != 2)
 	{
 		printf("usage: ./cube3d map.cub\n");
 		exit(NEED_MAP_CUB_FILE);
 	}
 	initialize_struct(&file_data);
-	return_value = validate_cub_file(&file_data, argv);
-	if (return_value == SUCCESS)
-		return_value = validate_map_scene(&file_data);
+	file_data.return_value = SUCCESS;
+	file_data.return_value = validate_cub_file(&file_data, argv);
+	if (file_data.return_value == SUCCESS)
+		file_data.return_value = validate_map_scene(&file_data);
 	//	initialize_game();
 	//	clean_up();
-	return (return_value);
+	return (file_data.return_value);
 }
