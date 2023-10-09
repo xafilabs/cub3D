@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:17:58 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/09 11:49:47 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/09 14:22:12 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static	t_return_value open_and_validate_file(t_file_data *data, char **path)
 	data->file_descriptor = open(path[1], O_RDONLY);
 	if (data->file_descriptor == -1)
 	 {
-		data->return_value == FILE_OPEN_ERROR;
+		print_error_message("Fatal: File open failed\n", 2);
+		data->return_value == FILE_OPEN_FAILURE;
 		close(data->file_descriptor);
 		return (data->return_value);
 	 }
@@ -47,17 +48,17 @@ static	t_return_value open_and_validate_file(t_file_data *data, char **path)
  * @param data A pointer to the t_file_data structure.
  * @return The exit code indicating success or failure.
  */
-static t_return_value	initialize_string_buffers(char *line, char *file_content_as_string, t_file_data *data)
+static t_return_value	initialize_string_buffers(char *line_buffer, t_file_data *data)
 {
-	line = ft_strdup("");
-	file_content_as_string = ft_strdup(""); 
-	if (!line || !file_content_as_string)
+	line_buffer = ft_strdup("");
+	data->file_content_as_string = ft_strdup(""); 
+	if (!line_buffer || !data->file_content_as_string)
 	{
-		data->return_value = MALLOC_FAIL;
-		if (line)
-			free(line);
-		if (file_content_as_string)
-			free(file_content_as_string);
+		data->return_value = MALLOC_FAILURE;
+		if (line_buffer)
+			free(line_buffer);
+		if (data->file_content_as_string)
+			free(data->file_content_as_string);
 		close(data->file_descriptor);
 	}
 	return (data->return_value);
@@ -81,14 +82,14 @@ static t_return_value	concatenate_line_to_string(t_file_data *data, char *line)
 	temp = ft_strdup(data->file_content_as_string);
 	if (temp == NULL)
 	 {
-		data->return_value = MALLOC_FAIL;
+		data->return_value = MALLOC_FAILURE;
 		return (data->return_value);
 	 }
 	free(data->file_content_as_string);
 	data->file_content_as_string = ft_strjoin(temp, line);
 	free(temp);
 	if (data->file_content_as_string == NULL)
-		data->return_value = MALLOC_FAIL;
+		data->return_value = MALLOC_FAILURE;
 	return (data->return_value);
 }
 
@@ -105,23 +106,23 @@ static t_return_value	concatenate_line_to_string(t_file_data *data, char *line)
  */
 static t_return_value	get_file_content_to_string(t_file_data *data, const char **path)
 {
-	char	*line;
+	char	*line_buffer;
 
-	if (open_and_validate_file(data, path) == FILE_OPEN_ERROR)
+	if (open_and_validate_file(data, path) == FILE_OPEN_FAILURE)
 		return (data->return_value);
-	if (initialize_string_buffers(line, data->file_content_as_string, data) == MALLOC_FAIL)
+	if (initialize_string_buffers(line_buffer, data->file_content_as_string, data) == MALLOC_FAILURE)
 		return (data->return_value);
-	while (line)
+	while (line_buffer)
 	{
-		line = get_next_line(data->file_descriptor);
-		if (line == NULL)
+		line_buffer = get_next_line_buffer(data->file_descriptor);
+		if (line_buffer == NULL)
 			break;
-		if (concatenate_line_to_string(data, line) == MALLOC_FAIL)
+		if (concatenate_line_buffer_to_string(data, line_buffer) == MALLOC_FAILURE)
 			break;
-		free(line);
+		free(line_buffer);
 	}
-	if (line)
-		free(line);
+	if (line_buffer)
+		free(line_buffer);
 	close(data->file_descriptor);
 	return (data->return_value);
 }
@@ -154,7 +155,6 @@ static t_return_value	check_file_type(t_file_data *data, const char **path_to_fi
 		else
 		{
 			free(last_4_chars);
-			printf("usage: ./cube3d map.cub\n");
 			data->return_value = NEED_MAP_CUB_FILE;
 		}
 	}
@@ -178,7 +178,7 @@ t_return_value	validate_cub_file(t_file_data *data, const char **path_to_file)
 	{
 		if (get_file_content_to_string(data, path_to_file) == SUCCESS)
 		{
-			
+			;
 		}
 	}
 	return (data->return_value);

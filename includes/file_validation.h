@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/06 11:36:07 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/09 12:59:47 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ typedef struct s_file_data
 	t_color			ceiling_color;
 	t_return_value	return_value;
 }					t_file_data;
+
+t_return_value	validate_cub_file(t_file_data *file_data, const char **path_to_file);
 
 #endif
