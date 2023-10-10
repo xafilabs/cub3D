@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/09 12:59:47 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/10 10:52:54 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,17 @@ typedef struct s_color
 	int green; // Green component (0-255)
 	int blue;  // Blue component (0-255)
 }					t_color;
+
+typedef enum e_return_value
+{
+	SUCCESS,
+	FAILURE,
+	MALLOC_FAILURE,
+	NEED_MAP_CUB_FILE,
+	FILE_OPEN_FAILURE,
+	FILE_CONTENT_NOT_VALID,
+	INVALID_ARGUMENT,
+}						t_return_value;
 
 // Structure to hold information extracted from the scene description file
 typedef struct s_file_data

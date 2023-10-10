@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/09 14:00:39 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/10 10:54:16 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  *
  * @param structure_pointer A pointer to the structure to be initialized.
  */
-void	initialize_struct(void *structure_pointer)
+void	initialize_struct(t_file_data *structure_pointer)
 {
 	ft_bzero(structure_pointer, sizeof(*structure_pointer));
 }
@@ -49,6 +49,13 @@ void	print_error_message(t_return_value error)
 		ft_putstr_fd("Error: file content not valid\n", 2);
 	else if (error == INVALID_ARGUMENT)
 		ft_putstr_fd("Usage: use cub file\n", 2);
+}
+
+void	clean_up(t_file_data *data)
+{
+	if (data->file_content_as_string)
+		free(data->file_content_as_string);
+
 }
 
 

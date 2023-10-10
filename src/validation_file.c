@@ -6,11 +6,12 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:17:58 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/09 14:22:12 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/09 16:00:30 lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/utils.h"
+#include "../libft/gnl/get_next_line.h"
 
 /**
  * @brief Open and validate the scene description file.
@@ -23,16 +24,16 @@
  * @param path An array containing the path to the scene description file.
  * @return The exit code indicating success or failure.
  */
-static	t_return_value open_and_validate_file(t_file_data *data, char **path)
+static t_return_value	open_and_validate_file(t_file_data *data,
+		const char **path)
 {
 	data->file_descriptor = open(path[1], O_RDONLY);
 	if (data->file_descriptor == -1)
-	 {
-		print_error_message("Fatal: File open failed\n", 2);
-		data->return_value == FILE_OPEN_FAILURE;
+	{
+		data->return_value = FILE_OPEN_FAILURE;
 		close(data->file_descriptor);
 		return (data->return_value);
-	 }
+	}
 	return (data->return_value);
 }
 
@@ -48,15 +49,18 @@ static	t_return_value open_and_validate_file(t_file_data *data, char **path)
  * @param data A pointer to the t_file_data structure.
  * @return The exit code indicating success or failure.
  */
-static t_return_value	initialize_string_buffers(char *line_buffer, t_file_data *data)
+static t_return_value	initialize_string_buffers(char **line_buffer,
+		t_file_data *data)
 {
-	line_buffer = ft_strdup("");
-	data->file_content_as_string = ft_strdup(""); 
-	if (!line_buffer || !data->file_content_as_string)
+	*line_buffer = ft_strdup("");
+	if (data->file_content_as_string)
+		free(data->file_content_as_string);
+	data->file_content_as_string = ft_strdup("");
+	if (!*line_buffer || !data->file_content_as_string)
 	{
 		data->return_value = MALLOC_FAILURE;
-		if (line_buffer)
-			free(line_buffer);
+		if (*line_buffer)
+			free(*line_buffer);
 		if (data->file_content_as_string)
 			free(data->file_content_as_string);
 		close(data->file_descriptor);
@@ -67,24 +71,27 @@ static t_return_value	initialize_string_buffers(char *line_buffer, t_file_data *
 /**
  * @brief Concatenate a line to the file content string.
  *
- * This function concatenates a line of text to the existing file content string.
- * It ensures that memory is properly allocated for the updated content and handles
+
+	* This function concatenates a line of text to the existing file content string.
+
+	* It ensures that memory is properly allocated for the updated content and handles
  * memory allocation failures by setting the appropriate error code.
  *
  * @param data A pointer to the t_file_data structure.
  * @param line A pointer to the line to be concatenated.
  * @return The exit code indicating success or failure.
  */
-static t_return_value	concatenate_line_to_string(t_file_data *data, char *line)
+static t_return_value	concatenate_line_buffer_to_string(t_file_data *data,
+		char *line)
 {
 	char	*temp;
 
 	temp = ft_strdup(data->file_content_as_string);
 	if (temp == NULL)
-	 {
+	{
 		data->return_value = MALLOC_FAILURE;
 		return (data->return_value);
-	 }
+	}
 	free(data->file_content_as_string);
 	data->file_content_as_string = ft_strjoin(temp, line);
 	free(temp);
@@ -104,22 +111,27 @@ static t_return_value	concatenate_line_to_string(t_file_data *data, char *line)
  * @param path An array containing the path to the scene description file.
  * @return The exit code indicating success or failure.
  */
-static t_return_value	get_file_content_to_string(t_file_data *data, const char **path)
+static t_return_value	get_file_content_to_string(t_file_data *data,
+		const char **path)
 {
 	char	*line_buffer;
 
 	if (open_and_validate_file(data, path) == FILE_OPEN_FAILURE)
 		return (data->return_value);
-	if (initialize_string_buffers(line_buffer, data->file_content_as_string, data) == MALLOC_FAILURE)
+	if (initialize_string_buffers(&line_buffer, data) == MALLOC_FAILURE)
 		return (data->return_value);
 	while (line_buffer)
 	{
-		line_buffer = get_next_line_buffer(data->file_descriptor);
-		if (line_buffer == NULL)
-			break;
-		if (concatenate_line_buffer_to_string(data, line_buffer) == MALLOC_FAILURE)
-			break;
 		free(line_buffer);
+		line_buffer = get_next_line(data->file_descriptor);
+		if (line_buffer == NULL)
+			break ;
+		if (concatenate_line_buffer_to_string(data,
+				line_buffer) == MALLOC_FAILURE)
+		{
+			free(line_buffer);
+			break ;
+		}
 	}
 	if (line_buffer)
 		free(line_buffer);
@@ -130,15 +142,19 @@ static t_return_value	get_file_content_to_string(t_file_data *data, const char *
 /**
  * @brief Check the file type to ensure it has the .cub extension.
  *
- * This function checks if the provided file path has the correct extension (.cub).
- * If the extension is incorrect, it sets the appropriate error code in the t_file_data
+
+	* This function checks if the provided file path has the correct extension (.cub).
+ * If the extension is incorrect,
+	it sets the appropriate error code in the t_file_data
  * structure and prints a usage message.
  *
  * @param data A pointer to the t_file_data structure.
- * @param path_to_file An array containing the path to the scene description file.
+
+	* @param path_to_file An array containing the path to the scene description file.
  * @return The exit code indicating success or failure.
  */
-static t_return_value	check_file_type(t_file_data *data, const char **path_to_file)
+static t_return_value	check_file_type(t_file_data *data,
+		const char **path_to_file)
 {
 	const char	*path;
 	char		*last_4_chars;
@@ -169,7 +185,8 @@ static t_return_value	check_file_type(t_file_data *data, const char **path_to_fi
  * during the validation process and sets the appropriate error codes.
  *
  * @param data A pointer to the t_file_data structure.
- * @param path_to_file An array containing the path to the scene description file.
+
+	* @param path_to_file An array containing the path to the scene description file.
  * @return The exit code indicating success or failure.
  */
 t_return_value	validate_cub_file(t_file_data *data, const char **path_to_file)
@@ -178,7 +195,8 @@ t_return_value	validate_cub_file(t_file_data *data, const char **path_to_file)
 	{
 		if (get_file_content_to_string(data, path_to_file) == SUCCESS)
 		{
-			;
+			trim_white_spaces_from_string()
+			printf("%s\n", data->file_content_as_string);
 		}
 	}
 	return (data->return_value);

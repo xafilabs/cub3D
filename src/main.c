@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/09 13:51:38 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/10 10:49:27 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,13 @@ int	main(int argc, char **argv)
 	}
 	initialize_struct(&file_data);
 	file_data.return_value = SUCCESS;
-	file_data.return_value = validate_cub_file(&file_data, argv);
-	if (file_data.return_value == SUCCESS)
-		file_data.return_value = validate_map_scene(&file_data);
+	file_data.return_value = validate_cub_file(&file_data, (const char **)argv);
+	//if (file_data.return_value == SUCCESS)
+		//file_data.return_value = validate_map_scene(&file_data);
 	//	initialize_game();
-	//	clean_up();
-	if (data->return_value != SUCCESS)
+	if (file_data.return_value != SUCCESS)
 	 	print_error_message(file_data.return_value);
+	clean_up(&file_data);
 	return (file_data.return_value);
 }
+

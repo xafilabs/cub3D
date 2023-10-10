@@ -20,28 +20,16 @@
 # include "../libft/libft.h"
 # include "../includes/file_validation.h"
 
-# define NULL ((void *) 0);
-
-typedef enum e_return_value
-{
-	SUCCESS,
-	FAILURE,
-	MALLOC_FAILURE,
-	NEED_MAP_CUB_FILE,
-	FILE_OPEN_FAILURE,
-	FILE_CONTENT_NOT_VALID,
-	INVALID_ARGUMENT,
-}						t_return_value;
-
 //typedef enum e_bool
 //{
 	//FALSE,
 	//TRUE
 //}			t_bool;
 
-void			initialize_struct(void *structure_pointer);
+void			initialize_struct(t_file_data *structure_pointer);
 void			print_error_message(t_return_value error);
-
+t_return_value	validate_cub_file(t_file_data *data, const char **path_to_file);
+void			clean_up(t_file_data *data);
 
 
 #endif
