@@ -63,7 +63,7 @@ $(MINILIBX_FOLDER)/$(MINILIBX_SUBFOL)/$(MINILIBX):
 
 $(FOLDER_LIST):
 	@mkdir $@
-	@echo "\033[0;95m~~* Created missing folders *~~\033[0m"
+	@echo "\033[0;95m~~* Created missing folder $@ *~~\033[0m"
 
 .PHONY: clean
 clean:
