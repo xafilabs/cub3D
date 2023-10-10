@@ -1,9 +1,10 @@
 # lets not ignore gitignore itself
 # lets group ignore instructions by category with comments
 
-# MLX42 folder and build 
+# MLX42
 MLX42/
 build/
+libmlx42.a
 
 # object folder
 obj/
@@ -41,14 +42,16 @@ xcuserdata
 # Debugging stuff
 *.dSYM
 
-# Project cube3d stuff
+# Project cub3d stuff
 libft.a
-cube3d
+cub3D
 *test*
 a.out
 *.o
 *.pdf
 *.bak
+
+# Libft
 libft.a
 
 # Lionel's stuff
