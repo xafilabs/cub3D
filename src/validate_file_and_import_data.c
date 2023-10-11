@@ -6,12 +6,11 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:17:58 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/11 10:54:44 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/11 18:24:59 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/utils.h"
-#include "../libft/gnl/get_next_line.h"
+#include "../inc/main.h"
 
 /**
  * @brief Open and validate the scene description file.

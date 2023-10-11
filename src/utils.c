@@ -6,11 +6,11 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/11 11:29:05 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/11 18:24:35 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/utils.h"
+#include "../inc/main.h"
 
 
 /**

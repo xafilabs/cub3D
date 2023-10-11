@@ -6,11 +6,11 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/11 18:11:04 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/11 18:24:05 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/utils.h"
+#include "../inc/main.h"
 
 
 t_return_value	validate_cub_and_map_file(t_file_data *data, const char **path_to_file)

@@ -6,11 +6,11 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:42:34 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/11 18:12:43 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/11 18:25:19 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "../includes/utils.h"
+//#include "../inc/main.h"
 
 
 //static int	get_file_amount_of_lines(t_file_data *data)

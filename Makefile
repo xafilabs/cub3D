@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+         #
+#    By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 15:25:10 by malaakso          #+#    #+#              #
-#    Updated: 2023/10/10 19:37:36 by malaakso         ###   ########.fr        #
+#    Updated: 2023/10/11 18:35:43 by lclerc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,15 @@ MINILIBX_SUBFOL	=	build
 FOLDER_LIST		=	$(H_FOLDER) $(C_FOLDER) $(OBJ_FOLDER) \
 					$(LIBFT_FOLDER) $(MINILIBX_FOLDER)
 
-H_FILES			=	main.h
-C_FILES			=	main.c
+H_FILES			=	main.h \
+					utils.h \
+					map_validation.h \
+					file_validation.h
+
+C_FILES			=	main.c \
+					utils.c \
+					validate_file_and_import_data.c \
+					validate_map_elements.c
 
 H_PATHS			=	$(addprefix $(H_FOLDER)/, $(H_FILES))
 C_PATHS			=	$(addprefix $(C_FOLDER)/, $(C_FILES))
@@ -49,7 +56,7 @@ $(NAME): $(FOLDER_LIST) $(OBJ_PATHS) Makefile \
 $(OBJ_PATHS): $(OBJ_FOLDER)/%.o:$(C_FOLDER)/%.c $(H_PATHS) Makefile
 	@$(COMPILER) $(C_FLAGS_OBJ) -I $(H_FOLDER) -I $(LIBFT_FOLDER) \
 		-I $(MINILIBX_FOLDER) -c $< -o $@
-	@echo "\033[0;95m~~* Created object files *~~\033[0m"
+	@echo "\033[0;95m~~* Created object file $@ *~~\033[0m"
 
 $(LIBFT_FOLDER)/$(LIBFT):
 	@$(MAKE) -s -C $(LIBFT_FOLDER)

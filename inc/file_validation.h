@@ -6,13 +6,12 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/11 14:30:47 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/11 18:28:42 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILE_VALIDATION_H
 # define FILE_VALIDATION_H
-# include "../libft/libft.h"
 
 // Structure to hold RGB color components
 typedef struct s_color
