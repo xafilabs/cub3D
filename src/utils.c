@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/10 10:54:16 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/11 11:29:05 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	print_error_message(t_return_value error)
 		ft_putstr_fd("Memory allocation failed\n", 2);
 	else if (error == NEED_MAP_CUB_FILE)
 		ft_putstr_fd("Usage: use cub file\n", 2);
+	else if (error == FILE_IS_EMPTY)
+		ft_putstr_fd("Error: file is empty\n", 2);
 	else if (error == FILE_OPEN_FAILURE)
 		ft_putstr_fd("Error: file open failure\n", 2);
 	else if (error == FILE_CONTENT_NOT_VALID)

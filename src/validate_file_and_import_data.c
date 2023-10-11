@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validation_file.c                                  :+:      :+:    :+:   */
+/*   validate_file_and_import_data.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:17:58 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/09 16:00:30 lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/11 10:54:44 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,7 @@ static t_return_value	concatenate_line_buffer_to_string(t_file_data *data,
  * @param path An array containing the path to the scene description file.
  * @return The exit code indicating success or failure.
  */
-static t_return_value	get_file_content_to_string(t_file_data *data,
-		const char **path)
+t_return_value	get_file_content_to_string(t_file_data *data, const char **path)
 {
 	char	*line_buffer;
 
@@ -153,7 +152,7 @@ static t_return_value	get_file_content_to_string(t_file_data *data,
 	* @param path_to_file An array containing the path to the scene description file.
  * @return The exit code indicating success or failure.
  */
-static t_return_value	check_file_type(t_file_data *data,
+t_return_value	check_file_type(t_file_data *data,
 		const char **path_to_file)
 {
 	const char	*path;
@@ -177,27 +176,3 @@ static t_return_value	check_file_type(t_file_data *data,
 	return (data->return_value);
 }
 
-/**
- * @brief Validate the scene description file.
- *
- * This function validates the scene description file by checking its type and
- * reading its content into a string. It also handles any errors that may occur
- * during the validation process and sets the appropriate error codes.
- *
- * @param data A pointer to the t_file_data structure.
-
-	* @param path_to_file An array containing the path to the scene description file.
- * @return The exit code indicating success or failure.
- */
-t_return_value	validate_cub_file(t_file_data *data, const char **path_to_file)
-{
-	if (check_file_type(data, path_to_file) == SUCCESS)
-	{
-		if (get_file_content_to_string(data, path_to_file) == SUCCESS)
-		{
-			trim_white_spaces_from_string()
-			printf("%s\n", data->file_content_as_string);
-		}
-	}
-	return (data->return_value);
-}

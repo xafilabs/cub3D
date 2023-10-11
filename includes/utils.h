@@ -28,8 +28,9 @@
 
 void			initialize_struct(t_file_data *structure_pointer);
 void			print_error_message(t_return_value error);
-t_return_value	validate_cub_file(t_file_data *data, const char **path_to_file);
+t_return_value	check_file_type(t_file_data *data, const char **path_to_file);
+t_return_value	get_file_content_to_string(t_file_data *data, const char **path);
 void			clean_up(t_file_data *data);
-
+t_return_value	validate_scene_requirement(t_file_data *data);
 
 #endif
