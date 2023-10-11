@@ -6,7 +6,7 @@
 #    By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 15:25:10 by malaakso          #+#    #+#              #
-#    Updated: 2023/10/11 18:35:43 by lclerc           ###   ########.fr        #
+#    Updated: 2023/10/11 18:39:07 by lclerc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,9 +39,12 @@ C_PATHS			=	$(addprefix $(C_FOLDER)/, $(C_FILES))
 OBJ_PATHS		=	$(addprefix $(OBJ_FOLDER)/, \
 					$(patsubst %.c, %.o, $(C_FILES)))
 
-C_FLAGS_OBJ		=	-Wall -Wextra -Werror
+C_FLAGS_OBJ		=	-Wall -Wextra -Werror \
+					-Wpedantic -Wunreachable-code -Wtype-limits
+
 C_FLAGS_MLX42	=	-framework Cocoa -framework OpenGL -framework IOKit \
 					-lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+
 C_FLAGS_NAME	=	$(C_FLAGS_OBJ) $(C_FLAGS_MLX42) -lm
 
 .PHONY: all
