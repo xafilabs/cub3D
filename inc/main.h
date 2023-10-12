@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/12 16:20:35 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:14:40 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
-
-// DEBUG headers
+# include <math.h>
 # include <stdio.h>
+# include <limits.h>
 
 // Include user headers
 # include "../MLX42/include/MLX42/MLX42.h"
@@ -38,6 +38,65 @@
 # include "utils.h"
 # include "file_validation.h"
 # include "map_validation.h"
+
+// Type definitions
+typedef struct s_player
+{
+	double	x;
+	double	y;
+	double	angle;
+	int		fov;
+	double	half_fov;
+}	t_player;
+
+typedef struct s_screen
+{
+	int		width;
+	int		height;
+	double	half_width;
+	double	half_height;
+	int		refresh_rate;
+}	t_screen;
+
+typedef struct s_raycast
+{
+	double	increment_angle;
+	int		precision;
+}	t_raycast;
+
+// color is stored in rgba format encoded into an int
+// int get_rgba(int r, int g, int b, int a) can be used for encoding
+// int get_r(int rgba) for decoding a single channel, r in this case
+typedef struct s_color_data
+{
+	int	floor;
+	int	ceiling;
+}	t_color_data;
+
+typedef struct s_texture_data
+{
+	mlx_texture_t	*north;
+	mlx_texture_t	*east;
+	mlx_texture_t	*south;
+	mlx_texture_t	*west;
+}	t_texture_data;
+
+typedef struct s_map
+{
+	int	width;
+	int	height;
+	int	**content;
+}	t_map;
+
+typedef struct s_data
+{
+	t_player		player;
+	t_screen		screen;
+	t_raycast		raycast;
+	t_color_data	color;
+	t_texture_data	texture;
+	t_map			map;
+}	t_data;
 
 // Function declarations
 void			initialize_struct(t_file_data *structure_pointer);
