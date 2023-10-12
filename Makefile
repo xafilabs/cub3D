@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+         #
+#    By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 15:25:10 by malaakso          #+#    #+#              #
-#    Updated: 2023/10/11 18:39:07 by lclerc           ###   ########.fr        #
+#    Updated: 2023/10/12 17:16:44 by malaakso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,53 +52,57 @@ all: $(NAME)
 
 $(NAME): $(FOLDER_LIST) $(OBJ_PATHS) Makefile \
 	$(LIBFT_FOLDER)/$(LIBFT) $(MINILIBX_FOLDER)/$(MINILIBX_SUBFOL)/$(MINILIBX)
+	@echo "\033[0;95m~~* Compiling $(NAME) *~~\033[0m"
 	@$(COMPILER) $(C_FLAGS_NAME) $(OBJ_PATHS) $(LIBFT_FOLDER)/$(LIBFT) \
 		$(MINILIBX_FOLDER)/$(MINILIBX_SUBFOL)/$(MINILIBX) -o $@
-	@echo "\033[0;95m~~* Compiled $(NAME) *~~\033[0m"
 
 $(OBJ_PATHS): $(OBJ_FOLDER)/%.o:$(C_FOLDER)/%.c $(H_PATHS) Makefile
+	@echo "\033[0;95m~~* Creating object file $@ *~~\033[0m"
 	@$(COMPILER) $(C_FLAGS_OBJ) -I $(H_FOLDER) -I $(LIBFT_FOLDER) \
 		-I $(MINILIBX_FOLDER) -c $< -o $@
-	@echo "\033[0;95m~~* Created object file $@ *~~\033[0m"
 
 $(LIBFT_FOLDER)/$(LIBFT):
+	@echo "\033[0;95m~~* Building libft *~~\033[0m"
 	@$(MAKE) -s -C $(LIBFT_FOLDER)
-	@echo "\033[0;95m~~* Built libft *~~\033[0m"
 
 $(MINILIBX_FOLDER)/$(MINILIBX_SUBFOL)/$(MINILIBX):
-	@cmake --log-level=ERROR $(MINILIBX_FOLDER) -B $(MINILIBX_FOLDER)/$(MINILIBX_SUBFOL)
-	@echo "\033[0;95m~~* libmlx42 build files were created *~~\033[0m"
+	@echo "\033[0;95m~~* Creating libmlx42 build files *~~\033[0m"
+	@cmake -DCMAKE_RULE_MESSAGES=OFF -DCMAKE_TARGET_MESSAGES=OFF \
+	-DCMAKE_MESSAGE_LOG_LEVEL=ERROR -DCMAKE_INSTALL_MESSAGE=NEVER \
+	$(MINILIBX_FOLDER) -B $(MINILIBX_FOLDER)/$(MINILIBX_SUBFOL)
+	@echo "\033[0;95m~~* Building libmlx42 *~~\033[0m"
 	@cmake --build $(MINILIBX_FOLDER)/$(MINILIBX_SUBFOL) -j4 -- -s
-	@echo "\033[0;95m~~* Built libmlx42 *~~\033[0m"
 
 $(FOLDER_LIST):
+	@echo "\033[0;95m~~* Creating missing folder $@ *~~\033[0m"
 	@mkdir $@
-	@echo "\033[0;95m~~* Created missing folder $@ *~~\033[0m"
 
 .PHONY: clean
 clean:
+	@echo "\033[0;95m~~* Removing .obj files *~~\033[0m"
 	@rm -f $(OBJ_PATHS)
-	@echo "\033[0;95m~~* Removed .obj files *~~\033[0m"
+	@echo "\033[0;95m~~* Removing obj folder *~~\033[0m"
 	@rm -rf $(OBJ_FOLDER)
-	@echo "\033[0;95m~~* Removed obj folder *~~\033[0m"
+	@echo "\033[0;95m~~* Cleaning libft *~~\033[0m"
 	@$(MAKE) -s clean -C $(LIBFT_FOLDER)
-	@echo "\033[0;95m~~* Cleaned libft *~~\033[0m"
-	@mv -f $(MINILIBX_FOLDER)/$(MINILIBX_SUBFOL)/$(MINILIBX) \
-	$(MINILIBX_FOLDER)/$(MINILIBX)
+	@echo "\033[0;95m~~* Cleaning libmlx42 *~~\033[0m"
+	@(test -s $(MINILIBX_FOLDER)/$(MINILIBX_SUBFOL)/$(MINILIBX) && \
+	mv -f $(MINILIBX_FOLDER)/$(MINILIBX_SUBFOL)/$(MINILIBX) \
+	$(MINILIBX_FOLDER)/$(MINILIBX)) || true
 	@rm -rf $(MINILIBX_FOLDER)/$(MINILIBX_SUBFOL)
 	@mkdir -p $(MINILIBX_FOLDER)/$(MINILIBX_SUBFOL)
-	@mv -f $(MINILIBX_FOLDER)/$(MINILIBX) \
-	$(MINILIBX_FOLDER)/$(MINILIBX_SUBFOL)/$(MINILIBX)
-	@echo "\033[0;95m~~* Cleaned libmlx42 *~~\033[0m"
+	@(test -s $(MINILIBX_FOLDER)/$(MINILIBX) && \
+	mv -f $(MINILIBX_FOLDER)/$(MINILIBX) \
+	$(MINILIBX_FOLDER)/$(MINILIBX_SUBFOL)/$(MINILIBX)) || true
 
 .PHONY: fclean
 fclean: clean
+	@echo "\033[0;95m~~* Removing $(NAME) *~~\033[0m"
 	@rm -f $(NAME)
-	@echo "\033[0;95m~~* Removed $(NAME) *~~\033[0m"
+	@echo "\033[0;95m~~* Cleaning libft (removing libft.a) *~~\033[0m"
 	@$(MAKE) -s fclean -C $(LIBFT_FOLDER)
-	@echo "\033[0;95m~~* Cleaned libft (removed libft.a) *~~\033[0m"
+	@echo "\033[0;95m~~* Cleaning libmlx42 (removing libmlx42.a) *~~\033[0m"
 	@rm -rf $(MINILIBX_FOLDER)/$(MINILIBX_SUBFOL)
-	@echo "\033[0;95m~~* Cleaned libmlx42 (removed libmlx42.a) *~~\033[0m"
 
 .PHONY: re
 re: fclean all
