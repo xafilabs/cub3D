@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/11 18:28:42 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/12 15:57:20 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef enum e_return_value
 	FILE_OPEN_FAILURE,
 	FILE_IS_EMPTY,
 	FILE_CONTENT_NOT_VALID,
+	ELEMENTS_NOT_VALID,
 	INVALID_ARGUMENT,
 }						t_return_value;
 
@@ -44,8 +45,9 @@ typedef struct s_file_data
 	char			**file_content_as_array;
 	char			player_spawn_direction;
 	int				file_number_of_lines;
-	int				player_x;
-	int				player_y;
+	int				elements_found;
+	double			player_x;
+	double			player_y;
 	int				file_descriptor;
 	t_color			floor_color;
 	t_color			ceiling_color;

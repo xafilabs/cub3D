@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/11 18:24:05 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/12 11:16:18 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,9 @@ t_return_value	validate_cub_and_map_file(t_file_data *data, const char **path_to
 		free (data->file_content_as_string);
 		data->file_content_as_string = temp;
 		printf("After trimming:\n%s\n", data->file_content_as_string);
-		//if (file_contains_data(data) != FILE_IS_EMPTY
 	 }
-	//if (data->return_value == SUCCESS)
-		//validate_scene_requirement(data);
+	if (data->return_value == SUCCESS)
+		validate_scene_requirement(data);
 
 	return (data->return_value);
 }
