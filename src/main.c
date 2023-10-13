@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/11 18:24:05 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/13 18:44:49 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,38 @@ t_return_value	validate_cub_and_map_file(t_file_data *data, const char **path_to
  */
 int	main(int argc, char **argv)
 {
-	t_file_data		file_data;
+	t_data			d;
 
 	if (argc != 2)
 	{
 		printf("usage: ./cube3d map.cub\n");
 		exit(NEED_MAP_CUB_FILE);
 	}
-	initialize_struct(&file_data);
-	file_data.return_value = SUCCESS;
-	validate_cub_and_map_file(&file_data, (const char **)argv);
-	//initialize_game();
-	if (file_data.return_value != SUCCESS)
-	 	print_error_message(file_data.return_value);
-	clean_up(&file_data);
-	return (file_data.return_value);
+	int	m[10][10] = {
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 1, 1, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+	};
+	d.map.content = &m;
+	d.map.height = 10;
+	d.map.width = 10;
+	d.player.x = 3;
+	d.player.y = 3;
+	d.player.angle = 180;
+	d.player.fov = 60;
+	d.screen.height = WINDOW_HEIGHT;
+	d.screen.width = WINDOW_WIDTH;
+	d.screen.refresh_rate = 60;
+	d.raycast.increment_angle = 0;
+	d.raycast.precision = 1;
+	game(&d);
+	return (0);
 }
 
