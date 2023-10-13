@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/12 15:57:20 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/13 15:17:45 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,21 @@ typedef enum e_return_value
 	FILE_IS_EMPTY,
 	FILE_CONTENT_NOT_VALID,
 	ELEMENTS_NOT_VALID,
+	ELEMENT_NOT_FOUND,
+	ELEMENT,
+	ELEMENT_FOUND,
 	INVALID_ARGUMENT,
 }						t_return_value;
 
 // Structure to hold information extracted from the scene description file
 typedef struct s_file_data
 {
-	char			*no_texture;
-	char			*so_texture;
-	char			*we_texture;
-	char			*ea_texture;
+	char			*north_texture;
+	char			*south_texture;
+	char			*west_texture;
+	char			*east_texture;
+	char			*floor_color;
+	char			*ceiling_color;
 	char			*file_content_as_string;
 	char			**file_content_as_array;
 	char			player_spawn_direction;
@@ -49,8 +54,8 @@ typedef struct s_file_data
 	double			player_x;
 	double			player_y;
 	int				file_descriptor;
-	t_color			floor_color;
-	t_color			ceiling_color;
+	t_color			floor_rgb;
+	t_color			ceiling_rgb;
 	t_return_value	return_value;
 }					t_file_data;
 

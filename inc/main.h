@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/11 18:34:48 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/13 15:32:51 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,6 @@ t_return_value	get_file_content_to_string(t_file_data *data, const char **path);
 void			clean_up(t_file_data *data);
 t_return_value	validate_scene_requirement(t_file_data *data);
 
+// to be deleted
+void			print_struct(t_file_data *data);
 #endif

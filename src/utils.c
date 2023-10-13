@@ -6,12 +6,28 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/11 18:24:35 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/13 15:33:43 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
+void print_struct(t_file_data *data) {
+    printf("North Texture: %s\n", data->north_texture);
+    printf("South Texture: %s\n", data->south_texture);
+    printf("West Texture: %s\n", data->west_texture);
+    printf("East Texture: %s\n", data->east_texture);
+    printf("Floor Color: %s\n", data->floor_color);
+    printf("Ceiling Color: %s\n", data->ceiling_color);
+    printf("Player Spawn Direction: %c\n", data->player_spawn_direction);
+    printf("Player X Coordinate: %lf\n", data->player_x);
+    printf("Player Y Coordinate: %lf\n", data->player_y);
+    printf("File Descriptor: %d\n", data->file_descriptor);
+    printf("Return Value: %d\n", data->return_value);
+    printf("Floor RGB: R(%d) G(%d) B(%d)\n", data->floor_rgb.red, data->floor_rgb.green, data->floor_rgb.blue);
+    printf("Ceiling RGB: R(%d) G(%d) B(%d)\n", data->ceiling_rgb.red, data->ceiling_rgb.green, data->ceiling_rgb.blue);
+    // Add more fields if needed
+}
 
 /**
  * @brief Initializes a structure with zeros.
