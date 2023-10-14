@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/13 18:45:06 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/14 18:37:12 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,17 @@ typedef struct s_data
 	t_color_data	color;
 	t_texture_data	texture;
 	t_map			map;
+	mlx_t			*mlx;
 }	t_data;
+
+typedef struct s_line
+{
+	int	x0;
+	int	y0;
+	int	x1;
+	int	y1;
+	int	color;
+}	t_line;
 
 // Function declarations
 void			initialize_struct(t_file_data *structure_pointer);
@@ -105,6 +115,8 @@ t_return_value	check_file_type(t_file_data *data, const char **path_to_file);
 t_return_value	get_file_content_to_string(t_file_data *data, const char **path);
 void			clean_up(t_file_data *data);
 t_return_value	validate_scene_requirement(t_file_data *data);
-int				game(t_data *d);
+void			game(t_data *d);
+void			loop_hook(void *data_param);
+void			draw_line(mlx_image_t *image, t_line line);
 
 #endif
