@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/12 11:16:18 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/14 16:59:33 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_return_value	validate_cub_and_map_file(t_file_data *data, const char **path_to
 	if (check_file_type(data, path_to_file) == SUCCESS)
 	 {
 		get_file_content_to_string(data, path_to_file);
-		printf("%s\n", data->file_content_as_string);
 		temp = ft_strtrim(data->file_content_as_string, " \t\v\f\r\n");
 		free (data->file_content_as_string);
 		data->file_content_as_string = temp;
@@ -57,9 +56,9 @@ int	main(int argc, char **argv)
 	file_data.return_value = SUCCESS;
 	validate_cub_and_map_file(&file_data, (const char **)argv);
 	//initialize_game();
-	if (file_data.return_value != SUCCESS)
-	 	print_error_message(file_data.return_value);
-	clean_up(&file_data);
+	//if (file_data.return_value != SUCCESS)
+	 	//print_error_message(file_data.return_value);
+	//clean_up(&file_data);
 	return (file_data.return_value);
 }
 
