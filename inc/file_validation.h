@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/13 15:17:45 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/14 17:20:24 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ typedef struct s_color
 	int green; // Green component (0-255)
 	int blue;  // Blue component (0-255)
 }					t_color;
+
+# define ELEMENTS_NEEDED 6
 
 typedef enum e_return_value
 {
