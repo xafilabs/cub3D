@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/14 18:37:12 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:49:44 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,29 @@
 # define MAIN_H
 
 // Preprocessor definitions
-# define EXIT_SUCCESS 0
-# define EXIT_FAILURE 1
 # ifndef WINDOW_WIDTH
 #  define WINDOW_WIDTH 720
 # endif
 # ifndef WINDOW_HEIGHT
 #  define WINDOW_HEIGHT 480
 # endif
+# ifndef MINIMAP_WIDTH
+#  define MINIMAP_WIDTH 160
+# endif
+# ifndef MINIMAP_HEIGHT
+#  define MINIMAP_HEIGHT 120
+# endif
+# define EXIT_SUCCESS 0
+# define EXIT_FAILURE 1
+# define TRUE 1
+# define FALSE 0
+# define COLOR_BLACK 0x000000FF
+# define COLOR_WHITE 0xFFFFFFFF
+# define COLOR_GREEN 0x90FD90FF
+# define COLOR_RED 0xCC3636FF
+# define COLOR_PINK 0xE97FC2FF
+# define COLOR_BLUE 0x35CFE4FF
+# define COLOR_GRAY 0x5F574FFF
 
 // Include system headers
 # include <stddef.h>
@@ -31,6 +46,7 @@
 # include <math.h>
 # include <stdio.h>
 # include <limits.h>
+# include <assert.h>
 
 // Include user headers
 # include "../MLX42/include/MLX42/MLX42.h"
@@ -97,16 +113,14 @@ typedef struct s_data
 	t_texture_data	texture;
 	t_map			map;
 	mlx_t			*mlx;
+	mlx_image_t		*img;
 }	t_data;
 
-typedef struct s_line
+typedef struct s_point
 {
-	int	x0;
-	int	y0;
-	int	x1;
-	int	y1;
-	int	color;
-}	t_line;
+	int	x;
+	int	y;
+}	t_point;
 
 // Function declarations
 void			initialize_struct(t_file_data *structure_pointer);
@@ -117,6 +131,10 @@ void			clean_up(t_file_data *data);
 t_return_value	validate_scene_requirement(t_file_data *data);
 void			game(t_data *d);
 void			loop_hook(void *data_param);
-void			draw_line(mlx_image_t *image, t_line line);
+void			close_hook(void *data_param);
+void			key_hook(mlx_key_data_t keydata, void *data_param);
+void			draw_line(mlx_image_t *image, t_point start, t_point end, int color);
+t_point			new_point(int x, int y);
+void			clean_exit(t_data *d);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/14 18:38:22 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:50:28 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ int	main(int argc, char **argv)
 	t_data			d;
 	int				i;
 	int				j;
-	mlx_image_t		*img;
-	t_line			line;
 
 	(void)argv;
 	if (argc != 2)
@@ -100,27 +98,18 @@ int	main(int argc, char **argv)
 	d.mlx = mlx_init(d.screen.width, d.screen.height, "cub3D", false);
 	if (!d.mlx)
 		return (EXIT_FAILURE);
-	img = mlx_new_image(d.mlx, d.screen.width, d.screen.height);
-	if (!img || (mlx_image_to_window(d.mlx, img, 0, 0) < 0))
+	d.img = mlx_new_image(d.mlx, d.screen.width, d.screen.height);
+	if (!d.img)
 		exit(EXIT_FAILURE);
-	mlx_put_pixel(img, 100, 100, 0x98FB98FF);
-	line.color = 0x90FD90FF;
-	line.x0 = 151;
-	line.y0 = 144;
-	line.x1 = 355;
-	line.y1 = 349;
-	draw_line(img, line);
+	draw_line(d.img, new_point(200, 200), new_point(411, 399), COLOR_PINK);
+	if (mlx_image_to_window(d.mlx, d.img, 0, 0) < 0)
+		exit(EXIT_FAILURE);
 	game(&d); //this is the draw/redraw function
 	mlx_loop_hook(d.mlx, loop_hook, &d);
+	mlx_close_hook(d.mlx, close_hook, &d);
+	mlx_key_hook(d.mlx, key_hook, &d);
 	mlx_loop(d.mlx);
-	mlx_terminate(d.mlx);
-	i = 0;
-	while (i < d.map.height)
-	{
-		free(d.map.content[i]);
-		i++;
-	}
-	free(d.map.content);
+	clean_exit(&d);
 	return (0);
 }
 
