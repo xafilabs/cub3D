@@ -6,50 +6,71 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:42:34 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/16 11:21:45 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/16 13:51:09 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-//static int	get_file_amount_of_lines(t_file_data *data)
-//{
-//char	*temp;
+static int	get_map_amount_of_lines(t_file_data *data, char *map_as_string)
+{
+	char	*temp;
 
-//temp = data->file_content_as_string;
-//while(*temp)
-//{
-//if (*temp == '\n')
-//data->file_number_of_lines++;
-//temp++;
-//}
-//if (data->file_number_of_lines < 9)
-//data->return_value = FILE_CONTENT_NOT_VALID;
-//return (data->file_number_of_lines);
-//}
+	temp = map_as_string;
+	while (*temp)
+	{
+		if (*temp == '\n')
+			data->map_number_of_lines++;
+		temp++;
+	}
+	if (data->map_number_of_lines < 3)
+		data->return_value = MAP_CONTENT_NOT_VALID;
+	return (data->map_number_of_lines);
+}
 
-//static t_return_value	transfer_string_to_array(t_file_data *data)
-//{
-//data->file_content_as_array = (char **)ft_calloc(data->file_number_of_lines
-//+ 1, sizeof(char *));
-//if (!data->file_content_as_array)
-//data->return_value = MALLOC_FAILURE;
+static t_return_value	transfer_remaining_string_to_map_array(t_file_data *data,
+		char *map_as_string)
+{
+	char	*line_starts;
+	char	*line_ends;
+	int		i;
+	
+	i=0;
+	line_starts = map_as_string;
+	data->map_as_array = (char **)ft_calloc(data->map_number_of_lines + 1,
+			sizeof(char *));
+	if (!data->map_as_array)
+		data->return_value = MALLOC_FAILURE;
+	while (*line_starts != '\0' && i < data->map_number_of_lines)
+	{
+		line_ends = ft_strchr(line_starts, '\n');
+		data->map_as_array[i] = ft_substr(line_starts, 0, line_ends - line_starts);
+		if (data->map_as_array[i] == NULL)
+			return (data->return_value);
+		line_starts = line_ends;
+		line_starts++;
+		i++;
+	}
+	data->map_as_array[i] = NULL;
+	return (data->return_value);
+}
 
-//}
+/**
+ * @brief Import and prepare map elements from a text file.
+ *
+ * @param data The structure to store imported data.
+ * @param element_starts The start of the element in the file.
+ * @return A return code indicating success or failure.
+ */
+static t_return_value	map_import_and_preparation(t_file_data *data,
+													char *map_as_string)
+{
+	if (get_map_amount_of_lines(data, map_as_string) == MAP_CONTENT_NOT_VALID)
+		return (data->return_value);
+	transfer_remaining_string_to_map_array(data, map_as_string);
+	return (data->return_value);
+}
 
-
-///**
- //* @brief Import and prepare map elements from a text file.
- //*
- //* @param data The structure to store imported data.
- //* @param element_starts The start of the element in the file.
- //* @return A return code indicating success or failure.
- //*/
-//static t_return_value	map_import_and_preparation(t_file_data *data,
-		//char *element_starts)
-//{
-
-//}
 /**
  * @brief Get the texture element content from the provided string.
  *
@@ -150,7 +171,8 @@ static t_return_value	get_scene_elements(t_file_data *data)
 		element_starts = element_ends;
 		element_starts++;
 	}
-	//map_import_and_preparation(data, element_starts);
+	if (data->return_value == SUCCESS)
+		map_import_and_preparation(data, element_starts);
 	return (data->return_value);
 }
 /**
@@ -173,3 +195,4 @@ t_return_value	validate_scene_requirement(t_file_data *data)
 	print_struct(data);
 	return (data->return_value);
 }
+

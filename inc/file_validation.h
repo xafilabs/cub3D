@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/14 17:20:24 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/16 13:12:02 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef enum e_return_value
 	NEED_MAP_CUB_FILE,
 	FILE_OPEN_FAILURE,
 	FILE_IS_EMPTY,
-	FILE_CONTENT_NOT_VALID,
+	MAP_CONTENT_NOT_VALID,
 	ELEMENTS_NOT_VALID,
 	ELEMENT_NOT_FOUND,
 	ELEMENT,
@@ -49,9 +49,9 @@ typedef struct s_file_data
 	char			*floor_color;
 	char			*ceiling_color;
 	char			*file_content_as_string;
-	char			**file_content_as_array;
+	char			**map_as_array;
 	char			player_spawn_direction;
-	int				file_number_of_lines;
+	int				map_number_of_lines;
 	int				elements_found;
 	double			player_x;
 	double			player_y;

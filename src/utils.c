@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/13 15:33:43 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/16 13:50:02 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@ void print_struct(t_file_data *data) {
     printf("Return Value: %d\n", data->return_value);
     printf("Floor RGB: R(%d) G(%d) B(%d)\n", data->floor_rgb.red, data->floor_rgb.green, data->floor_rgb.blue);
     printf("Ceiling RGB: R(%d) G(%d) B(%d)\n", data->ceiling_rgb.red, data->ceiling_rgb.green, data->ceiling_rgb.blue);
+    if (data->map_as_array) {
+        printf("Map Content:\n");
+        for (int i = 0; i < data->map_number_of_lines; i++) {
+            printf("%s\n", data->map_as_array[i]);
+        }
+    } else {
+        printf("Map Content: (Empty)\n");
+    }
     // Add more fields if needed
 }
 
@@ -63,7 +71,7 @@ void	print_error_message(t_return_value error)
 		ft_putstr_fd("Error: file is empty\n", 2);
 	else if (error == FILE_OPEN_FAILURE)
 		ft_putstr_fd("Error: file open failure\n", 2);
-	else if (error == FILE_CONTENT_NOT_VALID)
+	else if (error == MAP_CONTENT_NOT_VALID)
 		ft_putstr_fd("Error: file content not valid\n", 2);
 	else if (error == INVALID_ARGUMENT)
 		ft_putstr_fd("Usage: use cub file\n", 2);
