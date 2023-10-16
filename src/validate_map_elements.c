@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:42:34 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/14 17:36:33 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/16 11:21:45 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,18 @@
 //}
 
 
-/**
- * @brief Import and prepare map elements from a text file.
- *
- * @param data The structure to store imported data.
- * @param element_starts The start of the element in the file.
- * @return A return code indicating success or failure.
- */
-static t_return_value	map_import_and_preparation(t_file_data *data,
-		char *element_starts)
-{
+///**
+ //* @brief Import and prepare map elements from a text file.
+ //*
+ //* @param data The structure to store imported data.
+ //* @param element_starts The start of the element in the file.
+ //* @return A return code indicating success or failure.
+ //*/
+//static t_return_value	map_import_and_preparation(t_file_data *data,
+		//char *element_starts)
+//{
 
-}
+//}
 /**
  * @brief Get the texture element content from the provided string.
  *
@@ -90,17 +90,17 @@ static t_return_value	find_and_get_element(char *element, t_file_data *data)
 
 	return_value = ELEMENT_NOT_FOUND;
 	if (ft_strncmp("NO ", element, 3) == 0)
-		return_value = get_element_texture(&data->north_texture, element);
+		return_value = get_element_texture(&data->north_texture, element + 3);
 	else if (ft_strncmp("SO ", element, 3) == 0)
-		return_value = get_element_texture(&data->south_texture, element);
+		return_value = get_element_texture(&data->south_texture, element + 3);
 	else if (ft_strncmp("WE ", element, 3) == 0)
-		return_value = get_element_texture(&data->west_texture, element);
+		return_value = get_element_texture(&data->west_texture, element + 3);
 	else if (ft_strncmp("EA ", element, 3) == 0)
-		return_value = get_element_texture(&data->east_texture, element);
+		return_value = get_element_texture(&data->east_texture, element + 3);
 	else if (ft_strncmp("F ", element, 2) == 0)
-		return_value = get_element_texture(&data->floor_color, element);
+		return_value = get_element_texture(&data->floor_color, element + 2);
 	else if (ft_strncmp("C ", element, 2) == 0)
-		return_value = get_element_texture(&data->ceiling_color, element);
+		return_value = get_element_texture(&data->ceiling_color, element + 2);
 	data->return_value = return_value;
 	return (data->return_value);
 }
@@ -122,7 +122,7 @@ static void	remove_leading_white_spaces(char *string_beginning)
 			break ;
 	}
 }
-**
+/**
  * @brief Get map elements from the input scene description.
  *
  * This function parses the input scene description and extracts map elements.
@@ -150,7 +150,7 @@ static t_return_value	get_scene_elements(t_file_data *data)
 		element_starts = element_ends;
 		element_starts++;
 	}
-	map_import_and_preparation(data, element_starts);
+	//map_import_and_preparation(data, element_starts);
 	return (data->return_value);
 }
 /**
