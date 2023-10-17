@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:42:34 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/16 13:51:09 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/16 15:37:10by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	get_map_amount_of_lines(t_file_data *data, char *map_as_string)
 	temp = map_as_string;
 	while (*temp)
 	{
-		if (*temp == '\n')
+		if (*temp == '\0' || (*temp == '\n' && *temp + 1 != '\n') || (*temp == '\n' && *temp != '\0'))
 			data->map_number_of_lines++;
 		temp++;
 	}
@@ -35,16 +35,19 @@ static t_return_value	transfer_remaining_string_to_map_array(t_file_data *data,
 	char	*line_ends;
 	int		i;
 	
-	i=0;
+	i = 0;
 	line_starts = map_as_string;
 	data->map_as_array = (char **)ft_calloc(data->map_number_of_lines + 1,
 			sizeof(char *));
 	if (!data->map_as_array)
 		data->return_value = MALLOC_FAILURE;
-	while (*line_starts != '\0' && i < data->map_number_of_lines)
+	while (*line_starts != '\0' && i <= data->map_number_of_lines)
 	{
 		line_ends = ft_strchr(line_starts, '\n');
+		if (line_ends == NULL)
+			line_ends = line_starts + ft_strlen(line_starts);
 		data->map_as_array[i] = ft_substr(line_starts, 0, line_ends - line_starts);
+		printf("Line just copied :%d: is :%s:\t\t\nline_starts\t\t :%s:\nnumber_of_lines :%d:\n", i, data->map_as_array[i], line_starts, data->map_number_of_lines);
 		if (data->map_as_array[i] == NULL)
 			return (data->return_value);
 		line_starts = line_ends;
@@ -65,6 +68,8 @@ static t_return_value	transfer_remaining_string_to_map_array(t_file_data *data,
 static t_return_value	map_import_and_preparation(t_file_data *data,
 													char *map_as_string)
 {
+	while (*map_as_string == '\n' && (*map_as_string + 1 == '\0' || *map_as_string == '\n'))
+		map_as_string++;
 	if (get_map_amount_of_lines(data, map_as_string) == MAP_CONTENT_NOT_VALID)
 		return (data->return_value);
 	transfer_remaining_string_to_map_array(data, map_as_string);
@@ -125,6 +130,7 @@ static t_return_value	find_and_get_element(char *element, t_file_data *data)
 	data->return_value = return_value;
 	return (data->return_value);
 }
+
 /**
  * @brief Remove leading white spaces from a string.
  *
@@ -143,6 +149,7 @@ static void	remove_leading_white_spaces(char *string_beginning)
 			break ;
 	}
 }
+
 /**
  * @brief Get map elements from the input scene description.
  *

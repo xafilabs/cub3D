@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/16 13:50:02 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/17 14:04:54 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ void print_struct(t_file_data *data) {
     printf("Ceiling RGB: R(%d) G(%d) B(%d)\n", data->ceiling_rgb.red, data->ceiling_rgb.green, data->ceiling_rgb.blue);
     if (data->map_as_array) {
         printf("Map Content:\n");
-        for (int i = 0; i < data->map_number_of_lines; i++) {
-            printf("%s\n", data->map_as_array[i]);
+        for (int i = 0; i <= data->map_number_of_lines; i++) {
+            printf("Line count :%d:\t:%s",i, data->map_as_array[i]);
+			printf("\n");
         }
     } else {
         printf("Map Content: (Empty)\n");
