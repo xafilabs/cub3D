@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/17 14:04:54 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/17 15:36:47 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void print_struct(t_file_data *data) {
     printf("East Texture: %s\n", data->east_texture);
     printf("Floor Color: %s\n", data->floor_color);
     printf("Ceiling Color: %s\n", data->ceiling_color);
-    printf("Player Spawn Direction: %c\n", data->player_spawn_direction);
+    printf("Player Spawn Direction: %s\n", data->player_spawn_direction);
     printf("Player X Coordinate: %lf\n", data->player_x);
     printf("Player Y Coordinate: %lf\n", data->player_y);
     printf("File Descriptor: %d\n", data->file_descriptor);

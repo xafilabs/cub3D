@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/16 15:32:48 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/17 15:35:59 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_color
 }					t_color;
 
 # define ELEMENTS_NEEDED 6
+# define SPAWN_DIRECTION "NSEW"
 
 typedef enum e_return_value
 {
@@ -36,6 +37,7 @@ typedef enum e_return_value
 	ELEMENT_NOT_FOUND,
 	ELEMENT,
 	ELEMENT_FOUND,
+	PLAYER_DATA_INCORRECT_OR_MISSING,
 	INVALID_ARGUMENT,
 }						t_return_value;
 
@@ -50,7 +52,7 @@ typedef struct s_file_data
 	char			*ceiling_color;
 	char			*file_content_as_string;
 	char			**map_as_array;
-	char			player_spawn_direction;
+	char			player_spawn_direction[1];
 	int				map_number_of_lines;
 	int				elements_found;
 	double			player_x;

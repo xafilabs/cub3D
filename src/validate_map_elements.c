@@ -58,6 +58,39 @@ static t_return_value	transfer_remaining_string_to_map_array(t_file_data *data,
 	return (data->return_value);
 }
 
+static	t_return_value get_player_spawn_position_and_direction(t_file_data *data, char *map_string_contains_player_position, const char* spawn_direction_delimiter)
+{
+	int	spawn_location;
+	int	index_relative_to_last_new_line_found;
+	int	spawn_direction_index;
+	int	new_lines_found;
+
+	spawn_location = 0;
+	new_lines_found = 0;
+	while (map_string_contains_player_position[spawn_location] != '\0')
+	{
+		if (map_string_contains_player_position[spawn_location] == '\n')
+		 {
+			new_lines_found++;
+			index_relative_to_last_new_line_found = spawn_location;
+		 }
+		spawn_direction_index = 0;
+		while (spawn_direction_delimiter[spawn_direction_index] != '\0')
+		{
+			if (map_string_contains_player_position[spawn_location] == spawn_direction_delimiter[spawn_direction_index])
+			{
+				data->player_x = spawn_location - index_relative_to_last_new_line_found;
+				data->player_y = new_lines_found;
+				*data->player_spawn_direction = spawn_direction_delimiter[spawn_direction_index];
+				return (data->return_value);
+			}
+			spawn_direction_index++;
+		}
+		spawn_location++;
+	}
+	return (data->return_value = PLAYER_DATA_INCORRECT_OR_MISSING);
+}
+
 /**
  * @brief Import and prepare map elements from a text file.
  *
@@ -72,6 +105,7 @@ static t_return_value	map_import_and_preparation(t_file_data *data,
 		map_as_string++;
 	if (get_map_amount_of_lines(data, map_as_string) == MAP_CONTENT_NOT_VALID)
 		return (data->return_value);
+	get_player_spawn_position_and_direction(data, map_as_string, SPAWN_DIRECTION);
 	transfer_remaining_string_to_map_array(data, map_as_string);
 	return (data->return_value);
 }
@@ -158,7 +192,7 @@ static void	remove_leading_white_spaces(char *string_beginning)
  * @param data The structure to store the extracted elements.
  * @return A return code indicating success or failure.
  */
-static t_return_value	get_scene_elements(t_file_data *data)
+static t_return_value	get_scene_elements_and_map(t_file_data *data)
 {
 	char	*element_starts;
 	char	*element_ends;
@@ -192,7 +226,7 @@ static t_return_value	get_scene_elements(t_file_data *data)
  */
 t_return_value	validate_scene_requirement(t_file_data *data)
 {
-	if (get_scene_elements(data) != SUCCESS)
+	if (get_scene_elements_and_map(data) != SUCCESS)
 		return (data->return_value);
 	//if (get_file_amount_of_lines(data) < 9)
 	//return (data->return_value);
