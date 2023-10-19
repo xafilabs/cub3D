@@ -12,42 +12,55 @@
 
 #include "../inc/main.h"
 
+/**
+* @brief Remove leading white spaces from a string.
+*
+* This function removes leading white spaces (spaces and tabs) from a string.
+*
+* @param string_beginning The beginning of the string to process.
+*/
+static char	*remove_leading_white_spaces(char *string_beginning)
+{
+	return (ft_strtrim(string_beginning, " \t\v\f\r\n"));
+}
+
 static int	get_map_amount_of_lines(t_file_data *data, char *map_as_string)
 {
 	char	*temp;
 
 	temp = map_as_string;
+	data->map_number_of_lines++;
 	while (*temp)
 	{
-		if (*temp == '\0' || (*temp == '\n' && *temp + 1 != '\n') || (*temp == '\n' && *temp != '\0'))
+		if (*temp == '\n')
 			data->map_number_of_lines++;
 		temp++;
 	}
 	if (data->map_number_of_lines < 3)
 		data->return_value = MAP_CONTENT_NOT_VALID;
-	return (data->map_number_of_lines);
+	return (data->map_number_of_lines + 1);
 }
 
 static t_return_value	transfer_remaining_string_to_map_array(t_file_data *data,
-		char *map_as_string)
+																char *map_as_string)
 {
 	char	*line_starts;
 	char	*line_ends;
 	int		i;
-	
+
 	i = 0;
 	line_starts = map_as_string;
 	data->map_as_array = (char **)ft_calloc(data->map_number_of_lines + 1,
-			sizeof(char *));
+											sizeof(char *));
 	if (!data->map_as_array)
 		data->return_value = MALLOC_FAILURE;
-	while (*line_starts != '\0' && i <= data->map_number_of_lines)
+	while (*line_starts != '\0' && i < data->map_number_of_lines)
 	{
 		line_ends = ft_strchr(line_starts, '\n');
 		if (line_ends == NULL)
 			line_ends = line_starts + ft_strlen(line_starts);
-		data->map_as_array[i] = ft_substr(line_starts, 0, line_ends - line_starts);
-		printf("Line just copied :%d: is :%s:\t\t\nline_starts\t\t :%s:\nnumber_of_lines :%d:\n", i, data->map_as_array[i], line_starts, data->map_number_of_lines);
+		data->map_as_array[i] = ft_substr(line_starts, 0, line_ends
+				- line_starts);
 		if (data->map_as_array[i] == NULL)
 			return (data->return_value);
 		line_starts = line_ends;
@@ -58,7 +71,9 @@ static t_return_value	transfer_remaining_string_to_map_array(t_file_data *data,
 	return (data->return_value);
 }
 
-static	t_return_value get_player_spawn_position_and_direction(t_file_data *data, char *map_string_contains_player_position, const char* spawn_direction_delimiter)
+static t_return_value	get_player_spawn_position_and_direction(t_file_data *data,
+																char *map_string_contains_player_position,
+																const char *spawn_direction_delimiter)
 {
 	int	spawn_location;
 	int	index_relative_to_last_new_line_found;
@@ -70,16 +85,17 @@ static	t_return_value get_player_spawn_position_and_direction(t_file_data *data,
 	while (map_string_contains_player_position[spawn_location] != '\0')
 	{
 		if (map_string_contains_player_position[spawn_location] == '\n')
-		 {
+		{
 			new_lines_found++;
 			index_relative_to_last_new_line_found = spawn_location;
-		 }
+		}
 		spawn_direction_index = 0;
 		while (spawn_direction_delimiter[spawn_direction_index] != '\0')
 		{
 			if (map_string_contains_player_position[spawn_location] == spawn_direction_delimiter[spawn_direction_index])
 			{
-				data->player_x = spawn_location - index_relative_to_last_new_line_found;
+				data->player_x = spawn_location
+					- index_relative_to_last_new_line_found;
 				data->player_y = new_lines_found;
 				*data->player_spawn_direction = spawn_direction_delimiter[spawn_direction_index];
 				return (data->return_value);
@@ -101,11 +117,13 @@ static	t_return_value get_player_spawn_position_and_direction(t_file_data *data,
 static t_return_value	map_import_and_preparation(t_file_data *data,
 													char *map_as_string)
 {
-	while (*map_as_string == '\n' && (*map_as_string + 1 == '\0' || *map_as_string == '\n'))
-		map_as_string++;
+	map_as_string = remove_leading_white_spaces(map_as_string);
+	printf("map as string after trimming :\n%s\n:\n", map_as_string);
 	if (get_map_amount_of_lines(data, map_as_string) == MAP_CONTENT_NOT_VALID)
 		return (data->return_value);
-	get_player_spawn_position_and_direction(data, map_as_string, SPAWN_DIRECTION);
+	printf("map_amount_of_lines :%d:\n", data->map_number_of_lines);
+	get_player_spawn_position_and_direction(data, map_as_string,
+			SPAWN_DIRECTION);
 	transfer_remaining_string_to_map_array(data, map_as_string);
 	return (data->return_value);
 }
@@ -125,6 +143,7 @@ static t_return_value	get_element_texture(char **element_type,
 	size_t	element_length;
 
 	element_length = 0;
+	element_content = remove_leading_white_spaces(element_content);
 	while (element_content[element_length] != '\n'
 		&& element_content[element_length] != '\0')
 		element_length++;
@@ -132,7 +151,7 @@ static t_return_value	get_element_texture(char **element_type,
 	if (*element_type == NULL)
 		return (MALLOC_FAILURE);
 	ft_strlcpy(*element_type, element_content, element_length + 1);
-	return (SUCCESS);
+	return (ELEMENT_FOUND);
 }
 /**
  * @brief Find and extract map elements from a string.
@@ -146,8 +165,11 @@ static t_return_value	get_element_texture(char **element_type,
  */
 static t_return_value	find_and_get_element(char *element, t_file_data *data)
 {
+	char			*temp;
 	t_return_value	return_value;
 
+	temp = element;
+	element = remove_leading_white_spaces(temp);
 	return_value = ELEMENT_NOT_FOUND;
 	if (ft_strncmp("NO ", element, 3) == 0)
 		return_value = get_element_texture(&data->north_texture, element + 3);
@@ -161,27 +183,13 @@ static t_return_value	find_and_get_element(char *element, t_file_data *data)
 		return_value = get_element_texture(&data->floor_color, element + 2);
 	else if (ft_strncmp("C ", element, 2) == 0)
 		return_value = get_element_texture(&data->ceiling_color, element + 2);
-	data->return_value = return_value;
-	return (data->return_value);
-}
-
-/**
- * @brief Remove leading white spaces from a string.
- *
- * This function removes leading white spaces (spaces and tabs) from a string.
- *
- * @param string_beginning The beginning of the string to process.
- */
-static void	remove_leading_white_spaces(char *string_beginning)
-{
-	while (*string_beginning != '\n' || *string_beginning != '\0')
-	{
-		if ((*string_beginning > 8 && *string_beginning < 14) ||
-			*string_beginning == 32)
-			string_beginning++;
-		else
-			break ;
-	}
+	if (return_value == MALLOC_FAILURE)
+		data->return_value = MALLOC_FAILURE;
+	else if (return_value == ELEMENT_FOUND)
+		data->elements_found++;
+	if (data->elements_found == ELEMENTS_NEEDED)
+		return (ALL_ELEMENTS_FOUND);
+	return (return_value);
 }
 
 /**
@@ -196,22 +204,28 @@ static t_return_value	get_scene_elements_and_map(t_file_data *data)
 {
 	char	*element_starts;
 	char	*element_ends;
+	int		i;
 
+	i = 0;
 	element_starts = data->file_content_as_string;
 	while (*element_starts != '\0' && data->elements_found < ELEMENTS_NEEDED)
 	{
+		element_starts = remove_leading_white_spaces(element_starts);
 		element_ends = ft_strchr(element_starts, '\n');
-		remove_leading_white_spaces(element_starts);
 		if (element_ends != element_starts)
 		{
-			if (find_and_get_element(element_starts, data) == SUCCESS)
-				data->elements_found++;
-			else
+			if (*element_starts == '1' || *element_starts == '0')
+				break ;
+			if (find_and_get_element(element_starts, data) == MALLOC_FAILURE)
 				break ;
 		}
 		element_starts = element_ends;
-		element_starts++;
+		if (element_starts != '\0')
+			element_starts++;
 	}
+	print_elements(data);
+	printf("element_starts after finding all elements:\n:\n%s\n:\n",
+			element_starts);
 	if (data->return_value == SUCCESS)
 		map_import_and_preparation(data, element_starts);
 	return (data->return_value);
@@ -228,12 +242,7 @@ t_return_value	validate_scene_requirement(t_file_data *data)
 {
 	if (get_scene_elements_and_map(data) != SUCCESS)
 		return (data->return_value);
-	//if (get_file_amount_of_lines(data) < 9)
-	//return (data->return_value);
-	//if (transfer_string_to_array(data) == MALLOC_FAILURE)
-	//return (data->return_value);
 	printf("\n\n_______PRINT_STRUCT:\n");
 	print_struct(data);
 	return (data->return_value);
 }
-

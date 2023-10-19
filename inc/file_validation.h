@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/17 15:35:59 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/19 17:50:33 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef enum e_return_value
 	ELEMENT_NOT_FOUND,
 	ELEMENT,
 	ELEMENT_FOUND,
+	ALL_ELEMENTS_FOUND,
 	PLAYER_DATA_INCORRECT_OR_MISSING,
 	INVALID_ARGUMENT,
 }						t_return_value;
