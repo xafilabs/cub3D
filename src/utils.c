@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/18 15:51:06 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/20 15:54:36 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,24 @@ void print_struct(t_file_data *data) {
     printf("Ceiling RGB: R(%d) G(%d) B(%d)\n", data->ceiling_rgb.red, data->ceiling_rgb.green, data->ceiling_rgb.blue);
     if (data->map_as_array) {
         printf("Map Content:\n");
-        for (int i = 0; i <= data->map_number_of_lines; i++) {
-            printf("Line count :%d:\t:%s",i, data->map_as_array[i]);
-			printf("\n");
+        int i = 0;
+        while (data->map_as_array[i] != NULL) {
+            int j = 0;
+            while (data->map_as_array[i][j] != NEW_LINE) {
+                if (data->map_as_array[i][j] == EMPTY)
+                    printf("%d",data->map_as_array[i][j]);
+                else if (data->map_as_array[i][j] == FLOOR)
+                    printf("%d",data->map_as_array[i][j]);
+                else if (data->map_as_array[i][j] == WALL)
+                    printf("%d",data->map_as_array[i][j]);
+                j++;
+            }
+            printf(":%c:\n",data->map_as_array[i][j+1]);
+            i++;
         }
     } else {
         printf("Map Content: (Empty)\n");
     }
-    // Add more fields if needed
 }
 
 /**

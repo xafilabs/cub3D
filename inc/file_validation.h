@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/19 17:50:33 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/20 11:45:50 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ typedef struct s_color
 
 # define ELEMENTS_NEEDED 6
 # define SPAWN_DIRECTION "NSEW"
+
+typedef	enum e_map_tile
+{
+	FLOOR,
+	WALL,
+	EMPTY,
+	NEW_LINE
+}					t_map_tile;
 
 typedef enum e_return_value
 {
@@ -52,7 +60,7 @@ typedef struct s_file_data
 	char			*floor_color;
 	char			*ceiling_color;
 	char			*file_content_as_string;
-	char			**map_as_array;
+	t_map_tile		**map_as_array;
 	char			player_spawn_direction[1];
 	int				map_number_of_lines;
 	int				elements_found;
