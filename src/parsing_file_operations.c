@@ -1,16 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_file_and_import_data.c                    :+:      :+:    :+:   */
+/*   parsing_file_operations.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/04 15:17:58 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/11 18:24:59 by lclerc           ###   ########.fr       */
+/*   Created: 2023/10/10 17:42:34 by lclerc            #+#    #+#             */
+/*   Updated: 2023/10/21 14:21:05 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../inc/main.h"
+
+
 
 /**
  * @brief Open and validate the scene description file.
@@ -175,3 +178,20 @@ t_return_value	check_file_type(t_file_data *data,
 	return (data->return_value);
 }
 
+
+/**
+ * @brief Validate scene requirements and import map elements.
+ *
+ * This function validates the scene requirements and imports map elements.
+ *
+ * @param data The structure to store the extracted elements.
+ * @return A return code indicating success or failure.
+ */
+t_return_value	validate_scene_requirement(t_file_data *data)
+{
+	if (get_scene_elements_and_map(data) != SUCCESS)
+		return (data->return_value);
+	printf("\n\n_______PRINT_STRUCT:\n");
+	print_struct(data);
+	return (data->return_value);
+}

@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/20 11:45:50 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/21 14:34:30 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,9 @@ typedef struct s_file_data
 }					t_file_data;
 
 t_return_value	validate_cub_file(t_file_data *file_data, const char **path_to_file);
-
+t_return_value	get_scene_elements_and_map(t_file_data *data);
+t_return_value	validate_scene_requirement(t_file_data *data);
+int				get_map_amount_of_lines(t_file_data *data, char *map_as_string);
+char			*remove_leading_white_spaces(char *string_beginning);
+t_return_value	transfer_remaining_string_to_map_array(t_file_data *data, char *map_as_string);
 #endif

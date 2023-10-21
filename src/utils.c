@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/21 13:35:40 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/21 14:45:59 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,14 @@ void print_struct(t_file_data *data) {
         int i = 0;
         while (data->map_as_array[i] != NULL) {
             int j = 0;
+			printf("Line :%02d: -> ", i);
             while (data->map_as_array[i][j] != NEW_LINE) {
                 if (data->map_as_array[i][j] == EMPTY)
-                    printf("%d",data->map_as_array[i][j]);
+                    printf("\033[0;32m%d\033[0m",data->map_as_array[i][j]);
                 else if (data->map_as_array[i][j] == FLOOR)
-                    printf("%d",data->map_as_array[i][j]);
+                    printf("\033[0;33m%d\033[0m",data->map_as_array[i][j]);
                 else if (data->map_as_array[i][j] == WALL)
-                    printf("%d",data->map_as_array[i][j]);
+                    printf("\033[0;31m%d\033[0m",data->map_as_array[i][j]);
                 j++;
             }
             printf(":%d:\n",data->map_as_array[i][j]);
