@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:17:58 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/21 14:34:51 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/21 15:27:28 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ static t_return_value	get_player_spawn_position_and_direction(t_file_data *data,
 static t_return_value	map_import_and_preparation(t_file_data *data,
 													char *map_as_string)
 {
+	if (data->elements_found != 6)
+	 {
+		data->return_value = MISSING_ELEMENTS;
+		return (data->return_value);
+	 }
 	map_as_string = remove_leading_white_spaces(map_as_string);
 	printf("map as string after trimming :\n%s\n:\n", map_as_string);
 	if (get_map_amount_of_lines(data, map_as_string) == MAP_CONTENT_NOT_VALID)
@@ -150,9 +155,9 @@ t_return_value	get_scene_elements_and_map(t_file_data *data)
 
 	i = 0;
 	element_starts = data->file_content_as_string;
-	while (*element_starts != '\0' && data->elements_found < ELEMENTS_NEEDED)
+	while (element_starts && *element_starts != '\0' && data->elements_found < ELEMENTS_NEEDED)
 	{
-		element_starts = remove_leading_white_spaces(element_starts);
+		//element_starts = remove_leading_white_spaces(element_starts);
 		element_ends = ft_strchr(element_starts, '\n');
 		if (element_ends != element_starts)
 		{
@@ -164,11 +169,14 @@ t_return_value	get_scene_elements_and_map(t_file_data *data)
 		element_starts = element_ends;
 		if (element_starts != '\0')
 			element_starts++;
+
 	}
-	print_elements(data);
-	printf("element_starts after finding all elements:\n:\n%s\n:\n",
-			element_starts);
+	//print_elements(data);
+	//printf("element_starts after finding all elements:\n:\n%s\n:\n",
+			//element_starts);
+	printf("tata\n");
 	if (data->return_value == SUCCESS)
 		map_import_and_preparation(data, element_starts);
+	printf("toto\n");
 	return (data->return_value);
 }
