@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:42:34 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/16 15:37:10by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/21 13:36:30 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	copy_map_data(char *line_starts, t_file_data *data,
 	}
 	while (j < max_line_length)
 		data->map_as_array[current_line][j++] = EMPTY;
-	data->map_as_array[current_line][max_line_length + 1] = NEW_LINE;
+	data->map_as_array[current_line][max_line_length ] = NEW_LINE;
 }
 
 static t_return_value	transfer_remaining_string_to_map_array(t_file_data *data,

@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/20 15:54:36 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/21 13:35:40 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void print_struct(t_file_data *data) {
                     printf("%d",data->map_as_array[i][j]);
                 j++;
             }
-            printf(":%c:\n",data->map_as_array[i][j+1]);
+            printf(":%d:\n",data->map_as_array[i][j]);
             i++;
         }
     } else {
