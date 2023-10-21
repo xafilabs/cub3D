@@ -6,24 +6,36 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:12:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/21 15:01:40 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/21 17:13:47 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
 /**
-* @brief Remove leading white spaces from a string.
-*
-* This function removes leading white spaces (spaces and tabs) from a string.
-*
-* @param string_beginning The beginning of the string to process.
-*/
+ * @brief Remove leading white spaces from a string.
+ *
+ * This function removes leading white spaces (spaces and tabs) from a string.
+ *
+ * @param string_beginning The beginning of the string to process.
+ * @return A pointer to the string with leading white spaces removed.
+ */
 char	*remove_leading_white_spaces(char *string_beginning)
 {
 	return (ft_strtrim(string_beginning, " \t\v\f\r\n"));
 }
 
+/**
+ * @brief Get the number of lines in the map content.
+ *
+ * This function calculates the number of lines in the map content by counting
+ * the newline characters. It also validates that the map contains a minimum of
+ * three lines.
+ *
+ * @param data A pointer to the t_file_data structure.
+ * @param map_as_string The map content as a string.
+ * @return The number of lines in the map content.
+ */
 int	get_map_amount_of_lines(t_file_data *data, char *map_as_string)
 {
 	char	*temp;
@@ -40,7 +52,15 @@ int	get_map_amount_of_lines(t_file_data *data, char *map_as_string)
 		data->return_value = MAP_CONTENT_NOT_VALID;
 	return (data->map_number_of_lines + 1);
 }
-
+/**
+ * @brief Get the maximum line length in the map content.
+ *
+ * This function calculates the maximum line length in the map content by
+ * iterating through the lines.
+ *
+ * @param map_as_string The map content as a string.
+ * @return The maximum line length.
+ */
 static int	get_max_line_length(char *map_as_string)
 {
 	int		max_line_length;
@@ -63,7 +83,17 @@ static int	get_max_line_length(char *map_as_string)
 	}
 	return (max_line_length);
 }
-
+/**
+ * @brief Copy map data to a 2D array.
+ *
+ * This function copies the map data from the string to a 2D array and converts
+ * the characters to their corresponding integer values (e.g., '0' to FLOOR).
+ *
+ * @param line_starts The start of the line in the map string.
+ * @param data A pointer to the t_file_data structure.
+ * @param max_line_length The maximum line length.
+ * @param current_line The current line number being processed.
+ */
 static void	copy_map_data(char *line_starts, t_file_data *data,
 		int max_line_length, int current_line)
 {
@@ -87,6 +117,17 @@ static void	copy_map_data(char *line_starts, t_file_data *data,
 	data->map_as_array[current_line][max_line_length ] = NEW_LINE;
 }
 
+
+/**
+ * @brief Transfer the remaining string to a 2D array.
+ *
+ * This function transfers the remaining map data from the string to a 2D array.
+ * It also determines the maximum line length and allocates memory accordingly.
+ *
+ * @param data A pointer to the t_file_data structure.
+ * @param map_as_string The map content as a string.
+ * @return A return code indicating success or failure.
+ */
 t_return_value	transfer_remaining_string_to_map_array(t_file_data *data, char *map_as_string)
 {
 	int		max_line_length;

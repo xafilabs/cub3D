@@ -6,13 +6,23 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:17:58 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/21 15:27:28 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/21 17:08:28 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-
+/**
+ * @brief Get player spawn position and direction.
+ *
+ * This function extracts the player's spawn position and direction from the
+ * scene description.
+ *
+ * @param data The structure to store player data.
+ * @param map_string_contains_player_position The string with player data.
+ * @param spawn_direction_delimiter Delimiter for spawn direction.
+ * @return A return code indicating success or failure.
+ */
 static t_return_value	get_player_spawn_position_and_direction(t_file_data *data,
 																char *map_string_contains_player_position,
 																const char *spawn_direction_delimiter)
@@ -52,8 +62,10 @@ static t_return_value	get_player_spawn_position_and_direction(t_file_data *data,
 /**
  * @brief Import and prepare map elements from a text file.
  *
+ * This function parses the input scene description and prepares map elements for use.
+ *
  * @param data The structure to store imported data.
- * @param element_starts The start of the element in the file.
+ * @param map_as_string The string with map data.
  * @return A return code indicating success or failure.
  */
 static t_return_value	map_import_and_preparation(t_file_data *data,
@@ -103,8 +115,7 @@ static t_return_value	get_element_texture(char **element_type,
 /**
  * @brief Find and extract map elements from a string.
  *
- * This function identifies and extracts various map elements from a string,
- * such as textures, floor color, ceiling color.
+ * This function identifies and extracts various map elements from a string, such as textures, floor color, and ceiling color.
  *
  * @param element The string to analyze and extract elements from.
  * @param data The structure to store the extracted elements.
@@ -157,7 +168,7 @@ t_return_value	get_scene_elements_and_map(t_file_data *data)
 	element_starts = data->file_content_as_string;
 	while (element_starts && *element_starts != '\0' && data->elements_found < ELEMENTS_NEEDED)
 	{
-		//element_starts = remove_leading_white_spaces(element_starts);
+		element_starts = remove_leading_white_spaces(element_starts);
 		element_ends = ft_strchr(element_starts, '\n');
 		if (element_ends != element_starts)
 		{
@@ -169,14 +180,10 @@ t_return_value	get_scene_elements_and_map(t_file_data *data)
 		element_starts = element_ends;
 		if (element_starts != '\0')
 			element_starts++;
-
 	}
-	//print_elements(data);
-	//printf("element_starts after finding all elements:\n:\n%s\n:\n",
-			//element_starts);
-	printf("tata\n");
+	print_elements(data);
+	printf("element_starts after finding all elements:\n:\n%s\n:\n", element_starts);
 	if (data->return_value == SUCCESS)
 		map_import_and_preparation(data, element_starts);
-	printf("toto\n");
 	return (data->return_value);
 }
