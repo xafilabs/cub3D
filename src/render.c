@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/22 15:45:18 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/22 15:47:53 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,7 @@ void	cast_rays(t_data *d)
 			wall = d->map.content[(int)floor(ray.y)][(int)floor(ray.x)];
 		}
 		wall_distance = sqrt(pow(d->player.x - ray.x, 2) + pow(d->player.y - ray.y, 2));
+		wall_distance = wall_distance * cos(deg_to_rad(d->ray_angle - d->player.angle));
 		wall_height = floor(WINDOW_HALF_HEIGHT / wall_distance);
 		if (wall_height > WINDOW_HALF_HEIGHT)
 			wall_height = WINDOW_HALF_HEIGHT;
