@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/22 11:54:20 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/22 14:41:42 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@
 #  define PLAYER_FOV 60
 # endif
 # ifndef PLAYER_MOVE_SPEED
-#  define PLAYER_MOVE_SPEED 0.5
+#  define PLAYER_MOVE_SPEED 0.1
 # endif
 # ifndef PLAYER_ROTATE_SPEED
-#  define PLAYER_ROTATE_SPEED 5.0
+#  define PLAYER_ROTATE_SPEED 3.0
 # endif
 # define PLAYER_HALF_FOV PLAYER_FOV / 2
 # define WINDOW_HALF_WIDTH WINDOW_WIDTH / 2

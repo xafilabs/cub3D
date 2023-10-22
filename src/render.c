@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/22 14:29:37 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/22 15:39:35 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_t color)
 {
-	assert(x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT);
-	mlx_put_pixel(image, x, y, color);
+	if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
+		mlx_put_pixel(image, x, y, color);
+	else
+		printf("Warning: Putting pixels outside screen to x:y=%i:%i\n", x, y);
 }
 
 t_point	new_point(int x, int y)
@@ -241,6 +243,8 @@ void	cast_rays(t_data *d)
 		}
 		wall_distance = sqrt(pow(d->player.x - ray.x, 2) + pow(d->player.y - ray.y, 2));
 		wall_height = floor(WINDOW_HALF_HEIGHT / wall_distance);
+		if (wall_height > WINDOW_HALF_HEIGHT)
+			wall_height = WINDOW_HALF_HEIGHT;
 		draw_line(d->img, new_point(ray_count, 0), new_point(ray_count, WINDOW_HALF_HEIGHT - wall_height), COLOR_BLUE);
 		draw_line(d->img, new_point(ray_count, WINDOW_HALF_HEIGHT - wall_height), new_point(ray_count, WINDOW_HALF_HEIGHT + wall_height), COLOR_RED);
 		draw_line(d->img, new_point(ray_count, WINDOW_HALF_HEIGHT + wall_height), new_point(ray_count, WINDOW_HEIGHT), COLOR_GREEN);
