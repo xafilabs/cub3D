@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/22 15:43:29 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/22 16:17:13 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@
 #  define PLAYER_FOV 60
 # endif
 # ifndef PLAYER_MOVE_SPEED
-#  define PLAYER_MOVE_SPEED 0.1
+#  define PLAYER_MOVE_SPEED 0.01
 # endif
 # ifndef PLAYER_ROTATE_SPEED
-#  define PLAYER_ROTATE_SPEED 3.0
+#  define PLAYER_ROTATE_SPEED 1
 # endif
 # ifndef WALL_MIN_DISTANCE
 #  define WALL_MIN_DISTANCE 0.01
