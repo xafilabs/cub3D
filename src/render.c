@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/22 15:39:35 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/22 15:45:18 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ void	key_hook(mlx_key_data_t keydata, void *data_param)
 		d->player.move_sin = sin(deg_to_rad(d->player.angle))
 			* PLAYER_MOVE_SPEED;
 		if (!is_coordinate_in_wall(d->map.content,
-				d->player.x + d->player.move_cos,
-				d->player.y + d->player.move_sin))
+				d->player.x + (d->player.move_cos + WALL_MIN_DISTANCE),
+				d->player.y + (d->player.move_sin + WALL_MIN_DISTANCE)))
 		{
 			d->player.x += d->player.move_cos;
 			d->player.y += d->player.move_sin;
@@ -135,8 +135,8 @@ void	key_hook(mlx_key_data_t keydata, void *data_param)
 		d->player.move_sin = sin(deg_to_rad(d->player.angle))
 			* PLAYER_MOVE_SPEED;
 		if (!is_coordinate_in_wall(d->map.content,
-				d->player.x - d->player.move_cos,
-				d->player.y - d->player.move_sin))
+				d->player.x - (d->player.move_cos + WALL_MIN_DISTANCE),
+				d->player.y - (d->player.move_sin + WALL_MIN_DISTANCE)))
 		{
 			d->player.x -= d->player.move_cos;
 			d->player.y -= d->player.move_sin;
@@ -149,8 +149,8 @@ void	key_hook(mlx_key_data_t keydata, void *data_param)
 		d->player.move_sin = sin(deg_to_rad(d->player.angle + 90))
 			* PLAYER_MOVE_SPEED;
 		if (!is_coordinate_in_wall(d->map.content,
-				d->player.x + d->player.move_cos,
-				d->player.y + d->player.move_sin))
+				d->player.x + (d->player.move_cos + WALL_MIN_DISTANCE),
+				d->player.y + (d->player.move_sin + WALL_MIN_DISTANCE)))
 		{
 			d->player.x += d->player.move_cos;
 			d->player.y += d->player.move_sin;
@@ -163,8 +163,8 @@ void	key_hook(mlx_key_data_t keydata, void *data_param)
 		d->player.move_sin = sin(deg_to_rad(d->player.angle + 90))
 			* PLAYER_MOVE_SPEED;
 		if (!is_coordinate_in_wall(d->map.content,
-				d->player.x - d->player.move_cos,
-				d->player.y - d->player.move_sin))
+				d->player.x - (d->player.move_cos + WALL_MIN_DISTANCE),
+				d->player.y - (d->player.move_sin + WALL_MIN_DISTANCE)))
 		{
 			d->player.x -= d->player.move_cos;
 			d->player.y -= d->player.move_sin;

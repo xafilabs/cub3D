@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/22 14:41:42 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/22 15:43:29 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,17 @@
 # ifndef PLAYER_ROTATE_SPEED
 #  define PLAYER_ROTATE_SPEED 3.0
 # endif
+# ifndef WALL_MIN_DISTANCE
+#  define WALL_MIN_DISTANCE 0.01
+# endif
+# ifndef RAY_PRECISION
+#  define RAY_PRECISION 64
+# endif
 # define PLAYER_HALF_FOV PLAYER_FOV / 2
 # define WINDOW_HALF_WIDTH WINDOW_WIDTH / 2
 # define WINDOW_HALF_HEIGHT WINDOW_HEIGHT / 2
 # define RAY_LIMIT WINDOW_WIDTH
 # define RAY_INCREMENT PLAYER_FOV / RAY_LIMIT
-# define RAY_PRECISION 64
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
 # define TRUE 1
