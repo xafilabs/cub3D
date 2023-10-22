@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/17 13:30:58 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/22 11:54:20 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ typedef struct s_player
 	double	x;
 	double	y;
 	double	angle;
+	double	move_cos;
+	double	move_sin;
 }	t_player;
 
 // color is stored in rgba format encoded into an int
@@ -139,5 +141,7 @@ void			key_hook(mlx_key_data_t keydata, void *data_param);
 void			draw_line(mlx_image_t *image, t_point start, t_point end, int color);
 t_point			new_point(int x, int y);
 void			clean_exit(t_data *d);
+double			deg_to_rad(double degrees);
+double			rad_to_deg(double radians);
 
 #endif

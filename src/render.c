@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/17 14:10:10 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/22 14:29:37 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,13 @@ void	clean_exit(t_data *d)
 	exit(0);
 }
 
+int	is_coordinate_in_wall(int **map, double x, double y)
+{
+	if (map[(int)floor(y)][(int)floor(x)] == 1)
+		return (TRUE);
+	return (FALSE);
+}
+
 void	close_hook(void *data_param)
 {
 	t_data	*d;
@@ -106,13 +113,61 @@ void	key_hook(mlx_key_data_t keydata, void *data_param)
 	if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
 		d->player.angle += PLAYER_ROTATE_SPEED;
 	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
-		d->player.y += PLAYER_MOVE_SPEED;
+	{
+		d->player.move_cos = cos(deg_to_rad(d->player.angle))
+			* PLAYER_MOVE_SPEED;
+		d->player.move_sin = sin(deg_to_rad(d->player.angle))
+			* PLAYER_MOVE_SPEED;
+		if (!is_coordinate_in_wall(d->map.content,
+				d->player.x + d->player.move_cos,
+				d->player.y + d->player.move_sin))
+		{
+			d->player.x += d->player.move_cos;
+			d->player.y += d->player.move_sin;
+		}
+	}
 	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
-		d->player.y -= PLAYER_MOVE_SPEED;
-	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
-		d->player.x -= PLAYER_MOVE_SPEED;
+	{
+		d->player.move_cos = cos(deg_to_rad(d->player.angle))
+			* PLAYER_MOVE_SPEED;
+		d->player.move_sin = sin(deg_to_rad(d->player.angle))
+			* PLAYER_MOVE_SPEED;
+		if (!is_coordinate_in_wall(d->map.content,
+				d->player.x - d->player.move_cos,
+				d->player.y - d->player.move_sin))
+		{
+			d->player.x -= d->player.move_cos;
+			d->player.y -= d->player.move_sin;
+		}
+	}
 	if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
-		d->player.x += PLAYER_MOVE_SPEED;
+	{
+		d->player.move_cos = cos(deg_to_rad(d->player.angle + 90))
+			* PLAYER_MOVE_SPEED;
+		d->player.move_sin = sin(deg_to_rad(d->player.angle + 90))
+			* PLAYER_MOVE_SPEED;
+		if (!is_coordinate_in_wall(d->map.content,
+				d->player.x + d->player.move_cos,
+				d->player.y + d->player.move_sin))
+		{
+			d->player.x += d->player.move_cos;
+			d->player.y += d->player.move_sin;
+		}
+	}
+	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
+	{
+		d->player.move_cos = cos(deg_to_rad(d->player.angle + 90))
+			* PLAYER_MOVE_SPEED;
+		d->player.move_sin = sin(deg_to_rad(d->player.angle + 90))
+			* PLAYER_MOVE_SPEED;
+		if (!is_coordinate_in_wall(d->map.content,
+				d->player.x - d->player.move_cos,
+				d->player.y - d->player.move_sin))
+		{
+			d->player.x -= d->player.move_cos;
+			d->player.y -= d->player.move_sin;
+		}
+	}
 }
 
 void	loop_hook(void *data_param)
