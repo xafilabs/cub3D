@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/22 15:47:53 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/22 15:55:46 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,6 @@ void	cast_rays(t_data *d)
 	t_ray	ray;
 	double	ray_sin;
 	double	ray_cos;
-	int		wall;
 	double	wall_distance;
 	double	wall_height;
 
@@ -234,12 +233,11 @@ void	cast_rays(t_data *d)
 		ray.y = d->player.y;
 		ray_sin = sin(deg_to_rad(d->ray_angle)) / RAY_PRECISION;
 		ray_cos = cos(deg_to_rad(d->ray_angle)) / RAY_PRECISION;
-		wall = 0;
-		while (!wall)
+		while (d->map.content[(int)floor(ray.y)][(int)floor(ray.x)] == 0)
 		{
 			ray.x += ray_cos;
-			ray.y += ray_sin;
-			wall = d->map.content[(int)floor(ray.y)][(int)floor(ray.x)];
+			if (d->map.content[(int)floor(ray.y)][(int)floor(ray.x)] == 0)
+				ray.y += ray_sin;
 		}
 		wall_distance = sqrt(pow(d->player.x - ray.x, 2) + pow(d->player.y - ray.y, 2));
 		wall_distance = wall_distance * cos(deg_to_rad(d->ray_angle - d->player.angle));
