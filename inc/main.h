@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/16 17:49:44 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/17 13:30:58 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,21 @@
 # ifndef MINIMAP_HEIGHT
 #  define MINIMAP_HEIGHT 120
 # endif
+# ifndef PLAYER_FOV
+#  define PLAYER_FOV 60
+# endif
+# ifndef PLAYER_MOVE_SPEED
+#  define PLAYER_MOVE_SPEED 0.5
+# endif
+# ifndef PLAYER_ROTATE_SPEED
+#  define PLAYER_ROTATE_SPEED 5.0
+# endif
+# define PLAYER_HALF_FOV PLAYER_FOV / 2
+# define WINDOW_HALF_WIDTH WINDOW_WIDTH / 2
+# define WINDOW_HALF_HEIGHT WINDOW_HEIGHT / 2
+# define RAY_LIMIT WINDOW_WIDTH
+# define RAY_INCREMENT PLAYER_FOV / RAY_LIMIT
+# define RAY_PRECISION 64
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
 # define TRUE 1
@@ -61,24 +76,7 @@ typedef struct s_player
 	double	x;
 	double	y;
 	double	angle;
-	int		fov;
-	double	half_fov;
 }	t_player;
-
-typedef struct s_screen
-{
-	int		width;
-	int		height;
-	double	half_width;
-	double	half_height;
-	int		refresh_rate;
-}	t_screen;
-
-typedef struct s_raycast
-{
-	double	increment_angle;
-	int		precision;
-}	t_raycast;
 
 // color is stored in rgba format encoded into an int
 // int get_rgba(int r, int g, int b, int a) can be used for encoding
@@ -107,13 +105,12 @@ typedef struct s_map
 typedef struct s_data
 {
 	t_player		player;
-	t_screen		screen;
-	t_raycast		raycast;
 	t_color_data	color;
 	t_texture_data	texture;
 	t_map			map;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
+	double			ray_angle;
 }	t_data;
 
 typedef struct s_point
@@ -122,6 +119,12 @@ typedef struct s_point
 	int	y;
 }	t_point;
 
+typedef struct s_ray
+{
+	double	x;
+	double	y;
+}	t_ray;
+
 // Function declarations
 void			initialize_struct(t_file_data *structure_pointer);
 void			print_error_message(t_return_value error);
@@ -129,7 +132,7 @@ t_return_value	check_file_type(t_file_data *data, const char **path_to_file);
 t_return_value	get_file_content_to_string(t_file_data *data, const char **path);
 void			clean_up(t_file_data *data);
 t_return_value	validate_scene_requirement(t_file_data *data);
-void			game(t_data *d);
+void			render(t_data *d);
 void			loop_hook(void *data_param);
 void			close_hook(void *data_param);
 void			key_hook(mlx_key_data_t keydata, void *data_param);

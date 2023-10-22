@@ -6,7 +6,7 @@
 #    By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 15:25:10 by malaakso          #+#    #+#              #
-#    Updated: 2023/10/13 18:20:33 by malaakso         ###   ########.fr        #
+#    Updated: 2023/10/17 09:50:50 by malaakso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ C_FILES			=	main.c \
 					utils.c \
 					validate_file_and_import_data.c \
 					validate_map_elements.c \
-					game.c
+					render.c
 
 H_PATHS			=	$(addprefix $(H_FOLDER)/, $(H_FILES))
 C_PATHS			=	$(addprefix $(C_FOLDER)/, $(C_FILES))

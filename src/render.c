@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game.c                                             :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/16 17:52:54 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/17 14:10:10 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,18 @@ void	key_hook(mlx_key_data_t keydata, void *data_param)
 	d = (t_data *)data_param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		clean_exit(d);
+	if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_PRESS)
+		d->player.angle -= PLAYER_ROTATE_SPEED;
+	if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
+		d->player.angle += PLAYER_ROTATE_SPEED;
+	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
+		d->player.y += PLAYER_MOVE_SPEED;
+	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
+		d->player.y -= PLAYER_MOVE_SPEED;
+	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
+		d->player.x -= PLAYER_MOVE_SPEED;
+	if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
+		d->player.x += PLAYER_MOVE_SPEED;
 }
 
 void	loop_hook(void *data_param)
@@ -108,13 +120,13 @@ void	loop_hook(void *data_param)
 	t_data	*d;
 
 	d = (t_data *)data_param;
-	//game(d);
+	render(d);
 }
 
-void	render_minimap(t_data *d)
+static void	render_minimap_background(t_data *d)
 {
-	float	i;
-	float	j;
+	int	i;
+	int	j;
 
 	// Render background for the minimap
 	i = 0;
@@ -128,12 +140,63 @@ void	render_minimap(t_data *d)
 		}
 		i++;
 	}
+}
+
+double	deg_to_rad(double degrees)
+{
+	return (degrees * M_PI / 180.0);
+}
+
+double	rad_to_deg(double radians)
+{
+	return (radians * 180.0 / M_PI);
+}
+
+void	render_minimap(t_data *d)
+{
+	render_minimap_background(d);
 	// Render a map grid
 	
 }
 
-void	game(t_data *d)
+void	cast_rays(t_data *d)
 {
-	render_minimap(d);
+	int		ray_count;
+	t_ray	ray;
+	double	ray_sin;
+	double	ray_cos;
+	int		wall;
+	double	wall_distance;
+	double	wall_height;
+
+	d->ray_angle = d->player.angle - PLAYER_HALF_FOV;
+	ray_count = 0;
+	while (ray_count < RAY_LIMIT)
+	{
+		ray.x = d->player.x;
+		ray.y = d->player.y;
+		ray_sin = sin(deg_to_rad(d->ray_angle)) / RAY_PRECISION;
+		ray_cos = cos(deg_to_rad(d->ray_angle)) / RAY_PRECISION;
+		wall = 0;
+		while (!wall)
+		{
+			ray.x += ray_cos;
+			ray.y += ray_sin;
+			wall = d->map.content[(int)floor(ray.y)][(int)floor(ray.x)];
+		}
+		wall_distance = sqrt(pow(d->player.x - ray.x, 2) + pow(d->player.y - ray.y, 2));
+		wall_height = floor(WINDOW_HALF_HEIGHT / wall_distance);
+		draw_line(d->img, new_point(ray_count, 0), new_point(ray_count, WINDOW_HALF_HEIGHT - wall_height), COLOR_BLUE);
+		draw_line(d->img, new_point(ray_count, WINDOW_HALF_HEIGHT - wall_height), new_point(ray_count, WINDOW_HALF_HEIGHT + wall_height), COLOR_RED);
+		draw_line(d->img, new_point(ray_count, WINDOW_HALF_HEIGHT + wall_height), new_point(ray_count, WINDOW_HEIGHT), COLOR_GREEN);
+		d->ray_angle += (double)RAY_INCREMENT;
+		ray_count++;
+	}
+}
+
+void	render(t_data *d)
+{
+	cast_rays(d);
+	//render_minimap(d);
 	(void)d;
 }
