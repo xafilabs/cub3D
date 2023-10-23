@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/23 15:05:15 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:21:54 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,11 +221,11 @@ double	rad_to_deg(double radians)
 // Will return rgba encoded int, or 0 for failure.
 int	get_texture_pixel(mlx_texture_t *texture, int x, int y)
 {
-	int		color;
+	int32_t	color;
 	uint8_t	offset;
 
-	if (x < 0 || x >= (int)texture->width || y < 0 || y >= (int)texture->height)
-		return (0);
+	//if (x < 0 || x >= (int)texture->width || y < 0 || y >= (int)texture->height)
+	//	return (0);
 	offset = (y * texture->width) + (x * texture->bytes_per_pixel);
 	color = get_rgba(texture->pixels[offset], texture->pixels[offset + 1], texture->pixels[offset + 2], texture->pixels[offset + 3]);
 	return (color);
@@ -252,7 +252,7 @@ void	draw_texture(mlx_image_t *img, int x, int wall_height, int texture_x_pos, m
 	{
 		color = get_texture_pixel(texture, texture_x_pos, i);
 		draw_line(img, new_point(x, y), new_point(x, y + y_inc), color);
-		y = y + y_inc + 1;
+		y = y + y_inc;
 		i++;
 	}
 }

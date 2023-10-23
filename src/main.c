@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/23 14:36:19 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:14:01 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,10 @@ int	main(int argc, char **argv)
 	d.player.x = 3;
 	d.player.y = 3;
 	d.player.angle = 180;
-	d.texture.north = mlx_load_png("./textures/brick.png");
+	d.texture.north = mlx_load_png("./textures/checker.png");
+	//mlx_image_t *teximg = mlx_texture_to_image(d.mlx, d.texture.north);
+	printf("Debug: Texture width=%i, bpp=%i\n", d.texture.north->width, d.texture.north->bytes_per_pixel);
+	printf("Debug: Texture R:%i: G:%i: B:%i: A:%i: \n", get_r(get_texture_pixel(d.texture.north, 2, 2)), get_g(get_texture_pixel(d.texture.north, 2, 2)), get_b(get_texture_pixel(d.texture.north, 2, 2)), get_a(get_texture_pixel(d.texture.north, 2, 2)));
 	if (d.texture.north == NULL)
 		exit (EXIT_FAILURE);
 	d.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
@@ -108,4 +111,3 @@ int	main(int argc, char **argv)
 	clean_exit(&d);
 	return (EXIT_SUCCESS);
 }
-

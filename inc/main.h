@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/23 14:36:36 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/23 15:12:53 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,5 +149,6 @@ t_point			new_point(int x, int y);
 void			clean_exit(t_data *d);
 double			deg_to_rad(double degrees);
 double			rad_to_deg(double radians);
+int				get_texture_pixel(mlx_texture_t *texture, int x, int y);
 
 #endif
