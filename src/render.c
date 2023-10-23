@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/22 16:15:49 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/23 15:05:15 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ void	draw_line(mlx_image_t *image, t_point start, t_point end, int color)
 	idx = start;
 	while (idx.x != end.x || idx.y != end.y)
 	{
+		if (idx.x < 0 || idx.x >= WINDOW_WIDTH || idx.y < 0 || idx.y >= WINDOW_HEIGHT)
+		{
+			//printf("Warning: an attempt was made to draw a line at least partially outside the window.\n");
+			return ;
+		}
 		put_pixel(image, idx.x, idx.y, color);
 		err[1] = err[0] * 2;
 		if (err[1] > -delta.y)
@@ -213,6 +218,18 @@ double	rad_to_deg(double radians)
 {
 	return (radians * 180.0 / M_PI);
 }
+// Will return rgba encoded int, or 0 for failure.
+int	get_texture_pixel(mlx_texture_t *texture, int x, int y)
+{
+	int		color;
+	uint8_t	offset;
+
+	if (x < 0 || x >= (int)texture->width || y < 0 || y >= (int)texture->height)
+		return (0);
+	offset = (y * texture->width) + (x * texture->bytes_per_pixel);
+	color = get_rgba(texture->pixels[offset], texture->pixels[offset + 1], texture->pixels[offset + 2], texture->pixels[offset + 3]);
+	return (color);
+}
 
 void	render_minimap(t_data *d)
 {
@@ -221,14 +238,35 @@ void	render_minimap(t_data *d)
 	
 }
 
+void	draw_texture(mlx_image_t *img, int x, int wall_height, int texture_x_pos, mlx_texture_t *texture)
+{
+	double			y_inc;
+	double			y;
+	unsigned int	i;
+	int				color;
+
+	y_inc = (wall_height * 2) / texture->height;
+	y = WINDOW_HALF_HEIGHT - wall_height;
+	i = 0;
+	while (i < texture->height)
+	{
+		color = get_texture_pixel(texture, texture_x_pos, i);
+		draw_line(img, new_point(x, y), new_point(x, y + y_inc), color);
+		y = y + y_inc + 1;
+		i++;
+	}
+}
+
 void	cast_rays(t_data *d)
 {
-	int		ray_count;
-	t_ray	ray;
-	double	ray_sin;
-	double	ray_cos;
-	double	wall_distance;
-	double	wall_height;
+	int				ray_count;
+	t_ray			ray;
+	double			ray_sin;
+	double			ray_cos;
+	double			wall_distance;
+	double			wall_height;
+	mlx_texture_t	*texture;
+	double			texture_x_pos;
 
 	d->ray_angle = d->player.angle - PLAYER_HALF_FOV;
 	ray_count = 0;
@@ -247,10 +285,16 @@ void	cast_rays(t_data *d)
 		wall_distance = sqrt(pow(d->player.x - ray.x, 2) + pow(d->player.y - ray.y, 2));
 		wall_distance = wall_distance * cos(deg_to_rad(d->ray_angle - d->player.angle));
 		wall_height = floor(WINDOW_HALF_HEIGHT / wall_distance);
-		if (wall_height > WINDOW_HALF_HEIGHT)
-			wall_height = WINDOW_HALF_HEIGHT;
+		//if (wall_height > WINDOW_HALF_HEIGHT)
+		//	wall_height = WINDOW_HALF_HEIGHT;
+		// determine texture: north, south, east, west
+		texture = d->texture.north;
+		// determine x position of the texture to draw
+		texture_x_pos = texture->width * (ray.x + ray.y);
+		texture_x_pos = (int)floor(texture_x_pos) % texture->width;
 		draw_line(d->img, new_point(ray_count, 0), new_point(ray_count, WINDOW_HALF_HEIGHT - wall_height), COLOR_BLUE);
-		draw_line(d->img, new_point(ray_count, WINDOW_HALF_HEIGHT - wall_height), new_point(ray_count, WINDOW_HALF_HEIGHT + wall_height), COLOR_RED);
+		//draw_line(d->img, new_point(ray_count, WINDOW_HALF_HEIGHT - wall_height), new_point(ray_count, WINDOW_HALF_HEIGHT + wall_height), COLOR_RED);
+		draw_texture(d->img, ray_count, wall_height, texture_x_pos, texture);
 		draw_line(d->img, new_point(ray_count, WINDOW_HALF_HEIGHT + wall_height), new_point(ray_count, WINDOW_HEIGHT), COLOR_GREEN);
 		d->ray_angle += (double)RAY_INCREMENT;
 		ray_count++;
