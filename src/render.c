@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/23 16:21:54 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:56:30 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,7 @@ int	get_texture_pixel(mlx_texture_t *texture, int x, int y)
 	//if (x < 0 || x >= (int)texture->width || y < 0 || y >= (int)texture->height)
 	//	return (0);
 	offset = (y * texture->width) + (x * texture->bytes_per_pixel);
-	color = get_rgba(texture->pixels[offset], texture->pixels[offset + 1], texture->pixels[offset + 2], texture->pixels[offset + 3]);
+	color = get_rgba((uint8_t)texture->pixels[offset], (uint8_t)texture->pixels[offset + 1], (uint8_t)texture->pixels[offset + 2], (uint8_t)texture->pixels[offset + 3]);
 	return (color);
 }
 
@@ -305,5 +305,6 @@ void	render(t_data *d)
 {
 	cast_rays(d);
 	//render_minimap(d);
-	(void)d;
+	mlx_image_t *teximg = mlx_texture_to_image(d->mlx, d->texture.north);
+	mlx_image_to_window(d->mlx, teximg, 100, 100);
 }
