@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/17 13:36:02 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/23 14:36:19 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,9 @@ int	main(int argc, char **argv)
 	d.player.x = 3;
 	d.player.y = 3;
 	d.player.angle = 180;
+	d.texture.north = mlx_load_png("./textures/brick.png");
+	if (d.texture.north == NULL)
+		exit (EXIT_FAILURE);
 	d.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
 	if (!d.mlx)
 		return (EXIT_FAILURE);
@@ -103,6 +106,6 @@ int	main(int argc, char **argv)
 	mlx_key_hook(d.mlx, key_hook, &d);
 	mlx_loop(d.mlx);
 	clean_exit(&d);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 

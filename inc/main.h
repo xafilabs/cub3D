@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/23 14:03:09 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/23 14:36:36 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,6 @@ typedef struct s_texture_data
 	mlx_texture_t	*east;
 	mlx_texture_t	*south;
 	mlx_texture_t	*west;
-	mlx_image_t		*img_north;
-	mlx_image_t		*img_east;
-	mlx_image_t		*img_south;
-	mlx_image_t		*img_west;
 }	t_texture_data;
 
 typedef struct s_map
