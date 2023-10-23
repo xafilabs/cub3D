@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/23 16:56:30 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/23 18:50:04 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_t color)
 {
-	if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
+	if (x < WINDOW_WIDTH && y < WINDOW_HEIGHT)
 		mlx_put_pixel(image, x, y, color);
 	else
 		printf("Warning: Putting pixels outside screen to x:y=%i:%i\n", x, y);
