@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/24 08:31:23 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:58:26 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,9 +227,29 @@ unsigned int	get_image_pixel(mlx_image_t *image, unsigned int x, unsigned int y)
 
 	if (x >= image->width || y >= image->height)
 		return (0);
-	offset = (y * image->width) + x;
-	color = image->pixels[offset];
+	offset = ((y * image->width) + x);
+	color = ((unsigned int *)image->pixels)[offset];
 	return (color);
+}
+
+// unsigned int	get_image_pixel(mlx_image_t *image, unsigned int x, unsigned int y)
+// {
+// 	unsigned int	dst;
+
+// 	if (x >= image->width || y >= image->height)
+// 		return (COLOR_RED);
+// 	dst = *(unsigned int *)(image->pixels + (y * image->width + x));
+// 	return (dst);
+// }
+
+unsigned int	get_texture_pixel(mlx_texture_t *texture, unsigned int x, unsigned int y)
+{
+	unsigned int	dst;
+
+	if (x >= texture->width || y >= texture->height)
+		return (COLOR_RED);
+	dst = *(unsigned int *)(texture->pixels + (y * texture->width + x)); // * (texture->bytes_per_pixel / 8)
+	return (dst);
 }
 
 void	render_minimap(t_data *d)
@@ -318,6 +338,8 @@ void	render(t_data *d)
 {
 	render_ceiling_floor(d);
 	cast_rays(d);
-	//mlx_image_to_window(d->mlx, d->texture.north, WINDOW_HALF_WIDTH, WINDOW_HALF_HEIGHT);
+	printTextureFromImage(100, 100, d);
+	printTextureFromTexture(100, 300, d);
+	mlx_image_to_window(d->mlx, d->texture.north, WINDOW_HALF_WIDTH, WINDOW_HALF_HEIGHT);
 	//render_minimap(d);
 }

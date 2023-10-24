@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/24 08:00:47 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:03:01 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,29 @@ void printPixel(int x, int y, t_data *d)
 	get_b(get_image_pixel(d->texture.north, x, y)),
 	get_a(get_image_pixel(d->texture.north, x, y)));
 }
+
+void printTextureFromImage(int x, int y, t_data *d)
+{
+	for (size_t j = 0; j < d->texture.north->height; j++)
+	{
+		for (size_t i = 0; i < d->texture.north->width; i++)
+		{
+			mlx_put_pixel(d->img, i + x, j + y, get_image_pixel(d->texture.north, i, j));
+		}
+	}
+}
+
+void printTextureFromTexture(int x, int y, t_data *d)
+{
+	for (size_t j = 0; j < d->texture.north->height; j++)
+	{
+		for (size_t i = 0; i < d->texture.north->width; i++)
+		{
+			mlx_put_pixel(d->img, i + x, j + y, get_texture_pixel(d->texture.test, i, j));
+		}
+	}
+}
+
 /**
  * @brief The main function of the cub3D program.
  *
@@ -103,10 +126,15 @@ int	main(int argc, char **argv)
 	d.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
 	if (!d.mlx)
 		return (EXIT_FAILURE);
-	mlx_texture_t	*test = mlx_load_png("textures/brick.png");
-	if (!test)
+	d.img = mlx_new_image(d.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!d.img)
 		exit(EXIT_FAILURE);
-	d.texture.north = mlx_texture_to_image(d.mlx, test);
+	if (mlx_image_to_window(d.mlx, d.img, 0, 0) < 0)
+		exit(EXIT_FAILURE);
+	d.texture.test = mlx_load_png("textures/brick.png");
+	if (!d.texture.test)
+		exit(EXIT_FAILURE);
+	d.texture.north = mlx_texture_to_image(d.mlx, d.texture.test);
 	if (d.texture.north == NULL)
 		exit (EXIT_FAILURE);
 	printf("Debug: Texture width=%i\n", d.texture.north->width);
@@ -115,11 +143,6 @@ int	main(int argc, char **argv)
 		for (int y=0; y<8; y++)
 			printPixel(x, y, &d);
 	}
-	d.img = mlx_new_image(d.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	if (!d.img)
-		exit(EXIT_FAILURE);
-	if (mlx_image_to_window(d.mlx, d.img, 0, 0) < 0)
-		exit(EXIT_FAILURE);
 	mlx_loop_hook(d.mlx, loop_hook, &d);
 	mlx_close_hook(d.mlx, close_hook, &d);
 	mlx_key_hook(d.mlx, key_hook, &d);

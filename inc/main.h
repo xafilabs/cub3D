@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/24 09:32:46 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:02:19 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_color_data
 typedef struct s_texture_data
 {
 	mlx_image_t	*north;
+	mlx_texture_t	*test;
 	mlx_image_t	*east;
 	mlx_image_t	*south;
 	mlx_image_t	*west;
@@ -151,5 +152,8 @@ void			clean_exit(t_data *d);
 double			deg_to_rad(double degrees);
 double			rad_to_deg(double radians);
 unsigned int	get_image_pixel(mlx_image_t *image, unsigned int x, unsigned int y);
+unsigned int	get_texture_pixel(mlx_texture_t *texture, unsigned int x, unsigned int y);
+void			printTextureFromImage(int x, int y, t_data *d);
+void			printTextureFromTexture(int x, int y, t_data *d);
 
 #endif
