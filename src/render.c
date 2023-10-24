@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/23 18:50:04 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/24 06:44:41 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,6 +257,21 @@ void	draw_texture(mlx_image_t *img, int x, int wall_height, int texture_x_pos, m
 	}
 }
 
+void	render_ceiling_floor(t_data *d)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < (WINDOW_WIDTH * WINDOW_HEIGHT))
+	{
+		if (i < ((WINDOW_WIDTH * WINDOW_HEIGHT) / 2))
+			mlx_put_pixel(d->img, i, 0, COLOR_BLUE);
+		else
+			mlx_put_pixel(d->img, i, 0, COLOR_GREEN);
+		i++;
+	}
+}
+
 void	cast_rays(t_data *d)
 {
 	int				ray_count;
@@ -292,10 +307,8 @@ void	cast_rays(t_data *d)
 		// determine x position of the texture to draw
 		texture_x_pos = texture->width * (ray.x + ray.y);
 		texture_x_pos = (int)floor(texture_x_pos) % texture->width;
-		draw_line(d->img, new_point(ray_count, 0), new_point(ray_count, WINDOW_HALF_HEIGHT - wall_height), COLOR_BLUE);
 		//draw_line(d->img, new_point(ray_count, WINDOW_HALF_HEIGHT - wall_height), new_point(ray_count, WINDOW_HALF_HEIGHT + wall_height), COLOR_RED);
 		draw_texture(d->img, ray_count, wall_height, texture_x_pos, texture);
-		draw_line(d->img, new_point(ray_count, WINDOW_HALF_HEIGHT + wall_height), new_point(ray_count, WINDOW_HEIGHT), COLOR_GREEN);
 		d->ray_angle += (double)RAY_INCREMENT;
 		ray_count++;
 	}
@@ -303,8 +316,7 @@ void	cast_rays(t_data *d)
 
 void	render(t_data *d)
 {
+	render_ceiling_floor(d);
 	cast_rays(d);
 	//render_minimap(d);
-	mlx_image_t *teximg = mlx_texture_to_image(d->mlx, d->texture.north);
-	mlx_image_to_window(d->mlx, teximg, 100, 100);
 }
