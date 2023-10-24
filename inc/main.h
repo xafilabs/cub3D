@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/24 07:10:42 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/24 09:32:46 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,11 +145,11 @@ void			render(t_data *d);
 void			loop_hook(void *data_param);
 void			close_hook(void *data_param);
 void			key_hook(mlx_key_data_t keydata, void *data_param);
-void			draw_line(mlx_image_t *image, t_point start, t_point end, int color);
+void			draw_line(mlx_image_t *image, t_point start, t_point end, unsigned int color);
 t_point			new_point(int x, int y);
 void			clean_exit(t_data *d);
 double			deg_to_rad(double degrees);
 double			rad_to_deg(double radians);
-int				get_image_pixel(mlx_image_t *image, int x, int y);
+unsigned int	get_image_pixel(mlx_image_t *image, unsigned int x, unsigned int y);
 
 #endif

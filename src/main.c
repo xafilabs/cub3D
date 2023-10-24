@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/24 07:33:58 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/24 08:00:47 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,18 +103,18 @@ int	main(int argc, char **argv)
 	d.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
 	if (!d.mlx)
 		return (EXIT_FAILURE);
-	// mlx_texture_t	*test = mlx_load_png("textures/brick.png");
-	// if (!test)
-	// 	exit(EXIT_FAILURE);
-	// d.texture.north = mlx_texture_to_image(d.mlx, test);
-	// if (d.texture.north == NULL)
-	// 	exit (EXIT_FAILURE);
-	// printf("Debug: Texture width=%i, bpp=%i\n", d.texture.north->width, d.texture.north->bytes_per_pixel);
-	// for (int x=0; x<8; x++)
-	// {
-	// 	for (int y=0; y<8; y++)
-	// 		printPixel(x, y, &d);
-	// }
+	mlx_texture_t	*test = mlx_load_png("textures/brick.png");
+	if (!test)
+		exit(EXIT_FAILURE);
+	d.texture.north = mlx_texture_to_image(d.mlx, test);
+	if (d.texture.north == NULL)
+		exit (EXIT_FAILURE);
+	printf("Debug: Texture width=%i\n", d.texture.north->width);
+	for (int x=0; x<8; x++)
+	{
+		for (int y=0; y<8; y++)
+			printPixel(x, y, &d);
+	}
 	d.img = mlx_new_image(d.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!d.img)
 		exit(EXIT_FAILURE);

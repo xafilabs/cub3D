@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/24 07:36:03 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/24 08:31:23 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_t color)
 {
 	if (x < WINDOW_WIDTH && y < WINDOW_HEIGHT)
 		mlx_put_pixel(image, x, y, color);
-	else
-		printf("Warning: Putting pixels outside screen to x:y=%i:%i\n", x, y);
+	// else
+	// 	printf("Warning: Putting pixels outside screen to x:y=%i:%i\n", x, y);
 }
 
 t_point	new_point(int x, int y)
@@ -29,7 +29,7 @@ t_point	new_point(int x, int y)
 	return (point);
 }
 
-void	draw_line(mlx_image_t *image, t_point start, t_point end, int color)
+void	draw_line(mlx_image_t *image, t_point start, t_point end, unsigned int color)
 {
 	t_point	delta;
 	t_point	sign;
@@ -48,11 +48,11 @@ void	draw_line(mlx_image_t *image, t_point start, t_point end, int color)
 	idx = start;
 	while (idx.x != end.x || idx.y != end.y)
 	{
-		if (idx.x < 0 || idx.x >= WINDOW_WIDTH || idx.y < 0 || idx.y >= WINDOW_HEIGHT)
-		{
-			//printf("Warning: an attempt was made to draw a line at least partially outside the window.\n");
-			return ;
-		}
+		// if (idx.x < 0 || idx.x >= WINDOW_WIDTH || idx.y < 0 || idx.y >= WINDOW_HEIGHT)
+		// {
+		// 	//printf("Warning: an attempt was made to draw a line at least partially outside the window.\n");
+		// 	return ;
+		// }
 		put_pixel(image, idx.x, idx.y, color);
 		err[1] = err[0] * 2;
 		if (err[1] > -delta.y)
@@ -67,6 +67,8 @@ void	draw_line(mlx_image_t *image, t_point start, t_point end, int color)
 		}
 	}
 }
+
+//draw_vertical_strip() would be good to implement
 
 int	is_coordinate_in_wall(int **map, double x, double y)
 {
@@ -218,12 +220,12 @@ double	rad_to_deg(double radians)
 	return (radians * 180.0 / M_PI);
 }
 // Will return rgba encoded int, or 0 for failure.
-int	get_image_pixel(mlx_image_t *image, int x, int y)
+unsigned int	get_image_pixel(mlx_image_t *image, unsigned int x, unsigned int y)
 {
-	int32_t	color;
-	uint8_t	offset;
+	unsigned int	color;
+	unsigned int	offset;
 
-	if (x < 0 || x >= (int)image->width || y < 0 || y >= (int)image->height)
+	if (x >= image->width || y >= image->height)
 		return (0);
 	offset = (y * image->width) + x;
 	color = image->pixels[offset];
@@ -242,7 +244,7 @@ void	draw_texture(t_data *d, int x, int wall_height, t_ray ray)
 	double			y_inc;
 	double			y;
 	unsigned int	i;
-	int				color;
+	unsigned int	color;
 	int				texture_x_pos;
 
 	ray.texture = d->texture.north;
@@ -305,8 +307,8 @@ void	cast_rays(t_data *d)
 		//	wall_height = WINDOW_HALF_HEIGHT;
 		// determine texture: north, south, east, west
 		// determine x position of the texture to draw
-		draw_line(d->img, new_point(ray_count, WINDOW_HALF_HEIGHT - wall_height), new_point(ray_count, WINDOW_HALF_HEIGHT + wall_height), COLOR_RED);
-		//draw_texture(d, ray_count, wall_height, ray);
+		//draw_line(d->img, new_point(ray_count, WINDOW_HALF_HEIGHT - wall_height), new_point(ray_count, WINDOW_HALF_HEIGHT + wall_height), COLOR_RED);
+		draw_texture(d, ray_count, wall_height, ray);
 		d->ray_angle += (double)RAY_INCREMENT;
 		ray_count++;
 	}
