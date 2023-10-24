@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/23 15:12:53 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/24 07:10:42 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,10 @@ typedef struct s_color_data
 
 typedef struct s_texture_data
 {
-	mlx_texture_t	*north;
-	mlx_texture_t	*east;
-	mlx_texture_t	*south;
-	mlx_texture_t	*west;
+	mlx_image_t	*north;
+	mlx_image_t	*east;
+	mlx_image_t	*south;
+	mlx_image_t	*west;
 }	t_texture_data;
 
 typedef struct s_map
@@ -129,8 +129,9 @@ typedef struct s_point
 
 typedef struct s_ray
 {
-	double	x;
-	double	y;
+	double		x;
+	double		y;
+	mlx_image_t	*texture;
 }	t_ray;
 
 // Function declarations
@@ -149,6 +150,6 @@ t_point			new_point(int x, int y);
 void			clean_exit(t_data *d);
 double			deg_to_rad(double degrees);
 double			rad_to_deg(double radians);
-int				get_texture_pixel(mlx_texture_t *texture, int x, int y);
+int				get_image_pixel(mlx_image_t *image, int x, int y);
 
 #endif

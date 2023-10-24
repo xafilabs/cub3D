@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/23 16:46:13 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/24 07:33:58 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ void printPixel(int x, int y, t_data *d)
 {
 	printf("Debug: [x=%i, y=%i] Texture R:%i: G:%i: B:%i: A:%i: \n",
 	x, y,
-	get_r(get_texture_pixel(d->texture.north, x, y)),
-	get_g(get_texture_pixel(d->texture.north, x, y)),
-	get_b(get_texture_pixel(d->texture.north, x, y)),
-	get_a(get_texture_pixel(d->texture.north, x, y)));
+	get_r(get_image_pixel(d->texture.north, x, y)),
+	get_g(get_image_pixel(d->texture.north, x, y)),
+	get_b(get_image_pixel(d->texture.north, x, y)),
+	get_a(get_image_pixel(d->texture.north, x, y)));
 }
 /**
  * @brief The main function of the cub3D program.
@@ -100,19 +100,21 @@ int	main(int argc, char **argv)
 	d.player.x = 3;
 	d.player.y = 3;
 	d.player.angle = 180;
-	d.texture.north = mlx_load_png("./textures/checker.png");
-	printf("Debug: Texture width=%i, bpp=%i\n", d.texture.north->width, d.texture.north->bytes_per_pixel);
-	for (int x=0; x<8; x++)
-	{
-		for (int y=0; y<8; y++)
-			printPixel(x, y, &d);
-	}
-	//printf("Debug: Texture R:%i: G:%i: B:%i: A:%i: \n", get_r(get_texture_pixel(d.texture.north, 2, 2)), get_g(get_texture_pixel(d.texture.north, 2, 2)), get_b(get_texture_pixel(d.texture.north, 2, 2)), get_a(get_texture_pixel(d.texture.north, 2, 2)));
-	if (d.texture.north == NULL)
-		exit (EXIT_FAILURE);
 	d.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
 	if (!d.mlx)
 		return (EXIT_FAILURE);
+	// mlx_texture_t	*test = mlx_load_png("textures/brick.png");
+	// if (!test)
+	// 	exit(EXIT_FAILURE);
+	// d.texture.north = mlx_texture_to_image(d.mlx, test);
+	// if (d.texture.north == NULL)
+	// 	exit (EXIT_FAILURE);
+	// printf("Debug: Texture width=%i, bpp=%i\n", d.texture.north->width, d.texture.north->bytes_per_pixel);
+	// for (int x=0; x<8; x++)
+	// {
+	// 	for (int y=0; y<8; y++)
+	// 		printPixel(x, y, &d);
+	// }
 	d.img = mlx_new_image(d.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!d.img)
 		exit(EXIT_FAILURE);
