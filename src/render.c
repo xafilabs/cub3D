@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/24 17:58:26 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:41:34 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,37 +219,17 @@ double	rad_to_deg(double radians)
 {
 	return (radians * 180.0 / M_PI);
 }
-// Will return rgba encoded int, or 0 for failure.
-unsigned int	get_image_pixel(mlx_image_t *image, unsigned int x, unsigned int y)
+
+unsigned int	get_texture_pixel(mlx_texture_t *texture, unsigned int x, unsigned int y)
 {
 	unsigned int	color;
 	unsigned int	offset;
 
-	if (x >= image->width || y >= image->height)
-		return (0);
-	offset = ((y * image->width) + x);
-	color = ((unsigned int *)image->pixels)[offset];
-	return (color);
-}
-
-// unsigned int	get_image_pixel(mlx_image_t *image, unsigned int x, unsigned int y)
-// {
-// 	unsigned int	dst;
-
-// 	if (x >= image->width || y >= image->height)
-// 		return (COLOR_RED);
-// 	dst = *(unsigned int *)(image->pixels + (y * image->width + x));
-// 	return (dst);
-// }
-
-unsigned int	get_texture_pixel(mlx_texture_t *texture, unsigned int x, unsigned int y)
-{
-	unsigned int	dst;
-
 	if (x >= texture->width || y >= texture->height)
-		return (COLOR_RED);
-	dst = *(unsigned int *)(texture->pixels + (y * texture->width + x)); // * (texture->bytes_per_pixel / 8)
-	return (dst);
+		return (0);
+	offset = ((y * texture->width) + x);
+	color = ((unsigned int *)texture->pixels)[offset];
+	return (convert_abgr_to_rgba(color));
 }
 
 void	render_minimap(t_data *d)
@@ -275,7 +255,7 @@ void	draw_texture(t_data *d, int x, int wall_height, t_ray ray)
 	i = 0;
 	while (i < ray.texture->height)
 	{
-		color = get_image_pixel(ray.texture, texture_x_pos, i);
+		color = get_texture_pixel(ray.texture, texture_x_pos, i);
 		draw_line(d->img, new_point(x, y), new_point(x, y + y_inc), color);
 		y = y + y_inc;
 		i++;
@@ -338,8 +318,5 @@ void	render(t_data *d)
 {
 	render_ceiling_floor(d);
 	cast_rays(d);
-	printTextureFromImage(100, 100, d);
-	printTextureFromTexture(100, 300, d);
-	mlx_image_to_window(d->mlx, d->texture.north, WINDOW_HALF_WIDTH, WINDOW_HALF_HEIGHT);
 	//render_minimap(d);
 }

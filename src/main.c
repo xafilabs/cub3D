@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/24 18:03:01 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:38:10 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,38 +31,6 @@ t_return_value	validate_cub_and_map_file(t_file_data *data, const char **path_to
 		//validate_scene_requirement(data);
 
 	return (data->return_value);
-}
-
-void printPixel(int x, int y, t_data *d)
-{
-	printf("Debug: [x=%i, y=%i] Texture R:%i: G:%i: B:%i: A:%i: \n",
-	x, y,
-	get_r(get_image_pixel(d->texture.north, x, y)),
-	get_g(get_image_pixel(d->texture.north, x, y)),
-	get_b(get_image_pixel(d->texture.north, x, y)),
-	get_a(get_image_pixel(d->texture.north, x, y)));
-}
-
-void printTextureFromImage(int x, int y, t_data *d)
-{
-	for (size_t j = 0; j < d->texture.north->height; j++)
-	{
-		for (size_t i = 0; i < d->texture.north->width; i++)
-		{
-			mlx_put_pixel(d->img, i + x, j + y, get_image_pixel(d->texture.north, i, j));
-		}
-	}
-}
-
-void printTextureFromTexture(int x, int y, t_data *d)
-{
-	for (size_t j = 0; j < d->texture.north->height; j++)
-	{
-		for (size_t i = 0; i < d->texture.north->width; i++)
-		{
-			mlx_put_pixel(d->img, i + x, j + y, get_texture_pixel(d->texture.test, i, j));
-		}
-	}
 }
 
 /**
@@ -131,18 +99,9 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	if (mlx_image_to_window(d.mlx, d.img, 0, 0) < 0)
 		exit(EXIT_FAILURE);
-	d.texture.test = mlx_load_png("textures/brick.png");
-	if (!d.texture.test)
+	d.texture.north = mlx_load_png("textures/brick.png");
+	if (!d.texture.north)
 		exit(EXIT_FAILURE);
-	d.texture.north = mlx_texture_to_image(d.mlx, d.texture.test);
-	if (d.texture.north == NULL)
-		exit (EXIT_FAILURE);
-	printf("Debug: Texture width=%i\n", d.texture.north->width);
-	for (int x=0; x<8; x++)
-	{
-		for (int y=0; y<8; y++)
-			printPixel(x, y, &d);
-	}
 	mlx_loop_hook(d.mlx, loop_hook, &d);
 	mlx_close_hook(d.mlx, close_hook, &d);
 	mlx_key_hook(d.mlx, key_hook, &d);
