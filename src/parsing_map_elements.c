@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:12:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/25 13:19:10 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/25 18:00:24 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 char	*remove_leading_white_spaces(char *string)
 {
 	while (string && *string != '\0' && (*string == '\t' || *string == '\v'
-			|| *string == '\f' || *string == '\r' || *string == ' '))
+			|| *string == '\f' || *string == '\r' || *string == ' '
+			|| *string == '\n'))
 		string++;
 	return (string);
 }
@@ -100,43 +101,75 @@ static int	get_max_line_length(char *map_as_string)
 static void	copy_map_data(char *line_starts, t_file_data *data,
 		int max_line_length, int current_line)
 {
-	int	j;
+	int	i;
 
-	j = 0;
-	while (j < max_line_length && line_starts[j] != '\n'
-		&& line_starts[j] != '\0')
+	i = 0;
+	while (i < max_line_length && line_starts[i] != '\n'
+		&& line_starts[i] != '\0')
 	{
-		if (line_starts[j] == '0')
-			data->map_as_array[current_line][j] = FLOOR;
-		else if (line_starts[j] == '1')
-			data->map_as_array[current_line][j] = WALL;
-		else if (line_starts[j] == ' ')
-			data->map_as_array[current_line][j] = EMPTY;
+		if (line_starts[i] == '0')
+			data->map_as_array[current_line][i] = FLOOR;
+		else if (line_starts[i] == '1')
+			data->map_as_array[current_line][i] = WALL;
+		else if (line_starts[i] == ' ')
+			data->map_as_array[current_line][i] = EMPTY;
 		else
-			data->map_as_array[current_line][j] = FLOOR;
-		j++;
+			data->map_as_array[current_line][i] = FLOOR;
+		i++;
 	}
-	while (j < max_line_length)
-		data->map_as_array[current_line][j++] = EMPTY;
+	while (i < max_line_length)
+		data->map_as_array[current_line][i++] = EMPTY;
 	data->map_as_array[current_line][max_line_length] = NEW_LINE;
 }
 
+
 /**
- * @brief Transfer the remaining string to a 2D array.
+ * @brief Allocate memory for the map array and copy map data.
  *
- * This function transfers the remaining map data from the string to a 2D array.
- * It also determines the maximum line length and allocates memory accordingly.
+ * This function allocates memory for the map array and copies the map data from
+ * the string.
  *
- * @param data A pointer to the t_file_data structure.
- * @param map_as_string The map content as a string.
+ * @param data The structure to store imported data.
+ * @param map_as_string The string with map data.
+ * @param max_line_length The maximum length of a map line.
+ * @param current_line The current line being processed.
+ * @param line_starts The starting point of the current map line.
+ * @return A return code indicating success or failure.
+ */
+static t_return_value	allocate_map_array_and_copy_data(t_file_data *data,
+														int max_line_length,
+														int current_line,
+														char *line_starts)
+{
+	char	*line_ends;
+
+	line_ends = ft_strchr(line_starts, '\n');
+	data->map_as_array[current_line] = (t_map_tile *)ft_calloc(max_line_length
+			+ 1, sizeof(int));
+	if (!data->map_as_array[current_line])
+	{
+		data->return_value = MALLOC_FAILURE;
+		return (data->return_value);
+	}
+	copy_map_data(line_starts, data, max_line_length, current_line);
+	return (data->return_value);
+}
+
+/**
+ * @brief Transfer the map data from a string to a map array.
+ *
+ * This function transfers the map data from a string to a map array.
+ *
+ * @param data The structure to store imported data.
+ * @param map_as_string The string with map data.
+ * @param max_line_length The maximum length of a map line.
  * @return A return code indicating success or failure.
  */
 t_return_value	transfer_remaining_string_to_map_array(t_file_data *data,
-		char *map_as_string)
+														char *map_as_string)
 {
 	int		max_line_length;
 	char	*line_starts;
-	char	*line_ends;
 	int		current_line;
 
 	max_line_length = get_max_line_length(map_as_string);
@@ -149,14 +182,10 @@ t_return_value	transfer_remaining_string_to_map_array(t_file_data *data,
 		return (data->return_value = MALLOC_FAILURE);
 	while (*line_starts != '\0' && current_line < data->map_number_of_lines)
 	{
-		line_ends = ft_strchr(line_starts, '\n');
-		data->map_as_array[current_line] = (t_map_tile *)ft_calloc(max_line_length
-				+ 2,
-																	sizeof(int));
-		if (!data->map_as_array)
-			return (data->return_value = MALLOC_FAILURE);
-		copy_map_data(line_starts, data, max_line_length, current_line);
-		line_starts = line_ends;
+		if (allocate_map_array_and_copy_data(data, max_line_length,
+				current_line, line_starts) != SUCCESS)
+			return (data->return_value);
+		line_starts = ft_strchr(line_starts, '\n');
 		if (!line_starts)
 			break ;
 		line_starts++;
