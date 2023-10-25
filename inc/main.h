@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/25 12:40:36 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:25:30 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,9 @@ typedef struct s_ray
 {
 	double			x;
 	double			y;
+	double			cos;
+	double			sin;
+	int				index;
 	mlx_texture_t	*texture;
 }	t_ray;
 
@@ -151,5 +154,6 @@ void			clean_exit(t_data *d);
 double			deg_to_rad(double degrees);
 double			rad_to_deg(double radians);
 unsigned int	get_texture_pixel(mlx_texture_t *texture, unsigned int x, unsigned int y);
+void			draw_vertical_strip(mlx_image_t *image, t_point start, t_point end, unsigned int color);
 
 #endif

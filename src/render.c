@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/25 12:41:34 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:26:09 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,39 @@ void	draw_line(mlx_image_t *image, t_point start, t_point end, unsigned int colo
 			err[0] += delta.x;
 			idx.y += sign.y;
 		}
+	}
+}
+
+void	draw_vertical_strip(mlx_image_t *image, t_point start, t_point end, unsigned int color)
+{
+	int	j;
+	int	increment;
+	int	delta;
+	int	y;
+
+	if (start.x != end.x)
+	{
+		printf("Tried drawing strip non-vertically!\n");
+		return ;
+	}
+	if (start.x < 0 || start.x >= WINDOW_WIDTH
+		|| end.x < 0 || end.x >= WINDOW_WIDTH)
+	{
+		printf("Tried drawing vertical strip outside window!\n");
+		return ;
+	}
+	delta = abs(end.y - start.y);
+	if (start.y <= end.y)
+		increment = 1;
+	else
+		increment = -1;
+	y = start.y;
+	j = 0;
+	while (j < delta)
+	{
+		put_pixel(image, start.x, y, color);
+		y = y + increment;
+		j++;
 	}
 }
 
@@ -239,24 +272,46 @@ void	render_minimap(t_data *d)
 	
 }
 
-void	draw_texture(t_data *d, int x, int wall_height, t_ray ray)
+// void	draw_texture(t_data *d, t_ray ray, int wall_height)
+// {
+// 	double			y_inc;
+// 	double			y;
+// 	unsigned int	i;
+// 	unsigned int	color;
+// 	int				texture_x_pos;
+
+// 	ray.texture = d->texture.north; //have decider function to return the proper one
+// 	texture_x_pos = ray.texture->width * (ray.x + ray.y);
+// 	texture_x_pos = fmod(texture_x_pos, ray.texture->width);
+// 	y_inc = (wall_height * 2) / ray.texture->height;
+// 	y = WINDOW_HALF_HEIGHT - wall_height;
+// 	i = 0;
+// 	while (i < ray.texture->height)
+// 	{
+// 		color = get_texture_pixel(ray.texture, texture_x_pos, i);
+// 		draw_line(d->img, new_point(ray.index, y), new_point(ray.index, y + y_inc), color);
+// 		y = y + y_inc;
+// 		i++;
+// 	}
+// }
+
+void	draw_texture(t_data *d, t_ray ray, int wall_height)
 {
 	double			y_inc;
-	double			y;
-	unsigned int	i;
 	unsigned int	color;
 	int				texture_x_pos;
+	double			y;
+	int				i;
 
-	ray.texture = d->texture.north;
-	texture_x_pos = ray.texture->width * (ray.x + ray.y);
-	texture_x_pos = (int)floor(texture_x_pos) % ray.texture->width;
+	ray.texture = d->texture.north; //have decider function to return the proper one
+	texture_x_pos = floor(fmod(ray.texture->width * (ray.x + ray.y), ray.texture->width));
 	y_inc = (wall_height * 2) / ray.texture->height;
 	y = WINDOW_HALF_HEIGHT - wall_height;
 	i = 0;
-	while (i < ray.texture->height)
+	while (i < (int)ray.texture->height)
 	{
 		color = get_texture_pixel(ray.texture, texture_x_pos, i);
-		draw_line(d->img, new_point(x, y), new_point(x, y + y_inc), color);
+		draw_vertical_strip(d->img, new_point(ray.index, y), new_point(ray.index, y + (y_inc + 0.5)), color);
 		y = y + y_inc;
 		i++;
 	}
@@ -279,38 +334,31 @@ void	render_ceiling_floor(t_data *d)
 
 void	cast_rays(t_data *d)
 {
-	int				ray_count;
 	t_ray			ray;
-	double			ray_sin;
-	double			ray_cos;
 	double			wall_distance;
 	double			wall_height;
 
 	d->ray_angle = d->player.angle - PLAYER_HALF_FOV;
-	ray_count = 0;
-	while (ray_count < RAY_LIMIT)
+	ray.index = 0;
+	while (ray.index < RAY_LIMIT)
 	{
 		ray.x = d->player.x;
 		ray.y = d->player.y;
-		ray_sin = sin(deg_to_rad(d->ray_angle)) / RAY_PRECISION;
-		ray_cos = cos(deg_to_rad(d->ray_angle)) / RAY_PRECISION;
+		ray.sin = sin(deg_to_rad(d->ray_angle)) / RAY_PRECISION;
+		ray.cos = cos(deg_to_rad(d->ray_angle)) / RAY_PRECISION;
 		while (d->map.content[(int)floor(ray.y)][(int)floor(ray.x)] == 0)
 		{
-			ray.x += ray_cos;
+			ray.x += ray.cos;
 			if (d->map.content[(int)floor(ray.y)][(int)floor(ray.x)] == 0)
-				ray.y += ray_sin;
+				ray.y += ray.sin;
 		}
 		wall_distance = sqrt(pow(d->player.x - ray.x, 2) + pow(d->player.y - ray.y, 2));
 		wall_distance = wall_distance * cos(deg_to_rad(d->ray_angle - d->player.angle));
-		wall_height = floor(WINDOW_HALF_HEIGHT / wall_distance);
-		//if (wall_height > WINDOW_HALF_HEIGHT)
-		//	wall_height = WINDOW_HALF_HEIGHT;
-		// determine texture: north, south, east, west
-		// determine x position of the texture to draw
-		//draw_line(d->img, new_point(ray_count, WINDOW_HALF_HEIGHT - wall_height), new_point(ray_count, WINDOW_HALF_HEIGHT + wall_height), COLOR_RED);
-		draw_texture(d, ray_count, wall_height, ray);
+		wall_height = fmin(WINDOW_HALF_HEIGHT / wall_distance, 5000000); //limit wall_height to some number
+		//draw_line(d->img, new_point(ray.index, WINDOW_HALF_HEIGHT - wall_height), new_point(ray.index, WINDOW_HALF_HEIGHT + wall_height), COLOR_RED);
+		draw_texture(d, ray, wall_height);
 		d->ray_angle += (double)RAY_INCREMENT;
-		ray_count++;
+		ray.index++;
 	}
 }
 
