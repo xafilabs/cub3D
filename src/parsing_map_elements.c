@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:12:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/21 17:13:47 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/25 13:19:10 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@
  *
  * This function removes leading white spaces (spaces and tabs) from a string.
  *
- * @param string_beginning The beginning of the string to process.
+ * @param string The string to process.
  * @return A pointer to the string with leading white spaces removed.
  */
-char	*remove_leading_white_spaces(char *string_beginning)
+char	*remove_leading_white_spaces(char *string)
 {
-	return (ft_strtrim(string_beginning, " \t\v\f\r\n"));
+	while (string && *string != '\0' && (*string == '\t' || *string == '\v'
+			|| *string == '\f' || *string == '\r' || *string == ' '))
+		string++;
+	return (string);
 }
 
 /**
@@ -100,7 +103,8 @@ static void	copy_map_data(char *line_starts, t_file_data *data,
 	int	j;
 
 	j = 0;
-	while (j < max_line_length && line_starts[j] != '\n' && line_starts[j] != '\0')
+	while (j < max_line_length && line_starts[j] != '\n'
+		&& line_starts[j] != '\0')
 	{
 		if (line_starts[j] == '0')
 			data->map_as_array[current_line][j] = FLOOR;
@@ -114,9 +118,8 @@ static void	copy_map_data(char *line_starts, t_file_data *data,
 	}
 	while (j < max_line_length)
 		data->map_as_array[current_line][j++] = EMPTY;
-	data->map_as_array[current_line][max_line_length ] = NEW_LINE;
+	data->map_as_array[current_line][max_line_length] = NEW_LINE;
 }
-
 
 /**
  * @brief Transfer the remaining string to a 2D array.
@@ -128,7 +131,8 @@ static void	copy_map_data(char *line_starts, t_file_data *data,
  * @param map_as_string The map content as a string.
  * @return A return code indicating success or failure.
  */
-t_return_value	transfer_remaining_string_to_map_array(t_file_data *data, char *map_as_string)
+t_return_value	transfer_remaining_string_to_map_array(t_file_data *data,
+		char *map_as_string)
 {
 	int		max_line_length;
 	char	*line_starts;
@@ -146,18 +150,18 @@ t_return_value	transfer_remaining_string_to_map_array(t_file_data *data, char *m
 	while (*line_starts != '\0' && current_line < data->map_number_of_lines)
 	{
 		line_ends = ft_strchr(line_starts, '\n');
-		data->map_as_array[current_line] = (t_map_tile *)ft_calloc(max_line_length + 2,
-														sizeof(int));
+		data->map_as_array[current_line] = (t_map_tile *)ft_calloc(max_line_length
+				+ 2,
+																	sizeof(int));
 		if (!data->map_as_array)
 			return (data->return_value = MALLOC_FAILURE);
 		copy_map_data(line_starts, data, max_line_length, current_line);
 		line_starts = line_ends;
 		if (!line_starts)
-			break;
+			break ;
 		line_starts++;
 		current_line++;
 	}
 	data->map_as_array[data->map_number_of_lines] = NULL;
 	return (data->return_value);
 }
-
