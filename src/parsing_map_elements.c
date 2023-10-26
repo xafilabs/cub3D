@@ -6,7 +6,7 @@
 /*   By: lionel <lionel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:12:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/26 16:50:34 by lionel           ###   ########.fr       */
+/*   Updated: 2023/10/26 16:52:24 by lionel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ t_bool	is_wall_or_floor(t_map_tile current_tile)
 
 t_return_value validate_map(t_file_data *data, int map_width)
 {
-    int 	map_height;
-	int		line;
-	int		column;
-	char	current_tile;
+    int 		map_height;
+	int			line;
+	int			column;
+	t_map_tile	current_tile;
 
     map_height = data->map_number_of_lines;
     line = 0;
