@@ -240,7 +240,7 @@ t_return_value	get_scene_elements_and_map(t_file_data *data)
 		if (element_starts != '\0')
 			element_starts++;
 	}
-	while (*element_starts != '\0' && *element_starts == '\n')
+	while (element_starts && *element_starts != '\0' && *element_starts == '\n')
 		element_starts++;
 	if (data->return_value == SUCCESS)
 		map_import_and_preparation(data, element_starts);
