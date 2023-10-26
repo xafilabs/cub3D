@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:42:34 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/24 14:46:52 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/26 10:53:25 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ t_return_value	validate_scene_requirement(t_file_data *data)
 	if (get_scene_elements_and_map(data) != SUCCESS)
 		return (data->return_value);
 	printf("\n\n_______PRINT_STRUCT:\n");
-	print_struct(data);
+	if (data->return_value == SUCCESS)
+		print_struct(data);
 	return (data->return_value);
 }

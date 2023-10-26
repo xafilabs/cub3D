@@ -57,8 +57,8 @@ int	main(int argc, char **argv)
 	file_data.return_value = SUCCESS;
 	validate_cub_and_map_file(&file_data, (const char **)argv);
 	//initialize_game();
-	//if (file_data.return_value != SUCCESS)
-	 	//print_error_message(file_data.return_value);
+	if (file_data.return_value != SUCCESS)
+	 	print_error_message(file_data.return_value);
 	clean_up(&file_data);
 	return (file_data.return_value);
 }

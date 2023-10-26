@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/25 18:02:21 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/26 12:37:15 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_color
 # define ELEMENTS_NEEDED			6
 # define SPAWN_DIRECTION			"NSEW"
 # define SKIP_WHITE_SPACES			42
-# define SKIP_CONSECUTIVE_NEW_LINES 21
+# define SKIP_CONSECUTIVE_NEW_LINES 24
 
 typedef	enum e_map_tile
 {
@@ -33,6 +33,12 @@ typedef	enum e_map_tile
 	EMPTY,
 	NEW_LINE
 }					t_map_tile;
+
+typedef enum e_bool
+{
+	FALSE,
+	TRUE
+}					t_bool;
 
 typedef enum e_return_value
 {
@@ -52,6 +58,7 @@ typedef enum e_return_value
 	PLAYER_DATA_INCORRECT_OR_MISSING,
 	INVALID_ARGUMENT,
 	GARBAGE_DATA,
+	MAP_CONTAINS_EMPTY_LINE,
 }						t_return_value;
 
 // Structure to hold information extracted from the scene description file

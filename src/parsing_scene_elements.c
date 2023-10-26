@@ -12,6 +12,34 @@
 
 #include "../inc/main.h"
 
+static t_return_value check_map_does_not_contain_empty_lines(t_file_data *data, char *map_as_string)
+{
+    t_bool empty_line;
+
+	empty_line = FALSE;
+    while (*map_as_string != '\0')
+    {
+        if (*map_as_string != ' ' && *map_as_string != '\n')
+        {
+            empty_line = FALSE;  // Reset emptyLine if a non-space, non-newline character is found
+        }
+        else if (*map_as_string == '\n')
+        {
+            if (empty_line)
+            {
+                data->return_value = MAP_CONTAINS_EMPTY_LINE;
+                return (data->return_value);
+            }
+            empty_line = TRUE;
+        }
+        map_as_string++;
+    }
+    return (data->return_value);
+}
+
+
+
+
 /**
  * @brief Get player spawn position and direction.
  *
@@ -110,8 +138,10 @@ static t_return_value	map_import_and_preparation(t_file_data *data,
 	printf("map_amount_of_lines :%d:\n", data->map_number_of_lines);
 	get_player_spawn_position_and_direction(data, map_as_string,
 			SPAWN_DIRECTION);
-	 if (check_for_garbage_data_in_remaining_map(data, map_as_string) == GARBAGE_DATA)
+	if (check_for_garbage_data_in_remaining_map(data, map_as_string) == GARBAGE_DATA)
 	 	return(data->return_value);
+	if (check_map_does_not_contain_empty_lines(data, map_as_string) == MAP_CONTAINS_EMPTY_LINE)
+        return data->return_value;
 	transfer_remaining_string_to_map_array(data, map_as_string);
 	return (data->return_value);
 }
