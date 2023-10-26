@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/26 11:08:49 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/26 14:29:55 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,25 +112,29 @@ void	initialize_struct(t_file_data *structure_pointer)
 void print_error_message(t_return_value error)
 {
     if (error == MALLOC_FAILURE)
-        ft_putstr_fd("\x1b[31mMemory allocation failed\x1b[0m\n", 2);  // Red color
+        ft_putstr_fd("\x1b[31mMemory allocation failed\x1b[0m\n", 2);  
     else if (error == NEED_MAP_CUB_FILE)
-        ft_putstr_fd("\x1b[31mUsage: use cub file\x1b[0m\n", 2);  // Red color
+        ft_putstr_fd("\x1b[31mUsage: use cub file\x1b[0m\n", 2);  
     else if (error == FILE_IS_EMPTY)
-        ft_putstr_fd("\x1b[31mError: file is empty\x1b[0m\n", 2);  // Red color
+        ft_putstr_fd("\x1b[31mError: file is empty\x1b[0m\n", 2);  
     else if (error == FILE_OPEN_FAILURE)
-        ft_putstr_fd("\x1b[31mError: file open failure\x1b[0m\n", 2);  // Red color
+        ft_putstr_fd("\x1b[31mError: file open failure\x1b[0m\n", 2);  
     else if (error == MAP_CONTENT_NOT_VALID)
-        ft_putstr_fd("\x1b[31mError: file content not valid\x1b[0m\n", 2);  // Red color
+        ft_putstr_fd("\x1b[31mError: file content not valid\x1b[0m\n", 2);  
     else if (error == INVALID_ARGUMENT)
-        ft_putstr_fd("\x1b[31mUsage: use cub file\x1b[0m\n", 2);  // Red color
+        ft_putstr_fd("\x1b[31mUsage: use cub file\x1b[0m\n", 2);  
     else if (error == MISSING_ELEMENTS)
-        ft_putstr_fd("\x1b[31mError: Some elements are missing\x1b[0m\n", 2);  // Red color
+        ft_putstr_fd("\x1b[31mError: Some elements are missing\x1b[0m\n", 2);  
+	else if (error == NO_ELEMENT_FOUND)
+        ft_putstr_fd("\x1b[31mError: Cub file not properly formatted\x1b[0m\n", 2);  
     else if (error == PLAYER_DATA_INCORRECT_OR_MISSING)
-        ft_putstr_fd("\x1b[31mError: Player data incorrect or missing\x1b[0m\n", 2);  // Red color
+        ft_putstr_fd("\x1b[31mError: Player data incorrect or missing\x1b[0m\n", 2);  
     else if (error == GARBAGE_DATA)
-        ft_putstr_fd("\x1b[31mError: Map contains garbage data\x1b[0m\n", 2);  // Red color
+        ft_putstr_fd("\x1b[31mError: Map contains garbage data\x1b[0m\n", 2);  
     else if (error == MAP_CONTAINS_EMPTY_LINE)
-        ft_putstr_fd("\x1b[31mError: Map contains an empty line\x1b[0m\n", 2);  // Red color
+        ft_putstr_fd("\x1b[31mError: Map contains at least an empty line\x1b[0m\n", 2);  
+    else if (error == WALL_IS_BREACHED)
+        ft_putstr_fd("\x1b[31mError: Map contains a breached wall\x1b[0m\n", 2);  
 }
 
 

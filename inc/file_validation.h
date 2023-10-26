@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/26 12:37:15 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/26 14:27:35 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,14 @@ typedef enum e_return_value
 	ELEMENT,
 	ELEMENT_FOUND,
 	MISSING_ELEMENTS,
+	NO_ELEMENT_FOUND,
 	ALL_ELEMENTS_FOUND,
 	PLAYER_DATA_INCORRECT_OR_MISSING,
 	INVALID_ARGUMENT,
 	GARBAGE_DATA,
 	MAP_CONTAINS_EMPTY_LINE,
+	WALL_IS_BREACHED,
+
 }						t_return_value;
 
 // Structure to hold information extracted from the scene description file

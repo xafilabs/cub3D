@@ -21,7 +21,7 @@ static t_return_value check_map_does_not_contain_empty_lines(t_file_data *data, 
     {
         if (*map_as_string != ' ' && *map_as_string != '\n')
         {
-            empty_line = FALSE;  // Reset emptyLine if a non-space, non-newline character is found
+            empty_line = FALSE;
         }
         else if (*map_as_string == '\n')
         {
@@ -85,7 +85,8 @@ static t_return_value	get_player_spawn_position_and_direction(t_file_data *data,
 		}
 		spawn_location++;
 	}
-	return (data->return_value = PLAYER_DATA_INCORRECT_OR_MISSING);
+	data->return_value = PLAYER_DATA_INCORRECT_OR_MISSING;
+	return (data->return_value);
 }
 
 
@@ -129,7 +130,10 @@ static t_return_value	map_import_and_preparation(t_file_data *data,
 
 	if (data->elements_found != 6)
 	{
-		data->return_value = MISSING_ELEMENTS;
+		if (data->elements_found == 0)
+			data->return_value = NO_ELEMENT_FOUND;
+		else
+			data->return_value = MISSING_ELEMENTS;
 		return (data->return_value);
 	}
 	printf("map as string after trimming :\n->%s\n:\n", map_as_string);

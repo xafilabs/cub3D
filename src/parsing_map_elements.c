@@ -6,65 +6,59 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:12:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/26 11:26:47 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/26 14:38:35 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-// int	isWallOrFloor(char c)
-// {
-// 	return (c == '0' || c == '1');
-// }
+t_bool	is_wall_or_floor(t_map_tile current_tile)
+{
+	return (current_tile == FLOOR || current_tile == WALL);
+}
 
-// t_return_value validateMap(t_file_data *data, int mapWidth)
-// {
-//     int
-//  mapHeight;
-//     bool foundEmptyLine;
-//     char currentChar;
+t_return_value validate_map(t_file_data *data, int map_width)
+{
+    int map_height;
+    map_height = data->map_number_of_lines;
 
-//     mapHeight = data->map_number_of_lines;
-//     foundEmptyLine = false;
-//     for (int y = 0; y < mapHeight; y++)
-//     {
-//         bool isEmptyLine = true; // Initialize isEmptyLine for each row
-//         for (int x = 0; x < mapWidth; x++)
-//         {
-//             currentChar = data->map_as_array[y][x];
-//             if (x == 0) // Check if the line starts with a wall
-//             {
-//                 if (currentChar != WALL)
-//                 {
-//                     isEmptyLine = false; // Reset isEmptyLine if the first character is not a wall
-//                 }
-//             }
-//             if (currentChar == FLOOR)
-//             {
-//                 // Check surrounding cells (up, down, left, right)
-//                 if (y > 0 && data->map_as_array[y - 1][x] != WALL && data->map_as_array[y - 1][x] != FLOOR)
-//                     return false;
-//                 if (y < mapHeight - 1 && data->map_as_array[y + 1][x] != WALL && data->map_as_array[y + 1][x] != FLOOR)
-//                     return false;
-//                 if (x > 0 && data->map_as_array[y][x - 1] != WALL && data->map_as_array[y][x - 1] != FLOOR)
-//                     return false;
-//                 if (x < mapWidth - 1 && data->map_as_array[y][x + 1] != WALL && data->map_as_array[y][x + 1] != FLOOR)
-//                     return false;
-//             }
-//         }
-//         if (isEmptyLine)
-//         {
-//             printf("line is empty\n\n");
-//             data->return_value = MAP_CONTAINS_EMPTY_LINE;
-//             return data->return_value;
-//         }
-//     }
-//     return data->return_value;
-// }
+    int line = 0;
+    while (line < map_height)
+    {
+        int column = 0;
+        while (column < map_width)
+        {
+            char current_tile = data->map_as_array[line][column];
 
-
-
-
+            if (current_tile == FLOOR)
+            {
+                if (line > 0 && !is_wall_or_floor(data->map_as_array[line - 1][column]))
+                {
+                    data->return_value = WALL_IS_BREACHED;
+                    return data->return_value;
+                }
+                if (line < map_height - 1 && !is_wall_or_floor(data->map_as_array[line + 1][column]))
+                {
+                    data->return_value = WALL_IS_BREACHED;
+                    return data->return_value;
+                }
+                if (column > 0 && !is_wall_or_floor(data->map_as_array[line][column - 1]))
+                {
+                    data->return_value = WALL_IS_BREACHED;
+                    return data->return_value;
+                }
+                if (column < map_width - 1 && !is_wall_or_floor(data->map_as_array[line][column + 1]))
+                {
+                    data->return_value = WALL_IS_BREACHED;
+                    return (data->return_value);
+                }
+            }
+            column++;
+        }
+        line++;
+    }
+    return (data->return_value);
+}
 
 
 
@@ -230,6 +224,6 @@ t_return_value	transfer_remaining_string_to_map_array(t_file_data *data,
 		current_line++;
 	}
 	data->map_as_array[data->map_number_of_lines] = NULL;
-	// validateMap(data, max_line_length);
+	validate_map(data, max_line_length);
 	return (data->return_value);
 }
