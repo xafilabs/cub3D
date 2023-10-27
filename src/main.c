@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/26 19:47:56 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/27 07:04:02 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	if (mlx_image_to_window(d.mlx, d.img, 0, 0) < 0)
 		exit(EXIT_FAILURE);
-	d.texture.north = mlx_load_png("textures/brick.png");
+	d.texture.north = mlx_load_png("textures/calibration.png");
 	if (!d.texture.north)
 		exit(EXIT_FAILURE);
 	mlx_loop_hook(d.mlx, loop_hook, &d);

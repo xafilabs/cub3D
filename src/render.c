@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/26 19:57:00 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/27 07:19:37 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,9 +234,9 @@ void	draw_texture(t_data *d, t_ray *ray, int x)
 
 	ray->texture = d->texture.north;
 	ray->tex_pos.x = (int)(ray->wall_hit_dec * (double)ray->texture->width);
-	if (ray->side == 0 && ray->dir.x > 0)
+	if (ray->side == 0 && ray->dir.x < 0)
 		ray->tex_pos.x = ray->texture->width - ray->tex_pos.x - 1;
-	if (ray->side == 1 && ray->dir.y < 0)
+	if (ray->side == 1 && ray->dir.y > 0)
 		ray->tex_pos.x = ray->texture->width - ray->tex_pos.x - 1;
 	step = 1.0 * ray->texture->height / ray->line_height;
 	tex_start_pos = (ray->draw_start
