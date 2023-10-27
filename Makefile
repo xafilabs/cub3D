@@ -6,7 +6,7 @@
 #    By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 15:25:10 by malaakso          #+#    #+#              #
-#    Updated: 2023/10/24 16:30:35 by lclerc           ###   ########.fr        #
+#    Updated: 2023/10/27 11:47:09 by malaakso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,11 @@ C_FILES			=	main.c \
 					utils.c \
 					parsing_file_operations.c \
 					parsing_map_elements.c \
-					parsing_scene_elements.c 
+					parsing_scene_elements.c \
+					render.c \
+					render_utils.c \
+					mlx_hooks.c \
+					raycasting_movement.c
 
 H_PATHS			=	$(addprefix $(H_FOLDER)/, $(H_FILES))
 C_PATHS			=	$(addprefix $(C_FOLDER)/, $(C_FILES))
