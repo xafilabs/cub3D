@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/26 19:56:30 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/27 11:46:16 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@
 # include <math.h>
 # include <stdio.h>
 # include <limits.h>
-# include <assert.h>
 
 // Include user headers
 # include "../MLX42/include/MLX42/MLX42.h"
@@ -60,7 +59,6 @@
 # include "utils.h"
 # include "file_validation.h"
 # include "map_validation.h"
-# include "color_utils.h"
 
 // Type definitions
 typedef struct s_dvec
@@ -183,5 +181,9 @@ void			clean_exit(t_data *d);
 double			deg_to_rad(double degrees);
 unsigned int	get_texture_pixel(mlx_texture_t *texture, unsigned int x, unsigned int y);
 void			init_player_dir_plane(t_data *d, int player_angle_deg, int fov);
+unsigned int	convert_abgr_to_rgba(unsigned int agbr);
+void			put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_t color);
+void			render_ceiling_floor(t_data *d);
+void			update_player_location(t_data *d);
 
 #endif
