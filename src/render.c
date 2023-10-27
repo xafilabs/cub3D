@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/27 07:22:48 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/27 07:35:31 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,24 @@ void	init_player_dir_plane(t_data *d, int player_angle_deg, int fov_deg)
 		+ d->player.plane.y * cos(deg_to_rad(player_angle_deg));
 }
 
+void	set_ray_texture(t_data	*d, t_ray *ray)
+{
+	if (ray->side == 0)
+	{
+		if (ray->dir.x < 0)
+			ray->texture = d->texture.east;
+		else
+			ray->texture = d->texture.west;
+	}
+	else
+	{
+		if (ray->dir.y < 0)
+			ray->texture = d->texture.south;
+		else
+			ray->texture = d->texture.north;
+	}
+}
+
 void	draw_texture(t_data *d, t_ray *ray, int x)
 {
 	int				y;
@@ -233,7 +251,7 @@ void	draw_texture(t_data *d, t_ray *ray, int x)
 	double			tex_start_pos;
 	unsigned int	color;
 
-	ray->texture = d->texture.north;
+	set_ray_texture(d, ray);
 	ray->tex_pos.x = (int)(ray->wall_hit_dec * (double)ray->texture->width);
 	if (ray->side == 0 && ray->dir.x < 0)
 		ray->tex_pos.x = ray->texture->width - ray->tex_pos.x - 1;
