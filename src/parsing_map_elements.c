@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map_elements.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:12:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/27 13:47:49 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/27 16:43:30 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ t_return_value	transfer_remaining_string_to_map_array(t_file_data *data,
 	int		current_line;
 
 	max_line_length = get_max_line_length(map_as_string);
+	data->max_map_width = max_line_length;
 	printf("max_line_length :%d:\n", max_line_length);
 	current_line = 0;
 	line_starts = map_as_string;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/27 11:46:16 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/27 16:47:47 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,14 @@
 # endif
 // PLAYER_MOVE_SPEED in map squares
 # ifndef PLAYER_MOVE_SPEED
-#  define PLAYER_MOVE_SPEED 0.01
+#  define PLAYER_MOVE_SPEED 0.025
 # endif
 // PLAYER_ROTATE_SPEED in radians
 # ifndef PLAYER_ROTATE_SPEED
-#  define PLAYER_ROTATE_SPEED 0.01
+#  define PLAYER_ROTATE_SPEED 0.03
 # endif
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
-# define TRUE 1
-# define FALSE 0
 # define HUGE_NUMBER 100000000
 # define COLOR_BLACK 0x000000FF
 # define COLOR_WHITE 0xFFFFFFFF
@@ -61,6 +59,12 @@
 # include "map_validation.h"
 
 // Type definitions
+typedef enum e_program_phase
+{
+	PHASE_PARSING,
+	PHASE_RENDERING
+}	t_program_phase;
+
 typedef struct s_dvec
 {
 	double	x;
@@ -168,10 +172,10 @@ typedef struct s_ray
 
 // Function declarations
 void			initialize_struct(t_file_data *structure_pointer);
-void			print_error_message(t_return_value error);
+void			print_parsing_error_message(t_return_value error);
 t_return_value	check_file_type(t_file_data *data, const char **path_to_file);
 t_return_value	get_file_content_to_string(t_file_data *data, const char **path);
-void			clean_up(t_file_data *data);
+void			clean_up_parsing(t_file_data *data);
 t_return_value	validate_scene_requirement(t_file_data *data);
 void			render(t_data *d);
 void			loop_hook(void *data_param);
@@ -185,6 +189,7 @@ unsigned int	convert_abgr_to_rgba(unsigned int agbr);
 void			put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_t color);
 void			render_ceiling_floor(t_data *d);
 void			update_player_location(t_data *d);
+void			migrate_player_direction(t_file_data *file_data, t_data *render_data);
 
 // to be deleted
 void			print_struct(t_file_data *data);

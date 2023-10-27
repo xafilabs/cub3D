@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/27 11:47:34 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/27 16:57:04 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	clean_exit(t_data *d)
 		}
 		free(d->map.content);
 	}
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
 
 void	init_player_dir_plane(t_data *d, int player_angle_deg, int fov_deg)
@@ -94,7 +94,7 @@ void	draw_texture(t_data *d, t_ray *ray, int x)
 	tex_start_pos = (ray->draw_start
 			- WINDOW_HEIGHT / 2 + ray->line_height / 2) * step;
 	y = ray->draw_start;
-	while (y < ray->draw_end)
+	while (y <= ray->draw_end)
 	{
 		ray->tex_pos.y = (int)tex_start_pos & (ray->texture->height - 1);
 		tex_start_pos += step;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_validation.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/27 11:47:23 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/27 16:42:14 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_color
 # define W							3
 # define E							4
 
-typedef	enum e_map_tile
+typedef enum e_map_tile
 {
 	FLOOR,
 	WALL,
@@ -88,6 +88,7 @@ typedef struct s_file_data
 	t_color			floor_rgb;
 	t_color			ceiling_rgb;
 	t_return_value	return_value;
+	int				max_map_width;
 }					t_file_data;
 
 t_return_value	validate_cub_file(t_file_data *file_data, const char **path_to_file);
