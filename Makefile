@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+         #
+#    By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 15:25:10 by malaakso          #+#    #+#              #
-#    Updated: 2023/10/27 11:47:09 by malaakso         ###   ########.fr        #
+#    Updated: 2023/10/27 16:22:18 by malaakso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,9 @@ C_FILES			=	main.c \
 					render.c \
 					render_utils.c \
 					mlx_hooks.c \
-					raycasting_movement.c
+					raycasting_movement.c \
+					error.c \
+					migration.c
 
 H_PATHS			=	$(addprefix $(H_FOLDER)/, $(H_FILES))
 C_PATHS			=	$(addprefix $(C_FOLDER)/, $(C_FILES))
@@ -45,7 +47,8 @@ OBJ_PATHS		=	$(addprefix $(OBJ_FOLDER)/, \
 					$(patsubst %.c, %.o, $(C_FILES)))
 
 C_FLAGS_OBJ		=	-Wall -Wextra -Werror \
-					-g -Wpedantic -Wunreachable-code -Wtype-limits
+					-Wpedantic -Wunreachable-code -Wtype-limits \
+					-Ofast
 
 C_FLAGS_MLX42	=	-framework Cocoa -framework OpenGL -framework IOKit \
 					-lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"

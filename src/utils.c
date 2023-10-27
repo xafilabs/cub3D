@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/27 11:48:12 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/27 15:41:13 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	initialize_struct(t_file_data *structure_pointer)
  *
  * @param error The error code representing the specific error condition.
  */
-void print_error_message(t_return_value error)
+void	print_parsing_error_message(t_return_value error)
 {
     if (error == MALLOC_FAILURE)
         ft_putstr_fd("\x1b[31mMemory allocation failed\x1b[0m\n", 2);  
@@ -138,7 +138,7 @@ void print_error_message(t_return_value error)
 }
 
 
-void	clean_up(t_file_data *data)
+void	clean_up_parsing(t_file_data *data)
 {
 	int	i;
 
