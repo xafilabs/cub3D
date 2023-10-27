@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/25 19:25:30 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:56:30 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,36 +20,22 @@
 # ifndef WINDOW_HEIGHT
 #  define WINDOW_HEIGHT 480
 # endif
-# ifndef MINIMAP_WIDTH
-#  define MINIMAP_WIDTH 160
-# endif
-# ifndef MINIMAP_HEIGHT
-#  define MINIMAP_HEIGHT 120
-# endif
 # ifndef PLAYER_FOV
-#  define PLAYER_FOV 60
+#  define PLAYER_FOV 65
 # endif
+// PLAYER_MOVE_SPEED in map squares
 # ifndef PLAYER_MOVE_SPEED
 #  define PLAYER_MOVE_SPEED 0.01
 # endif
+// PLAYER_ROTATE_SPEED in radians
 # ifndef PLAYER_ROTATE_SPEED
-#  define PLAYER_ROTATE_SPEED 1
+#  define PLAYER_ROTATE_SPEED 0.01
 # endif
-# ifndef WALL_MIN_DISTANCE
-#  define WALL_MIN_DISTANCE 0.01
-# endif
-# ifndef RAY_PRECISION
-#  define RAY_PRECISION 64
-# endif
-# define PLAYER_HALF_FOV PLAYER_FOV / 2
-# define WINDOW_HALF_WIDTH WINDOW_WIDTH / 2
-# define WINDOW_HALF_HEIGHT WINDOW_HEIGHT / 2
-# define RAY_LIMIT WINDOW_WIDTH
-# define RAY_INCREMENT PLAYER_FOV / RAY_LIMIT
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
 # define TRUE 1
 # define FALSE 0
+# define HUGE_NUMBER 100000000
 # define COLOR_BLACK 0x000000FF
 # define COLOR_WHITE 0xFFFFFFFF
 # define COLOR_GREEN 0x90FD90FF
@@ -77,13 +63,23 @@
 # include "color_utils.h"
 
 // Type definitions
-typedef struct s_player
+typedef struct s_dvec
 {
 	double	x;
 	double	y;
-	double	angle;
-	double	move_cos;
-	double	move_sin;
+}	t_dvec;
+
+/**
+ * @brief Contains player position information
+ * @param pos position vector
+ * @param dir direction vector
+ * @param plane camera plane vector
+ */
+typedef struct s_player
+{
+	t_dvec	pos;
+	t_dvec	dir;
+	t_dvec	plane;
 }	t_player;
 
 // color is stored in rgba format encoded into an int
@@ -118,7 +114,6 @@ typedef struct s_data
 	t_map			map;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
-	double			ray_angle;
 }	t_data;
 
 typedef struct s_point
@@ -127,14 +122,50 @@ typedef struct s_point
 	int	y;
 }	t_point;
 
+typedef struct s_line
+{
+	t_point			start;
+	t_point			end;
+	unsigned int	color;
+}	t_line;
+
+/**
+ * @brief Represents a single cast ray
+ * @param dir ray direction vector
+ * @param cam_x x coordinate on the camera plane for current window x
+ * coordinate
+ * @param map current map square
+ * @param side_dist ray length from current position to next x or y map side
+ * @param delta_dist ray length from one x or y map side to the next x or y
+ * @param normal_wall_distance length of the ray from the camera plane
+ * to the wall point hit
+ * @param step direction the ray steps in x and y direction
+ * @param hit flag for the ray hitting a wall
+ * @param side which side of the wall did the ray hit North/South/X
+ * or East/West/Y (x hit or y hit)
+ * @param line_height height of the line to draw on screen to represent the ray
+ * @param draw_start y coordinate from where to start drawing
+ * @param draw_end y coordinate where to stop drawing (inclusive)
+ * @param wall_hit_dec the decimal value of the point where the ray
+ * hit the wall
+ */
 typedef struct s_ray
 {
-	double			x;
-	double			y;
-	double			cos;
-	double			sin;
-	int				index;
+	t_dvec			dir;
+	double			cam_x;
+	t_point			map;
+	t_dvec			side_dist;
+	t_dvec			delta_dist;
+	double			normal_wall_distance;
+	t_point			step;
+	int				hit;
+	int				side;
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
+	double			wall_hit_dec;
 	mlx_texture_t	*texture;
+	t_point			tex_pos;
 }	t_ray;
 
 // Function declarations
@@ -148,12 +179,9 @@ void			render(t_data *d);
 void			loop_hook(void *data_param);
 void			close_hook(void *data_param);
 void			key_hook(mlx_key_data_t keydata, void *data_param);
-void			draw_line(mlx_image_t *image, t_point start, t_point end, unsigned int color);
-t_point			new_point(int x, int y);
 void			clean_exit(t_data *d);
 double			deg_to_rad(double degrees);
-double			rad_to_deg(double radians);
 unsigned int	get_texture_pixel(mlx_texture_t *texture, unsigned int x, unsigned int y);
-void			draw_vertical_strip(mlx_image_t *image, t_point start, t_point end, unsigned int color);
+void			init_player_dir_plane(t_data *d, int player_angle_deg, int fov);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/25 12:38:10 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/27 07:37:57 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ int	main(int argc, char **argv)
 	d.map.content[5][7] = 1;
 	d.map.content[5][3] = 1;
 	d.map.content[6][2] = 1;
-	d.player.x = 3;
-	d.player.y = 3;
-	d.player.angle = 180;
+	d.player.pos.x = 3;
+	d.player.pos.y = 3;
+	init_player_dir_plane(&d, 0, PLAYER_FOV);
 	d.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
 	if (!d.mlx)
 		return (EXIT_FAILURE);
@@ -100,6 +100,11 @@ int	main(int argc, char **argv)
 	if (mlx_image_to_window(d.mlx, d.img, 0, 0) < 0)
 		exit(EXIT_FAILURE);
 	d.texture.north = mlx_load_png("textures/brick.png");
+	d.texture.east = mlx_load_png("textures/grass.png");
+	d.texture.south = mlx_load_png("textures/wood.png");
+	d.texture.west = mlx_load_png("textures/checker.png");
+	d.color.ceiling = COLOR_BLUE;
+	d.color.floor = COLOR_GRAY;
 	if (!d.texture.north)
 		exit(EXIT_FAILURE);
 	mlx_loop_hook(d.mlx, loop_hook, &d);
