@@ -6,31 +6,72 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/27 07:37:57 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/27 17:18:18 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-
-t_return_value	validate_cub_and_map_file(t_file_data *data, const char **path_to_file)
+static t_return_value
+	validate_cub_and_map_file(t_file_data *data, const char **path_to_file)
 {
-	char *temp;
+	char	*temp;
 
 	if (check_file_type(data, path_to_file) == SUCCESS)
-	 {
+	{
 		get_file_content_to_string(data, path_to_file);
-		printf("%s\n", data->file_content_as_string);
 		temp = ft_strtrim(data->file_content_as_string, " \t\v\f\r\n");
 		free (data->file_content_as_string);
-		data->file_content_as_string = temp;
+		data->file_content_as_string = ft_strdup(temp);
+		free (temp);
 		printf("After trimming:\n%s\n", data->file_content_as_string);
-		//if (file_contains_data(data) != FILE_IS_EMPTY
-	 }
-	//if (data->return_value == SUCCESS)
-		//validate_scene_requirement(data);
-
+	}
+	if (data->return_value == SUCCESS)
+		validate_scene_requirement(data);
 	return (data->return_value);
+}
+
+static void	parsing_main(t_file_data *file_data, char **argv)
+{
+	initialize_struct(file_data);
+	file_data->return_value = SUCCESS;
+	validate_cub_and_map_file(file_data, (const char **)argv);
+	if (file_data->return_value != SUCCESS)
+	{
+		print_parsing_error_message(file_data->return_value);
+		clean_up_parsing(file_data);
+		exit(1);
+	}
+}
+
+static t_return_value
+	migrate_data_file_to_render(t_file_data *file_data, t_data *render_data)
+{
+	// What is missing:
+	// color unsigned int for floor and ceiling
+	render_data->texture.north = mlx_load_png(file_data->north_texture);
+	if (!render_data->texture.north)
+		return (FAILURE);
+	render_data->texture.east = mlx_load_png(file_data->east_texture);
+	if (!render_data->texture.east)
+		return (FAILURE);
+	render_data->texture.south = mlx_load_png(file_data->south_texture);
+	if (!render_data->texture.south)
+		return (FAILURE);
+	render_data->texture.west = mlx_load_png(file_data->west_texture);
+	if (!render_data->texture.west)
+		return (FAILURE);
+	render_data->map.height = file_data->map_number_of_lines;
+	render_data->map.width = file_data->max_map_width;
+	render_data->map.content = (int **)file_data->map_as_array;
+	render_data->player.pos.x = file_data->player_x + 0.5;
+	render_data->player.pos.y = file_data->player_y + 0.5;
+	migrate_player_direction(file_data, render_data);
+	//PLACEHOLDERS START (assuming maps/good/malaakso_verysimple.cub)
+	render_data->color.floor = COLOR_GREEN;
+	render_data->color.ceiling = COLOR_BLUE;
+	//PLACEHOLDERS END
+	return (SUCCESS);
 }
 
 /**
@@ -48,9 +89,8 @@ t_return_value	validate_cub_and_map_file(t_file_data *data, const char **path_to
  */
 int	main(int argc, char **argv)
 {
-	t_data			d;
-	int				i;
-	int				j;
+	t_data			render_data;
+	t_file_data		file_data;
 
 	(void)argv;
 	if (argc != 2)
@@ -58,59 +98,21 @@ int	main(int argc, char **argv)
 		printf("usage: ./cube3d map.cub\n");
 		exit(NEED_MAP_CUB_FILE);
 	}
-	d.map.height = 10;
-	d.map.width = 10;
-	d.map.content = malloc(sizeof(int*) * d.map.height);
-	if (!d.map.content)
+	parsing_main(&file_data, argv);
+	render_data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
+	if (!render_data.mlx)
 		return (EXIT_FAILURE);
-	i = 0;
-	while (i < d.map.height)
-	{
-		d.map.content[i] = malloc(sizeof(int) * d.map.width);
-		if (!d.map.content[i])
-			return (EXIT_FAILURE);
-		i++;
-	}
-	i = 0;
-	while (i < d.map.height)
-	{
-		j = 0;
-		while (j < d.map.width)
-		{
-			if (i == 0 || j == 0 || i == d.map.height - 1 || j == d.map.width - 1)
-				d.map.content[i][j] = 1;
-			else
-				d.map.content[i][j] = 0;
-			j++;
-		}
-		i++;
-	}
-	d.map.content[5][7] = 1;
-	d.map.content[5][3] = 1;
-	d.map.content[6][2] = 1;
-	d.player.pos.x = 3;
-	d.player.pos.y = 3;
-	init_player_dir_plane(&d, 0, PLAYER_FOV);
-	d.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
-	if (!d.mlx)
-		return (EXIT_FAILURE);
-	d.img = mlx_new_image(d.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	if (!d.img)
+	render_data.img = mlx_new_image(
+			render_data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!render_data.img)
 		exit(EXIT_FAILURE);
-	if (mlx_image_to_window(d.mlx, d.img, 0, 0) < 0)
+	migrate_data_file_to_render(&file_data, &render_data);
+	if (mlx_image_to_window(render_data.mlx, render_data.img, 0, 0) < 0)
 		exit(EXIT_FAILURE);
-	d.texture.north = mlx_load_png("textures/brick.png");
-	d.texture.east = mlx_load_png("textures/grass.png");
-	d.texture.south = mlx_load_png("textures/wood.png");
-	d.texture.west = mlx_load_png("textures/checker.png");
-	d.color.ceiling = COLOR_BLUE;
-	d.color.floor = COLOR_GRAY;
-	if (!d.texture.north)
-		exit(EXIT_FAILURE);
-	mlx_loop_hook(d.mlx, loop_hook, &d);
-	mlx_close_hook(d.mlx, close_hook, &d);
-	mlx_key_hook(d.mlx, key_hook, &d);
-	mlx_loop(d.mlx);
-	clean_exit(&d);
+	mlx_loop_hook(render_data.mlx, loop_hook, &render_data);
+	mlx_close_hook(render_data.mlx, close_hook, &render_data);
+	mlx_key_hook(render_data.mlx, key_hook, &render_data);
+	mlx_loop(render_data.mlx);
+	clean_exit(&render_data);
 	return (EXIT_SUCCESS);
 }
