@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/27 17:18:18 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/27 17:38:17 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,11 @@ int	main(int argc, char **argv)
 			render_data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!render_data.img)
 		exit(EXIT_FAILURE);
-	migrate_data_file_to_render(&file_data, &render_data);
+	if (migrate_data_file_to_render(&file_data, &render_data) == FAILURE)
+	{
+		clean_up_parsing(&file_data);
+		exit(1);
+	}
 	if (mlx_image_to_window(render_data.mlx, render_data.img, 0, 0) < 0)
 		exit(EXIT_FAILURE);
 	mlx_loop_hook(render_data.mlx, loop_hook, &render_data);
