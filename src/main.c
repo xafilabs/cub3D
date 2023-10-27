@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/27 07:26:17 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/27 07:37:57 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int	main(int argc, char **argv)
 	d.texture.east = mlx_load_png("textures/grass.png");
 	d.texture.south = mlx_load_png("textures/wood.png");
 	d.texture.west = mlx_load_png("textures/checker.png");
+	d.color.ceiling = COLOR_BLUE;
+	d.color.floor = COLOR_GRAY;
 	if (!d.texture.north)
 		exit(EXIT_FAILURE);
 	mlx_loop_hook(d.mlx, loop_hook, &d);

@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/27 07:35:31 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/27 07:38:30 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,9 +192,9 @@ void	render_ceiling_floor(t_data *d)
 	while (i < (WINDOW_WIDTH * WINDOW_HEIGHT))
 	{
 		if (i < ((WINDOW_WIDTH * WINDOW_HEIGHT) / 2))
-			mlx_put_pixel(d->img, i, 0, COLOR_BLUE);
+			mlx_put_pixel(d->img, i, 0, d->color.ceiling);
 		else
-			mlx_put_pixel(d->img, i, 0, COLOR_GREEN);
+			mlx_put_pixel(d->img, i, 0, d->color.floor);
 		i++;
 	}
 }
