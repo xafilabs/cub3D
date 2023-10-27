@@ -6,7 +6,7 @@
 #    By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 15:25:10 by malaakso          #+#    #+#              #
-#    Updated: 2023/10/12 17:16:44 by malaakso         ###   ########.fr        #
+#    Updated: 2023/10/23 13:59:08 by malaakso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,12 +27,15 @@ FOLDER_LIST		=	$(H_FOLDER) $(C_FOLDER) $(OBJ_FOLDER) \
 H_FILES			=	main.h \
 					utils.h \
 					map_validation.h \
-					file_validation.h
+					file_validation.h \
+					color_utils.h
 
 C_FILES			=	main.c \
 					utils.c \
 					validate_file_and_import_data.c \
-					validate_map_elements.c
+					validate_map_elements.c \
+					render.c \
+					color_utils.c
 
 H_PATHS			=	$(addprefix $(H_FOLDER)/, $(H_FILES))
 C_PATHS			=	$(addprefix $(C_FOLDER)/, $(C_FILES))

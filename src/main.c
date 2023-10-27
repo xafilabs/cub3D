@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/11 18:24:05 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/27 07:37:57 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_return_value	validate_cub_and_map_file(t_file_data *data, const char **path_to
 
 	return (data->return_value);
 }
+
 /**
  * @brief The main function of the cub3D program.
  *
@@ -47,20 +48,69 @@ t_return_value	validate_cub_and_map_file(t_file_data *data, const char **path_to
  */
 int	main(int argc, char **argv)
 {
-	t_file_data		file_data;
+	t_data			d;
+	int				i;
+	int				j;
 
+	(void)argv;
 	if (argc != 2)
 	{
 		printf("usage: ./cube3d map.cub\n");
 		exit(NEED_MAP_CUB_FILE);
 	}
-	initialize_struct(&file_data);
-	file_data.return_value = SUCCESS;
-	validate_cub_and_map_file(&file_data, (const char **)argv);
-	//initialize_game();
-	if (file_data.return_value != SUCCESS)
-	 	print_error_message(file_data.return_value);
-	clean_up(&file_data);
-	return (file_data.return_value);
+	d.map.height = 10;
+	d.map.width = 10;
+	d.map.content = malloc(sizeof(int*) * d.map.height);
+	if (!d.map.content)
+		return (EXIT_FAILURE);
+	i = 0;
+	while (i < d.map.height)
+	{
+		d.map.content[i] = malloc(sizeof(int) * d.map.width);
+		if (!d.map.content[i])
+			return (EXIT_FAILURE);
+		i++;
+	}
+	i = 0;
+	while (i < d.map.height)
+	{
+		j = 0;
+		while (j < d.map.width)
+		{
+			if (i == 0 || j == 0 || i == d.map.height - 1 || j == d.map.width - 1)
+				d.map.content[i][j] = 1;
+			else
+				d.map.content[i][j] = 0;
+			j++;
+		}
+		i++;
+	}
+	d.map.content[5][7] = 1;
+	d.map.content[5][3] = 1;
+	d.map.content[6][2] = 1;
+	d.player.pos.x = 3;
+	d.player.pos.y = 3;
+	init_player_dir_plane(&d, 0, PLAYER_FOV);
+	d.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
+	if (!d.mlx)
+		return (EXIT_FAILURE);
+	d.img = mlx_new_image(d.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!d.img)
+		exit(EXIT_FAILURE);
+	if (mlx_image_to_window(d.mlx, d.img, 0, 0) < 0)
+		exit(EXIT_FAILURE);
+	d.texture.north = mlx_load_png("textures/brick.png");
+	d.texture.east = mlx_load_png("textures/grass.png");
+	d.texture.south = mlx_load_png("textures/wood.png");
+	d.texture.west = mlx_load_png("textures/checker.png");
+	d.color.ceiling = COLOR_BLUE;
+	d.color.floor = COLOR_GRAY;
+	if (!d.texture.north)
+		exit(EXIT_FAILURE);
+	mlx_loop_hook(d.mlx, loop_hook, &d);
+	mlx_close_hook(d.mlx, close_hook, &d);
+	mlx_key_hook(d.mlx, key_hook, &d);
+	mlx_loop(d.mlx);
+	clean_exit(&d);
+	return (EXIT_SUCCESS);
 }
-
