@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/27 07:04:02 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/27 07:21:38 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,7 @@ int	main(int argc, char **argv)
 	d.map.content[6][2] = 1;
 	d.player.pos.x = 3;
 	d.player.pos.y = 3;
-	// player direction vector needs to be a normal vector (normalized)
-	// known working values
-	// d.player.dir.x = 1;
-	// d.player.dir.y = 0;
-	// d.player.plane.x = 0;
-	// d.player.plane.y = 0.66;
-	init_player_dir_plane(&d, 90, PLAYER_FOV);
+	init_player_dir_plane(&d, 0, PLAYER_FOV);
 	d.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
 	if (!d.mlx)
 		return (EXIT_FAILURE);
@@ -105,7 +99,7 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	if (mlx_image_to_window(d.mlx, d.img, 0, 0) < 0)
 		exit(EXIT_FAILURE);
-	d.texture.north = mlx_load_png("textures/calibration.png");
+	d.texture.north = mlx_load_png("textures/brick.png");
 	if (!d.texture.north)
 		exit(EXIT_FAILURE);
 	mlx_loop_hook(d.mlx, loop_hook, &d);

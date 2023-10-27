@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/27 07:19:37 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/27 07:22:48 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,7 @@ void	init_player_dir_plane(t_data *d, int player_angle_deg, int fov_deg)
 	d->player.dir.y = 0;
 	d->player.plane.x = 0;
 	d->player.plane.y = tan(deg_to_rad((double)fov_deg / 2.0));
+	player_angle_deg = (player_angle_deg - 90) % 360;
 	old_dir = d->player.dir.x;
 	d->player.dir.x = d->player.dir.x * cos(deg_to_rad(player_angle_deg))
 		- d->player.dir.y * sin(deg_to_rad(player_angle_deg));
