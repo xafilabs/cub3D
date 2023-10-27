@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:12:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/27 11:47:11 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/27 13:47:49 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ static int	get_max_line_length(char *map_as_string)
 		if (line_length > max_line_length)
 			max_line_length = line_length;
 		line_starts = line_ends;
-		line_starts++;
+		if (line_starts)
+			line_starts++;
 	}
 	return (max_line_length);
 }
