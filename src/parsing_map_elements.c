@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:12:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/27 16:43:30 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/27 19:47:16 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,9 +164,6 @@ static t_return_value	allocate_map_array_and_copy_data(t_file_data *data,
 														int current_line,
 														char *line_starts)
 {
-	char	*line_ends;
-
-	line_ends = ft_strchr(line_starts, '\n');
 	data->map_as_array[current_line] = (t_map_tile *)ft_calloc(max_line_length
 			+ 1, sizeof(int));
 	if (!data->map_as_array[current_line])
