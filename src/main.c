@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/27 17:38:17 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/27 18:48:02 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static t_return_value
 
 	if (check_file_type(data, path_to_file) == SUCCESS)
 	{
-		get_file_content_to_string(data, path_to_file);
+		if (get_file_content_to_string(data, path_to_file) == FILE_OPEN_FAILURE)
+			return (data->return_value);
 		temp = ft_strtrim(data->file_content_as_string, " \t\v\f\r\n");
 		free (data->file_content_as_string);
 		data->file_content_as_string = ft_strdup(temp);
