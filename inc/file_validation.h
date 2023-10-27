@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/26 14:27:35 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/27 11:47:23 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ typedef struct s_color
 # define SPAWN_DIRECTION			"NSEW"
 # define SKIP_WHITE_SPACES			42
 # define SKIP_CONSECUTIVE_NEW_LINES 24
+# define N							1
+# define S							2
+# define W							3
+# define E							4
 
 typedef	enum e_map_tile
 {

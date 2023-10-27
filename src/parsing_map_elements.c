@@ -6,51 +6,51 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:12:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/27 10:15:03 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/27 11:47:11 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-t_bool	is_wall_or_floor(t_map_tile current_tile)
+t_bool	is_wall_or_floor(t_file_data *data, int line, int column, int map_width)
 {
-	return (current_tile == FLOOR || current_tile == WALL);
+	t_bool	is_wall_or_floor;
+
+	is_wall_or_floor = TRUE;
+	if (line == 0 || data->map_as_array[line - 1][column] == EMPTY)
+		is_wall_or_floor = FALSE;
+	else if (line == data->map_number_of_lines || data->map_as_array[line + 1][column] == EMPTY)
+		is_wall_or_floor = FALSE;
+	else if (line == 0 || data->map_as_array[line][column - 1] == EMPTY)
+		is_wall_or_floor = FALSE;
+	else if (line == map_width || data->map_as_array[line][column + 1] == EMPTY)
+		is_wall_or_floor = FALSE;
+	return (is_wall_or_floor);
 }
 
-t_return_value validate_map(t_file_data *data, int map_width)
+t_return_value	validate_map(t_file_data *data, int map_width)
 {
-    int 		map_height;
-	int			line;
-	int			column;
-	t_map_tile	current_tile;
+	int	line;
+	int	column;
 
-    map_height = data->map_number_of_lines;
-    line = 0;
-    while (line < map_height)
-    {
-        column = 0;
-        while (column < map_width && data->return_value == SUCCESS)
-        {
-            current_tile = data->map_as_array[line][column];
-            if (current_tile == FLOOR)
-            {
-                if (!is_wall_or_floor(data->map_as_array[line - 1][column]))
-                    data->return_value = WALL_IS_BREACHED;
-                if (!is_wall_or_floor(data->map_as_array[line + 1][column]))
-                    data->return_value = WALL_IS_BREACHED;
-                if (!is_wall_or_floor(data->map_as_array[line][column - 1]))
-                    data->return_value = WALL_IS_BREACHED;
-                if (!is_wall_or_floor(data->map_as_array[line][column + 1]))
-                    data->return_value = WALL_IS_BREACHED;
-            }
-            column++;
-        }
-        line++;
-    }
-    return (data->return_value);
+	line = 0;
+	while (line < (data->map_number_of_lines - 1)
+		&& data->return_value == SUCCESS)
+	{
+		column = 0;
+		while (column < map_width && line < data->map_number_of_lines - 1)
+		{
+			if (data->map_as_array[line][column] == FLOOR)
+			{
+				if (!is_wall_or_floor(data, line, column, map_width))
+					data->return_value = WALL_IS_BREACHED;
+			}
+			column++;
+		}
+		line++;
+	}
+	return (data->return_value);
 }
-
-
 
 /**
  * @brief Get the number of lines in the map content.

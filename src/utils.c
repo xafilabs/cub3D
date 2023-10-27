@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/26 14:29:55 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/27 11:48:12 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void print_error_message(t_return_value error)
     else if (error == MAP_CONTAINS_EMPTY_LINE)
         ft_putstr_fd("\x1b[31mError: Map contains at least an empty line\x1b[0m\n", 2);  
     else if (error == WALL_IS_BREACHED)
-        ft_putstr_fd("\x1b[31mError: Map contains a breached wall\x1b[0m\n", 2);  
+        ft_putstr_fd("\x1b[31mError: Wall is breached\x1b[0m\n", 2);  
 }
 
 
