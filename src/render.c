@@ -6,119 +6,11 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/27 07:38:30 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/27 11:47:34 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
-
-void	put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_t color)
-{
-	if (x < WINDOW_WIDTH && y < WINDOW_HEIGHT)
-		mlx_put_pixel(image, x, y, color);
-}
-
-void	update_player_location(t_data *d)
-{
-	double	old_dir;
-	double	old_plane;
-	t_dvec	rot;
-
-	if (mlx_is_key_down(d->mlx, MLX_KEY_RIGHT))
-	{
-		old_dir = d->player.dir.x;
-		d->player.dir.x = d->player.dir.x * cos(PLAYER_ROTATE_SPEED)
-			- d->player.dir.y * sin(PLAYER_ROTATE_SPEED);
-		d->player.dir.y = old_dir * sin(PLAYER_ROTATE_SPEED)
-			+ d->player.dir.y * cos(PLAYER_ROTATE_SPEED);
-		old_plane = d->player.plane.x;
-		d->player.plane.x = d->player.plane.x * cos(PLAYER_ROTATE_SPEED)
-			- d->player.plane.y * sin(PLAYER_ROTATE_SPEED);
-		d->player.plane.y = old_plane * sin(PLAYER_ROTATE_SPEED)
-			+ d->player.plane.y * cos(PLAYER_ROTATE_SPEED);
-	}
-	if (mlx_is_key_down(d->mlx, MLX_KEY_LEFT))
-	{
-		old_dir = d->player.dir.x;
-		d->player.dir.x = d->player.dir.x * cos(-PLAYER_ROTATE_SPEED)
-			- d->player.dir.y * sin(-PLAYER_ROTATE_SPEED);
-		d->player.dir.y = old_dir * sin(-PLAYER_ROTATE_SPEED)
-			+ d->player.dir.y * cos(-PLAYER_ROTATE_SPEED);
-		old_plane = d->player.plane.x;
-		d->player.plane.x = d->player.plane.x * cos(-PLAYER_ROTATE_SPEED)
-			- d->player.plane.y * sin(-PLAYER_ROTATE_SPEED);
-		d->player.plane.y = old_plane * sin(-PLAYER_ROTATE_SPEED)
-			+ d->player.plane.y * cos(-PLAYER_ROTATE_SPEED);
-	}
-	if (mlx_is_key_down(d->mlx, MLX_KEY_W))
-	{
-		if (d->map.content[
-				(int)d->player.pos.y][
-			(int)(d->player.pos.x
-			+ d->player.dir.x * PLAYER_MOVE_SPEED)] == 0)
-		{
-			d->player.pos.x += d->player.dir.x * PLAYER_MOVE_SPEED;
-		}
-		if (d->map.content[
-				(int)(d->player.pos.y + d->player.dir.y * PLAYER_MOVE_SPEED)][
-			(int)d->player.pos.x] == 0)
-		{
-			d->player.pos.y += d->player.dir.y * PLAYER_MOVE_SPEED;
-		}
-	}
-	if (mlx_is_key_down(d->mlx, MLX_KEY_S))
-	{
-		if (d->map.content[
-				(int)d->player.pos.y][
-			(int)(d->player.pos.x
-			- d->player.dir.x * PLAYER_MOVE_SPEED)] == 0)
-		{
-			d->player.pos.x -= d->player.dir.x * PLAYER_MOVE_SPEED;
-		}
-		if (d->map.content[
-				(int)(d->player.pos.y - d->player.dir.y * PLAYER_MOVE_SPEED)][
-			(int)d->player.pos.x] == 0)
-		{
-			d->player.pos.y -= d->player.dir.y * PLAYER_MOVE_SPEED;
-		}
-	}
-	if (mlx_is_key_down(d->mlx, MLX_KEY_A))
-	{
-		rot.y = d->player.dir.x * -1;
-		rot.x = d->player.dir.y;
-		if (d->map.content[
-				(int)d->player.pos.y][
-			(int)(d->player.pos.x
-			+ rot.x * PLAYER_MOVE_SPEED)] == 0)
-		{
-			d->player.pos.x += rot.x * PLAYER_MOVE_SPEED;
-		}
-		if (d->map.content[
-				(int)(d->player.pos.y + rot.y * PLAYER_MOVE_SPEED)][
-			(int)d->player.pos.x] == 0)
-		{
-			d->player.pos.y += rot.y * PLAYER_MOVE_SPEED;
-		}
-	}
-	if (mlx_is_key_down(d->mlx, MLX_KEY_D))
-	{
-		rot.y = d->player.dir.x * -1;
-		rot.x = d->player.dir.y;
-		if (d->map.content[
-				(int)d->player.pos.y][
-			(int)(d->player.pos.x
-			- rot.x * PLAYER_MOVE_SPEED)] == 0)
-		{
-			d->player.pos.x -= rot.x * PLAYER_MOVE_SPEED;
-		}
-		if (d->map.content[
-				(int)(d->player.pos.y - rot.y * PLAYER_MOVE_SPEED)][
-			(int)d->player.pos.x] == 0)
-		{
-			d->player.pos.y -= rot.y * PLAYER_MOVE_SPEED;
-		}
-	}
-}
 
 void	clean_exit(t_data *d)
 {
@@ -138,65 +30,6 @@ void	clean_exit(t_data *d)
 		free(d->map.content);
 	}
 	exit(0);
-}
-
-void	close_hook(void *data_param)
-{
-	t_data	*d;
-
-	printf("Caught close hook!\n");
-	d = (t_data *)data_param;
-	clean_exit(d);
-}
-
-void	key_hook(mlx_key_data_t keydata, void *data_param)
-{
-	t_data	*d;
-
-	d = (t_data *)data_param;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		clean_exit(d);
-}
-
-void	loop_hook(void *data_param)
-{
-	t_data	*d;
-
-	d = (t_data *)data_param;
-	update_player_location(d);
-	render(d);
-}
-
-double	deg_to_rad(double degrees)
-{
-	return (degrees * M_PI / 180.0);
-}
-
-unsigned int	get_texture_pixel(mlx_texture_t *texture, unsigned int x, unsigned int y)
-{
-	unsigned int	color;
-	unsigned int	offset;
-
-	if (x >= texture->width || y >= texture->height)
-		return (0);
-	offset = ((y * texture->width) + x);
-	color = ((unsigned int *)texture->pixels)[offset];
-	return (convert_abgr_to_rgba(color));
-}
-
-void	render_ceiling_floor(t_data *d)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < (WINDOW_WIDTH * WINDOW_HEIGHT))
-	{
-		if (i < ((WINDOW_WIDTH * WINDOW_HEIGHT) / 2))
-			mlx_put_pixel(d->img, i, 0, d->color.ceiling);
-		else
-			mlx_put_pixel(d->img, i, 0, d->color.floor);
-		i++;
-	}
 }
 
 void	init_player_dir_plane(t_data *d, int player_angle_deg, int fov_deg)
