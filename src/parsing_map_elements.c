@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map_elements.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lionel <lionel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:12:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/26 16:52:24 by lionel           ###   ########.fr       */
+/*   Updated: 2023/10/27 10:15:03 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,19 @@ t_return_value validate_map(t_file_data *data, int map_width)
     while (line < map_height)
     {
         column = 0;
-        while (column < map_width)
+        while (column < map_width && data->return_value == SUCCESS)
         {
             current_tile = data->map_as_array[line][column];
-
             if (current_tile == FLOOR)
             {
-                if (line > 0 && !is_wall_or_floor(data->map_as_array[line - 1][column]))
-                {
+                if (!is_wall_or_floor(data->map_as_array[line - 1][column]))
                     data->return_value = WALL_IS_BREACHED;
-                    return (data->return_value);
-                }
-                if (line < map_height - 1 && !is_wall_or_floor(data->map_as_array[line + 1][column]))
-                {
+                if (!is_wall_or_floor(data->map_as_array[line + 1][column]))
                     data->return_value = WALL_IS_BREACHED;
-                    return (data->return_value);
-                }
-                if (column > 0 && !is_wall_or_floor(data->map_as_array[line][column - 1]))
-                {
+                if (!is_wall_or_floor(data->map_as_array[line][column - 1]))
                     data->return_value = WALL_IS_BREACHED;
-                    return (data->return_value);
-                }
-                if (column < map_width - 1 && !is_wall_or_floor(data->map_as_array[line][column + 1]))
-                {
+                if (!is_wall_or_floor(data->map_as_array[line][column + 1]))
                     data->return_value = WALL_IS_BREACHED;
-                    return (data->return_value);
-                }
             }
             column++;
         }
