@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+         #
+#    By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 15:25:10 by malaakso          #+#    #+#              #
 #    Updated: 2023/10/27 11:47:09 by malaakso         ###   ########.fr        #
@@ -31,8 +31,9 @@ H_FILES			=	main.h \
 
 C_FILES			=	main.c \
 					utils.c \
-					validate_file_and_import_data.c \
-					validate_map_elements.c \
+					parsing_file_operations.c \
+					parsing_map_elements.c \
+					parsing_scene_elements.c \
 					render.c \
 					render_utils.c \
 					mlx_hooks.c \
@@ -44,12 +45,14 @@ OBJ_PATHS		=	$(addprefix $(OBJ_FOLDER)/, \
 					$(patsubst %.c, %.o, $(C_FILES)))
 
 C_FLAGS_OBJ		=	-Wall -Wextra -Werror \
-					-Wpedantic -Wunreachable-code -Wtype-limits
+					-g -Wpedantic -Wunreachable-code -Wtype-limits
 
 C_FLAGS_MLX42	=	-framework Cocoa -framework OpenGL -framework IOKit \
 					-lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 
 C_FLAGS_NAME	=	$(C_FLAGS_OBJ) $(C_FLAGS_MLX42) -lm
+
+C_FLAGS_DEBUG	=	-g -fsanitize=address,undefined
 
 .PHONY: all
 all: $(NAME)
@@ -110,3 +113,11 @@ fclean: clean
 
 .PHONY: re
 re: fclean all
+
+.PHONY: debug
+debug: C_FLAGS_NAME += $(C_FLAGS_DEBUG)
+debug: all
+
+.PHONY: lldb
+lldb: C_FLAGS_NAME += -g
+lldb: all

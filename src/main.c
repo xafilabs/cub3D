@@ -20,15 +20,14 @@ t_return_value	validate_cub_and_map_file(t_file_data *data, const char **path_to
 	if (check_file_type(data, path_to_file) == SUCCESS)
 	 {
 		get_file_content_to_string(data, path_to_file);
-		printf("%s\n", data->file_content_as_string);
 		temp = ft_strtrim(data->file_content_as_string, " \t\v\f\r\n");
 		free (data->file_content_as_string);
-		data->file_content_as_string = temp;
+		data->file_content_as_string = ft_strdup(temp);
+		free (temp);
 		printf("After trimming:\n%s\n", data->file_content_as_string);
-		//if (file_contains_data(data) != FILE_IS_EMPTY
 	 }
-	//if (data->return_value == SUCCESS)
-		//validate_scene_requirement(data);
+	if (data->return_value == SUCCESS)
+		validate_scene_requirement(data);
 
 	return (data->return_value);
 }

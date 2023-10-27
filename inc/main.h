@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
 /*   Updated: 2023/10/27 11:46:16 by malaakso         ###   ########.fr       */
@@ -186,4 +186,7 @@ void			put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_t color);
 void			render_ceiling_floor(t_data *d);
 void			update_player_location(t_data *d);
 
+// to be deleted
+void			print_struct(t_file_data *data);
+void			print_elements(t_file_data *data); 
 #endif
