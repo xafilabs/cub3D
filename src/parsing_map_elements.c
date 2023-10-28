@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:12:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/27 16:43:30 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 15:34:30 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_bool	is_wall_or_floor(t_file_data *data, int line, int column, int map_width)
 	is_wall_or_floor = TRUE;
 	if (line == 0 || data->map_as_array[line - 1][column] == EMPTY)
 		is_wall_or_floor = FALSE;
-	else if (line == data->map_number_of_lines || data->map_as_array[line + 1][column] == EMPTY)
+	else if (line == data->map_number_of_lines
+		|| data->map_as_array[line + 1][column] == EMPTY)
 		is_wall_or_floor = FALSE;
 	else if (line == 0 || data->map_as_array[line][column - 1] == EMPTY)
 		is_wall_or_floor = FALSE;
@@ -79,6 +80,7 @@ int	get_map_amount_of_lines(t_file_data *data, char *map_as_string)
 		data->return_value = MAP_CONTENT_NOT_VALID;
 	return (data->map_number_of_lines + 1);
 }
+
 /**
  * @brief Get the maximum line length in the map content.
  *
@@ -111,6 +113,7 @@ static int	get_max_line_length(char *map_as_string)
 	}
 	return (max_line_length);
 }
+
 /**
  * @brief Copy map data to a 2D array.
  *
@@ -164,9 +167,6 @@ static t_return_value	allocate_map_array_and_copy_data(t_file_data *data,
 														int current_line,
 														char *line_starts)
 {
-	char	*line_ends;
-
-	line_ends = ft_strchr(line_starts, '\n');
 	data->map_as_array[current_line] = (t_map_tile *)ft_calloc(max_line_length
 			+ 1, sizeof(int));
 	if (!data->map_as_array[current_line])
@@ -188,8 +188,9 @@ static t_return_value	allocate_map_array_and_copy_data(t_file_data *data,
  * @param max_line_length The maximum length of a map line.
  * @return A return code indicating success or failure.
  */
-t_return_value	transfer_remaining_string_to_map_array(t_file_data *data,
-														char *map_as_string)
+t_return_value
+	transfer_remaining_string_to_map_array(
+	t_file_data *data, char *map_as_string)
 {
 	int		max_line_length;
 	char	*line_starts;
@@ -200,8 +201,8 @@ t_return_value	transfer_remaining_string_to_map_array(t_file_data *data,
 	printf("max_line_length :%d:\n", max_line_length);
 	current_line = 0;
 	line_starts = map_as_string;
-	data->map_as_array = (t_map_tile **)ft_calloc(data->map_number_of_lines + 1,
-													sizeof(int *));
+	data->map_as_array = (t_map_tile **)
+		ft_calloc(data->map_number_of_lines + 1, sizeof(int *));
 	if (!data->map_as_array)
 		return (data->return_value = MALLOC_FAILURE);
 	while (*line_starts != '\0' && current_line < data->map_number_of_lines)

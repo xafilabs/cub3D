@@ -6,7 +6,7 @@
 #    By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 15:25:10 by malaakso          #+#    #+#              #
-#    Updated: 2023/10/27 16:22:18 by malaakso         ###   ########.fr        #
+#    Updated: 2023/10/28 16:21:29 by malaakso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,10 @@ C_FILES			=	main.c \
 					mlx_hooks.c \
 					raycasting_movement.c \
 					error.c \
-					migration.c
+					migration.c \
+					raycasting.c \
+					raycasting_init.c \
+					parsing_colors.c
 
 H_PATHS			=	$(addprefix $(H_FOLDER)/, $(H_FILES))
 C_PATHS			=	$(addprefix $(C_FOLDER)/, $(C_FILES))

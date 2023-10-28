@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_file_operations.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:42:34 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/27 18:46:15 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/28 16:24:59 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../inc/main.h"
-
-
 
 /**
  * @brief Open and validate the scene description file.
@@ -73,9 +70,10 @@ static t_return_value	initialize_string_buffers(char **line_buffer,
 /**
  * @brief Concatenate a line to the file content string.
  *
- * This function concatenates a line of text to the existing file content string.
- * It ensures that memory is properly allocated for the updated content and handles
- * memory allocation failures by setting the appropriate error code.
+ * This function concatenates a line of text to the existing
+ * file content string. It ensures that memory is properly allocated
+ * for the updated content and handles memory allocation failures
+ * by setting the appropriate error code.
  *
  * @param data A pointer to the t_file_data structure.
  * @param line A pointer to the line to be concatenated.
@@ -141,12 +139,14 @@ t_return_value	get_file_content_to_string(t_file_data *data, const char **path)
 /**
  * @brief Check the file type to ensure it has the .cub extension.
  *
- * This function checks if the provided file path has the correct extension (.cub).
- * If the extension is incorrect, it sets the appropriate error code in the t_file_data
- * structure and prints a usage message.
+ * This function checks if the provided file path has the correct
+ * extension (.cub). If the extension is incorrect, it sets
+ * the appropriate error code in the t_file_data structure and
+ * prints a usage message.
  *
  * @param data A pointer to the t_file_data structure.
- * @param path_to_file An array containing the path to the scene description file.
+ * @param path_to_file An array containing the path
+ * to the scene description file.
  * @return The exit code indicating success or failure.
  */
 t_return_value	check_file_type(t_file_data *data,
@@ -173,7 +173,6 @@ t_return_value	check_file_type(t_file_data *data,
 	return (data->return_value);
 }
 
-
 /**
  * @brief Validate scene requirements and import map elements.
  *
@@ -185,6 +184,8 @@ t_return_value	check_file_type(t_file_data *data,
 t_return_value	validate_scene_requirement(t_file_data *data)
 {
 	if (get_scene_elements_and_map(data) != SUCCESS)
+		return (data->return_value);
+	if (get_rgb_colors(data) != SUCCESS)
 		return (data->return_value);
 	printf("\n\n_______PRINT_STRUCT:\n");
 	if (data->return_value == SUCCESS)

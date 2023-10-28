@@ -3,42 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_scene_elements.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:17:58 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/24 10:31:25by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/28 15:39:23 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-static t_return_value check_map_does_not_contain_empty_lines(t_file_data *data, char *map_as_string)
+static t_return_value
+	check_map_does_not_contain_empty_lines(
+		t_file_data *data, char *map_as_string)
 {
-    t_bool empty_line;
+	t_bool	empty_line;
 
 	empty_line = FALSE;
-    while (*map_as_string != '\0')
-    {
-        if (*map_as_string != ' ' && *map_as_string != '\n')
-        {
-            empty_line = FALSE;
-        }
-        else if (*map_as_string == '\n')
-        {
-            if (empty_line)
-            {
-                data->return_value = MAP_CONTAINS_EMPTY_LINE;
-                return (data->return_value);
-            }
-            empty_line = TRUE;
-        }
-        map_as_string++;
-    }
-    return (data->return_value);
+	while (*map_as_string != '\0')
+	{
+		if (*map_as_string != ' ' && *map_as_string != '\n')
+		{
+			empty_line = FALSE;
+		}
+		else if (*map_as_string == '\n')
+		{
+			if (empty_line)
+			{
+				data->return_value = MAP_CONTAINS_EMPTY_LINE;
+				return (data->return_value);
+			}
+			empty_line = TRUE;
+		}
+		map_as_string++;
+	}
+	return (data->return_value);
 }
-
-
-
 
 /**
  * @brief Get player spawn position and direction.
@@ -51,9 +50,11 @@ static t_return_value check_map_does_not_contain_empty_lines(t_file_data *data, 
  * @param spawn_direction_delimiter Delimiter for spawn direction.
  * @return A return code indicating success or failure.
  */
-static t_return_value	get_player_spawn_position_and_direction(t_file_data *data,
-																char *map_string_contains_player_position,
-																const char *spawn_direction_delimiter)
+static t_return_value
+	get_player_spawn_position_and_direction(
+		t_file_data *data,
+		char *map_string_contains_player_position,
+		const char *spawn_direction_delimiter)
 {
 	int	spawn_location;
 	int	index_relative_to_last_new_line_found;
@@ -72,12 +73,14 @@ static t_return_value	get_player_spawn_position_and_direction(t_file_data *data,
 		spawn_direction_index = 0;
 		while (spawn_direction_delimiter[spawn_direction_index] != '\0')
 		{
-			if (map_string_contains_player_position[spawn_location] == spawn_direction_delimiter[spawn_direction_index])
+			if (map_string_contains_player_position[spawn_location]
+				== spawn_direction_delimiter[spawn_direction_index])
 			{
 				data->player_x = spawn_location
 					- index_relative_to_last_new_line_found;
 				data->player_y = new_lines_found;
-				*data->player_spawn_direction = spawn_direction_delimiter[spawn_direction_index];
+				*data->player_spawn_direction
+					= spawn_direction_delimiter[spawn_direction_index];
 				map_string_contains_player_position[spawn_location] = '0';
 				return (data->return_value);
 			}
@@ -89,8 +92,6 @@ static t_return_value	get_player_spawn_position_and_direction(t_file_data *data,
 	return (data->return_value);
 }
 
-
-
 /**
  * @brief Check for garbage data before the map in the input string.
  *
@@ -100,34 +101,36 @@ static t_return_value	get_player_spawn_position_and_direction(t_file_data *data,
  * @param map_as_string The string with map data.
  * @return A return code indicating the presence of garbage data.
  */
-static t_return_value check_for_garbage_data_in_remaining_map(t_file_data *data, char *map_as_string)
+static t_return_value
+	check_for_garbage_data_in_remaining_map(
+		t_file_data *data, char *map_as_string)
 {
-    while (*map_as_string && *map_as_string != '\0')
-    {
-        if (*map_as_string != ' ' && *map_as_string != '0' && *map_as_string != '1' && *map_as_string != '\n')
-        {
+	while (*map_as_string && *map_as_string != '\0')
+	{
+		if (*map_as_string != ' ' && *map_as_string != '0'
+			&& *map_as_string != '1' && *map_as_string != '\n')
+		{
 			data->return_value = GARBAGE_DATA;
-            return (data->return_value);
-        }
-        map_as_string++;
-    }
-    return (data->return_value);
+			return (data->return_value);
+		}
+		map_as_string++;
+	}
+	return (data->return_value);
 }
 
 /**
  * @brief Import and prepare map elements from a text file.
  *
-
-	* This function parses the input scene description and prepares map elements for use.
+ * This function parses the input scene description
+ * and prepares map elements for use.
  *
  * @param data The structure to store imported data.
  * @param map_as_string The string with map data.
  * @return A return code indicating success or failure.
  */
-static t_return_value	map_import_and_preparation(t_file_data *data,
-													char *map_as_string)
+static t_return_value
+	map_import_and_preparation(t_file_data *data, char *map_as_string)
 {
-
 	if (data->elements_found != 6)
 	{
 		if (data->elements_found == 0)
@@ -141,11 +144,13 @@ static t_return_value	map_import_and_preparation(t_file_data *data,
 		return (data->return_value);
 	printf("map_amount_of_lines :%d:\n", data->map_number_of_lines);
 	get_player_spawn_position_and_direction(data, map_as_string,
-			SPAWN_DIRECTION);
-	if (check_for_garbage_data_in_remaining_map(data, map_as_string) == GARBAGE_DATA)
-	 	return(data->return_value);
-	if (check_map_does_not_contain_empty_lines(data, map_as_string) == MAP_CONTAINS_EMPTY_LINE)
-        return data->return_value;
+		SPAWN_DIRECTION);
+	if (check_for_garbage_data_in_remaining_map(data,
+			map_as_string) == GARBAGE_DATA)
+		return (data->return_value);
+	if (check_map_does_not_contain_empty_lines(data,
+			map_as_string) == MAP_CONTAINS_EMPTY_LINE)
+		return (data->return_value);
 	transfer_remaining_string_to_map_array(data, map_as_string);
 	return (data->return_value);
 }
@@ -159,8 +164,8 @@ static t_return_value	map_import_and_preparation(t_file_data *data,
  * @param element_content The string containing the element content.
  * @return A return code indicating success or failure.
  */
-static t_return_value	get_element_texture(char **element_type,
-											char *element_content)
+static t_return_value
+	get_element_texture(char **element_type, char *element_content)
 {
 	size_t	element_length;
 
@@ -175,6 +180,7 @@ static t_return_value	get_element_texture(char **element_type,
 	ft_strlcpy(*element_type, element_content, element_length + 1);
 	return (ELEMENT_FOUND);
 }
+
 /**
  * @brief Find and extract map elements from a string.
  *
@@ -185,7 +191,8 @@ static t_return_value	get_element_texture(char **element_type,
  * @param data The structure to store the extracted elements.
  * @return A return code indicating success or failure.
  */
-static t_return_value	find_and_get_element(char *element, t_file_data *data)
+static t_return_value
+	find_and_get_element(char *element, t_file_data *data)
 {
 	t_return_value	return_value;
 
@@ -224,9 +231,7 @@ t_return_value	get_scene_elements_and_map(t_file_data *data)
 {
 	char	*element_starts;
 	char	*element_ends;
-	int		i;
 
-	i = 0;
 	element_starts = data->file_content_as_string;
 	while (element_starts && *element_starts != '\0'
 		&& data->elements_found < ELEMENTS_NEEDED)
@@ -241,7 +246,7 @@ t_return_value	get_scene_elements_and_map(t_file_data *data)
 				break ;
 		}
 		element_starts = element_ends;
-		if (element_starts != '\0')
+		if (*element_starts != '\0')
 			element_starts++;
 	}
 	while (element_starts && *element_starts != '\0' && *element_starts == '\n')
