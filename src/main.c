@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/27 18:48:02 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/28 17:08:10 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ static void	parsing_main(t_file_data *file_data, char **argv)
 static t_return_value
 	migrate_data_file_to_render(t_file_data *file_data, t_data *render_data)
 {
-	// What is missing:
-	// color unsigned int for floor and ceiling
 	render_data->texture.north = mlx_load_png(file_data->north_texture);
 	if (!render_data->texture.north)
 		return (FAILURE);
@@ -68,10 +66,14 @@ static t_return_value
 	render_data->player.pos.x = file_data->player_x + 0.5;
 	render_data->player.pos.y = file_data->player_y + 0.5;
 	migrate_player_direction(file_data, render_data);
-	//PLACEHOLDERS START (assuming maps/good/malaakso_verysimple.cub)
-	render_data->color.floor = COLOR_GREEN;
-	render_data->color.ceiling = COLOR_BLUE;
-	//PLACEHOLDERS END
+	render_data->color.floor = migrate_colors_to_rgba(
+			(unsigned int)file_data->floor_rgb.red,
+			(unsigned int)file_data->floor_rgb.red,
+			(unsigned int)file_data->floor_rgb.red, 255);
+	render_data->color.ceiling = migrate_colors_to_rgba(
+			(unsigned int)file_data->ceiling_rgb.red,
+			(unsigned int)file_data->ceiling_rgb.red,
+			(unsigned int)file_data->ceiling_rgb.red, 255);
 	return (SUCCESS);
 }
 

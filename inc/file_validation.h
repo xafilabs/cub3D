@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/27 16:42:14 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 16:25:56 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef enum e_return_value
 	GARBAGE_DATA,
 	MAP_CONTAINS_EMPTY_LINE,
 	WALL_IS_BREACHED,
+	INVALID_COLORS,
 
 }						t_return_value;
 
