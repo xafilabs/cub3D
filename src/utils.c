@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/27 15:41:13 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 15:28:52 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	print_elements(t_file_data *data)
 	printf("\t\tFloor Color: %s\n", data->floor_color);
 	printf("\t\tCeiling Color: %s\n", data->ceiling_color);
 }
+
 void	print_struct(t_file_data *data)
 {
 	int	i;
@@ -38,9 +39,9 @@ void	print_struct(t_file_data *data)
 	printf("File Descriptor: %d\n", data->file_descriptor);
 	printf("Return Value: %d\n", data->return_value);
 	printf("Floor RGB: R(%d) G(%d) B(%d)\n", data->floor_rgb.red,
-			data->floor_rgb.green, data->floor_rgb.blue);
+		data->floor_rgb.green, data->floor_rgb.blue);
 	printf("Ceiling RGB: R(%d) G(%d) B(%d)\n", data->ceiling_rgb.red,
-			data->ceiling_rgb.green, data->ceiling_rgb.blue);
+		data->ceiling_rgb.green, data->ceiling_rgb.blue);
 	if (data->map_as_array)
 	{
 		printf("Map Content:\n");
@@ -68,6 +69,7 @@ void	print_struct(t_file_data *data)
 		printf("Map Content: (Empty)\n");
 	}
 }
+
 /**
  * @brief Remove leading white spaces from a string.
  *
@@ -111,32 +113,38 @@ void	initialize_struct(t_file_data *structure_pointer)
  */
 void	print_parsing_error_message(t_return_value error)
 {
-    if (error == MALLOC_FAILURE)
-        ft_putstr_fd("\x1b[31mMemory allocation failed\x1b[0m\n", 2);  
-    else if (error == NEED_MAP_CUB_FILE)
-        ft_putstr_fd("\x1b[31mUsage: use cub file\x1b[0m\n", 2);  
-    else if (error == FILE_IS_EMPTY)
-        ft_putstr_fd("\x1b[31mError: file is empty\x1b[0m\n", 2);  
-    else if (error == FILE_OPEN_FAILURE)
-        ft_putstr_fd("\x1b[31mError: file open failure\x1b[0m\n", 2);  
-    else if (error == MAP_CONTENT_NOT_VALID)
-        ft_putstr_fd("\x1b[31mError: file content not valid\x1b[0m\n", 2);  
-    else if (error == INVALID_ARGUMENT)
-        ft_putstr_fd("\x1b[31mUsage: use cub file\x1b[0m\n", 2);  
-    else if (error == MISSING_ELEMENTS)
-        ft_putstr_fd("\x1b[31mError: Some elements are missing\x1b[0m\n", 2);  
+	if (error == MALLOC_FAILURE)
+		ft_putstr_fd("Error\n\x1b[31mMemory allocation failed\x1b[0m\n", 2);
+	else if (error == NEED_MAP_CUB_FILE)
+		ft_putstr_fd("Error\n\x1b[31mUsage: use cub file\x1b[0m\n", 2);
+	else if (error == FILE_IS_EMPTY)
+		ft_putstr_fd("Error\n\x1b[31mError: file is empty\x1b[0m\n", 2);
+	else if (error == FILE_OPEN_FAILURE)
+		ft_putstr_fd("Error\n\x1b[31mError: file open failure\x1b[0m\n", 2);
+	else if (error == MAP_CONTENT_NOT_VALID)
+		ft_putstr_fd("Error\n\x1b[31mError: file content not valid\x1b[0m\n",
+			2);
+	else if (error == INVALID_ARGUMENT)
+		ft_putstr_fd("Error\n\x1b[31mUsage: use cub file\x1b[0m\n", 2);
+	else if (error == MISSING_ELEMENTS)
+		ft_putstr_fd("Error\n\x1b[31mError: Some elements are missing\x1b[0m\n",
+			2);
 	else if (error == NO_ELEMENT_FOUND)
-        ft_putstr_fd("\x1b[31mError: Cub file not properly formatted\x1b[0m\n", 2);  
-    else if (error == PLAYER_DATA_INCORRECT_OR_MISSING)
-        ft_putstr_fd("\x1b[31mError: Player data incorrect or missing\x1b[0m\n", 2);  
-    else if (error == GARBAGE_DATA)
-        ft_putstr_fd("\x1b[31mError: Map contains garbage data\x1b[0m\n", 2);  
-    else if (error == MAP_CONTAINS_EMPTY_LINE)
-        ft_putstr_fd("\x1b[31mError: Map contains at least an empty line\x1b[0m\n", 2);  
-    else if (error == WALL_IS_BREACHED)
-        ft_putstr_fd("\x1b[31mError: Wall is breached\x1b[0m\n", 2);  
+		ft_putstr_fd(
+			"Error\n\x1b[31mError: Cub file not properly formatted\x1b[0m\n", 2);
+	else if (error == PLAYER_DATA_INCORRECT_OR_MISSING)
+		ft_putstr_fd(
+			"Error\n\x1b[31mError: Player data incorrect or missing\x1b[0m\n", 2);
+	else if (error == GARBAGE_DATA)
+		ft_putstr_fd("Error\n\x1b[31mError: Map contains garbage data\x1b[0m\n",
+			2);
+	else if (error == MAP_CONTAINS_EMPTY_LINE)
+		ft_putstr_fd(
+			"Error\n\x1b[31mError: Map contains at least an empty line\x1b[0m\n",
+			2);
+	else if (error == WALL_IS_BREACHED)
+		ft_putstr_fd("Error\n\x1b[31mError: Wall is breached\x1b[0m\n", 2);
 }
-
 
 void	clean_up_parsing(t_file_data *data)
 {
