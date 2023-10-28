@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/27 16:57:04 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 12:19:02 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,88 +101,6 @@ void	draw_texture(t_data *d, t_ray *ray, int x)
 		color = get_texture_pixel(ray->texture, ray->tex_pos.x, ray->tex_pos.y);
 		put_pixel(d->img, x, y, color);
 		y++;
-	}
-}
-
-void	cast_rays(t_data *d)
-{
-	int		x;
-	t_ray	ray;
-
-	x = 0;
-	while (x < WINDOW_WIDTH)
-	{
-		ray.cam_x = 2 * x / (double)WINDOW_WIDTH - 1;
-		ray.dir.x = d->player.dir.x + d->player.plane.x * ray.cam_x;
-		ray.dir.y = d->player.dir.y + d->player.plane.y * ray.cam_x;
-		ray.map.x = (int)d->player.pos.x;
-		ray.map.y = (int)d->player.pos.y;
-		ray.delta_dist.x = HUGE_NUMBER;
-		if (ray.dir.x != 0)
-			ray.delta_dist.x = fabs(1 / ray.dir.x);
-		ray.delta_dist.y = HUGE_NUMBER;
-		if (ray.dir.y != 0)
-			ray.delta_dist.y = fabs(1 / ray.dir.y);
-		if (ray.dir.x < 0)
-		{
-			ray.step.x = -1;
-			ray.side_dist.x = (d->player.pos.x - ray.map.x) * ray.delta_dist.x;
-		}
-		else
-		{
-			ray.step.x = 1;
-			ray.side_dist.x = (ray.map.x + 1.0 - d->player.pos.x)
-				* ray.delta_dist.x;
-		}
-		if (ray.dir.y < 0)
-		{
-			ray.step.y = -1;
-			ray.side_dist.y = (d->player.pos.y - ray.map.y) * ray.delta_dist.y;
-		}
-		else
-		{
-			ray.step.y = 1;
-			ray.side_dist.y = (ray.map.y + 1.0 - d->player.pos.y)
-				* ray.delta_dist.y;
-		}
-		ray.hit = 0;
-		while (!ray.hit)
-		{
-			if (ray.side_dist.x < ray.side_dist.y)
-			{
-				ray.side_dist.x += ray.delta_dist.x;
-				ray.map.x += ray.step.x;
-				ray.side = 0;
-			}
-			else
-			{
-				ray.side_dist.y += ray.delta_dist.y;
-				ray.map.y += ray.step.y;
-				ray.side = 1;
-			}
-			if (d->map.content[ray.map.y][ray.map.x] > 0)
-				ray.hit = 1;
-		}
-		if (ray.side == 0)
-			ray.normal_wall_distance = ray.side_dist.x - ray.delta_dist.x;
-		else
-			ray.normal_wall_distance = ray.side_dist.y - ray.delta_dist.y;
-		ray.line_height = (int)(WINDOW_HEIGHT / ray.normal_wall_distance);
-		ray.draw_start = -ray.line_height / 2 + WINDOW_HEIGHT / 2;
-		if (ray.draw_start < 0)
-			ray.draw_start = 0;
-		ray.draw_end = ray.line_height / 2 + WINDOW_HEIGHT / 2;
-		if (ray.draw_end >= WINDOW_HEIGHT)
-			ray.draw_end = WINDOW_HEIGHT - 1;
-		if (ray.side == 0)
-			ray.wall_hit_dec = d->player.pos.y + ray.normal_wall_distance
-				* ray.dir.y;
-		else
-			ray.wall_hit_dec = d->player.pos.x + ray.normal_wall_distance
-				* ray.dir.x;
-		ray.wall_hit_dec -= floor(ray.wall_hit_dec);
-		draw_texture(d, &ray, x);
-		x++;
 	}
 }
 

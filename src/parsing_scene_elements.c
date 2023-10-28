@@ -224,9 +224,7 @@ t_return_value	get_scene_elements_and_map(t_file_data *data)
 {
 	char	*element_starts;
 	char	*element_ends;
-	int		i;
 
-	i = 0;
 	element_starts = data->file_content_as_string;
 	while (element_starts && *element_starts != '\0'
 		&& data->elements_found < ELEMENTS_NEEDED)
@@ -241,7 +239,7 @@ t_return_value	get_scene_elements_and_map(t_file_data *data)
 				break ;
 		}
 		element_starts = element_ends;
-		if (element_starts != '\0')
+		if (*element_starts != '\0')
 			element_starts++;
 	}
 	while (element_starts && *element_starts != '\0' && *element_starts == '\n')
