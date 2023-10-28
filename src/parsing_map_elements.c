@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map_elements.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:12:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 15:34:30 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 20:39:23 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,13 +192,10 @@ t_return_value
 	transfer_remaining_string_to_map_array(
 	t_file_data *data, char *map_as_string)
 {
-	int		max_line_length;
 	char	*line_starts;
 	int		current_line;
 
-	max_line_length = get_max_line_length(map_as_string);
-	data->max_map_width = max_line_length;
-	printf("max_line_length :%d:\n", max_line_length);
+	data->max_map_width = get_max_line_length(map_as_string);
 	current_line = 0;
 	line_starts = map_as_string;
 	data->map_as_array = (t_map_tile **)
@@ -207,7 +204,7 @@ t_return_value
 		return (data->return_value = MALLOC_FAILURE);
 	while (*line_starts != '\0' && current_line < data->map_number_of_lines)
 	{
-		if (allocate_map_array_and_copy_data(data, max_line_length,
+		if (allocate_map_array_and_copy_data(data, data->max_map_width,
 				current_line, line_starts) != SUCCESS)
 			return (data->return_value);
 		line_starts = ft_strchr(line_starts, '\n');
@@ -217,6 +214,6 @@ t_return_value
 		current_line++;
 	}
 	data->map_as_array[data->map_number_of_lines] = NULL;
-	validate_map(data, max_line_length);
+	validate_map(data, data->max_map_width);
 	return (data->return_value);
 }

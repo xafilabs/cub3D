@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_scene_elements.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:17:58 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 15:39:23 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 22:28:39 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
 static t_return_value
-	check_map_does_not_contain_empty_lines(
-		t_file_data *data, char *map_as_string)
+check_map_does_not_contain_empty_lines(
+	t_file_data *data, char *map_as_string)
 {
 	t_bool	empty_line;
 
@@ -39,6 +39,15 @@ static t_return_value
 	return (data->return_value);
 }
 
+static void	set_player_data(t_file_data *data, char *input_string,
+		char player_spawn_direction)
+{
+	data->player_x = data->current_position - data->last_new_line_position;
+	data->player_y = data->line_count;
+	*data->player_spawn_direction = player_spawn_direction;
+	input_string[data->current_position] = '0';
+}
+
 /**
  * @brief Get player spawn position and direction.
  *
@@ -51,42 +60,31 @@ static t_return_value
  * @return A return code indicating success or failure.
  */
 static t_return_value
-	get_player_spawn_position_and_direction(
-		t_file_data *data,
-		char *map_string_contains_player_position,
-		const char *spawn_direction_delimiter)
+get_player_spawn_position_and_direction(
+	t_file_data *data,
+	char *input_string,
+	const char *spawn_direction_delimiter)
 {
-	int	spawn_location;
-	int	index_relative_to_last_new_line_found;
-	int	spawn_direction_index;
-	int	new_lines_found;
-
-	spawn_location = 0;
-	new_lines_found = 0;
-	while (map_string_contains_player_position[spawn_location] != '\0')
+	while (input_string[data->current_position] != '\0')
 	{
-		if (map_string_contains_player_position[spawn_location] == '\n')
+		if (input_string[data->current_position] == '\n')
 		{
-			new_lines_found++;
-			index_relative_to_last_new_line_found = spawn_location;
+			data->line_count++;
+			data->last_new_line_position = data->current_position;
 		}
-		spawn_direction_index = 0;
-		while (spawn_direction_delimiter[spawn_direction_index] != '\0')
+		data->direction_index = 0;
+		while (spawn_direction_delimiter[data->direction_index] != '\0')
 		{
-			if (map_string_contains_player_position[spawn_location]
-				== spawn_direction_delimiter[spawn_direction_index])
+			if (input_string[data->current_position] == 
+				spawn_direction_delimiter[data->direction_index])
 			{
-				data->player_x = spawn_location
-					- index_relative_to_last_new_line_found;
-				data->player_y = new_lines_found;
-				*data->player_spawn_direction
-					= spawn_direction_delimiter[spawn_direction_index];
-				map_string_contains_player_position[spawn_location] = '0';
+				set_player_data(data, input_string,
+						spawn_direction_delimiter[data->direction_index]);
 				return (data->return_value);
 			}
-			spawn_direction_index++;
+			data->direction_index++;
 		}
-		spawn_location++;
+		data->current_position++;
 	}
 	data->return_value = PLAYER_DATA_INCORRECT_OR_MISSING;
 	return (data->return_value);
@@ -102,8 +100,8 @@ static t_return_value
  * @return A return code indicating the presence of garbage data.
  */
 static t_return_value
-	check_for_garbage_data_in_remaining_map(
-		t_file_data *data, char *map_as_string)
+check_for_garbage_data_in_remaining_map(
+	t_file_data *data, char *map_as_string)
 {
 	while (*map_as_string && *map_as_string != '\0')
 	{
@@ -129,7 +127,7 @@ static t_return_value
  * @return A return code indicating success or failure.
  */
 static t_return_value
-	map_import_and_preparation(t_file_data *data, char *map_as_string)
+map_import_and_preparation(t_file_data *data, char *map_as_string)
 {
 	if (data->elements_found != 6)
 	{
@@ -144,12 +142,12 @@ static t_return_value
 		return (data->return_value);
 	printf("map_amount_of_lines :%d:\n", data->map_number_of_lines);
 	get_player_spawn_position_and_direction(data, map_as_string,
-		SPAWN_DIRECTION);
+			SPAWN_DIRECTION);
 	if (check_for_garbage_data_in_remaining_map(data,
-			map_as_string) == GARBAGE_DATA)
+												map_as_string) == GARBAGE_DATA)
 		return (data->return_value);
 	if (check_map_does_not_contain_empty_lines(data,
-			map_as_string) == MAP_CONTAINS_EMPTY_LINE)
+												map_as_string) == MAP_CONTAINS_EMPTY_LINE)
 		return (data->return_value);
 	transfer_remaining_string_to_map_array(data, map_as_string);
 	return (data->return_value);
@@ -165,7 +163,7 @@ static t_return_value
  * @return A return code indicating success or failure.
  */
 static t_return_value
-	get_element_texture(char **element_type, char *element_content)
+get_element_texture(char **element_type, char *element_content)
 {
 	size_t	element_length;
 
@@ -192,7 +190,7 @@ static t_return_value
  * @return A return code indicating success or failure.
  */
 static t_return_value
-	find_and_get_element(char *element, t_file_data *data)
+find_and_get_element(char *element, t_file_data *data)
 {
 	t_return_value	return_value;
 
@@ -238,7 +236,7 @@ t_return_value	get_scene_elements_and_map(t_file_data *data)
 	{
 		element_starts = remove_leading_white_spaces(element_starts);
 		element_ends = ft_strchr(element_starts, '\n');
-		if (element_ends != element_starts)
+		if (element_starts != element_ends)
 		{
 			if (*element_starts == '1' || *element_starts == '0')
 				break ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_validation.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 16:25:56 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 22:08:52 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,11 @@ typedef struct s_file_data
 	char			*file_content_as_string;
 	t_map_tile		**map_as_array;
 	char			player_spawn_direction[1];
+	int				current_position;
+	int				last_new_line_position;
 	int				map_number_of_lines;
+	int				direction_index;
+	int				line_count;
 	int				elements_found;
 	double			player_x;
 	double			player_y;
