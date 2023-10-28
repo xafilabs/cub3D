@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 11:47:12 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/28 14:39:07 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 14:48:01 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	rotate_vectors_dir_plane(t_data *d, int left_right)
 
 // int direction 1 for moving in positive direction
 // -1 for moving in negative direction
-static void	move_with_direction_vector(t_data *d, int direction)
+static void	move_player_in_direction_parallel(t_data *d, int direction)
 {
 	if (d->map.content[(int)d->player.pos.y]
 		[(int)(d->player.pos.x
@@ -54,17 +54,21 @@ static void	move_with_direction_vector(t_data *d, int direction)
 
 // int direction 1 for moving in positive direction
 // -1 for moving in negative direction
-static void	move_with_direction_vector_perpendicular(t_data *d, int direction)
+static void	move_player_in_direction_perpendicular(t_data *d, int direction)
 {
 	t_dvec	rot;
 
 	rot.y = d->player.dir.x * -1;
 	rot.x = d->player.dir.y;
-	if (d->map.content[(int)d->player.pos.y][(int)(d->player.pos.x + direction * rot.x * PLAYER_MOVE_SPEED)] == 0)
+	if (d->map.content[(int)d->player.pos.y]
+		[(int)(d->player.pos.x
+			+ direction * rot.x * PLAYER_MOVE_SPEED)] == 0)
 	{
 		d->player.pos.x += direction * rot.x * PLAYER_MOVE_SPEED;
 	}
-	if (d->map.content[(int)(d->player.pos.y + direction * rot.y * PLAYER_MOVE_SPEED)][(int)d->player.pos.x] == 0)
+	if (d->map.content[(int)(d->player.pos.y
+			+ direction * rot.y * PLAYER_MOVE_SPEED)]
+			[(int)d->player.pos.x] == 0)
 	{
 		d->player.pos.y += direction * rot.y * PLAYER_MOVE_SPEED;
 	}
@@ -78,18 +82,18 @@ void	update_player_location(t_data *d)
 		rotate_vectors_dir_plane(d, 1);
 	if (mlx_is_key_down(d->mlx, MLX_KEY_W))
 	{
-		move_with_direction_vector(d, POSITIVE);
+		move_player_in_direction_parallel(d, POSITIVE);
 	}
 	if (mlx_is_key_down(d->mlx, MLX_KEY_S))
 	{
-		move_with_direction_vector(d, NEGATIVE);
+		move_player_in_direction_parallel(d, NEGATIVE);
 	}
 	if (mlx_is_key_down(d->mlx, MLX_KEY_A))
 	{
-		move_with_direction_vector_perpendicular(d, POSITIVE);
+		move_player_in_direction_perpendicular(d, POSITIVE);
 	}
 	if (mlx_is_key_down(d->mlx, MLX_KEY_D))
 	{
-		move_with_direction_vector_perpendicular(d, NEGATIVE);
+		move_player_in_direction_perpendicular(d, NEGATIVE);
 	}
 }
