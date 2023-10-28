@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 22:37:05 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/28 23:36:22 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ void	print_parsing_error_message_2(t_return_value error)
 		ft_putstr_fd("Error\nInvalid RGB values\n", 2);
 }
 
-
 /**
  * @brief Prints an error message based on the error code.
  *
@@ -153,7 +152,14 @@ void	print_parsing_error_message(t_return_value error)
 	else 
 		print_parsing_error_message_2(error);
 }
-
+/**
+ * @brief Frees memory allocated for parsed data.
+ *
+ * This function is responsible for cleaning up memory allocated during the
+ * parsing process, including textures, colors, file content, and the map array.
+ *
+ * @param data A pointer to the t_file_data structure.
+ */
 void	clean_up_parsing(t_file_data *data)
 {
 	int	i;
@@ -182,22 +188,4 @@ void	clean_up_parsing(t_file_data *data)
 		}
 		free(data->map_as_array);
 	}
-}
-
-// only returns true if all characters in the input string are digits
-// and if the string is not empty
-t_bool	ft_is_numerical(char *str)
-{
-	size_t	i;
-
-	if (!str || !str[0])
-		return (FALSE);
-	i = 0;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (FALSE);
-		i++;
-	}
-	return (TRUE);
 }

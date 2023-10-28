@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/28 18:03:41 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 23:47:33 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,17 @@
 # define COLOR_GRAY 0x5F574FFF
 
 // Include system headers
-# include <stddef.h>
 # include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <math.h>
-# include <stdio.h>
 # include <limits.h>
+# include <math.h>
+# include <stddef.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 // Include user headers
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/libft.h"
-# include "utils.h"
 # include "file_validation.h"
 # include "map_validation.h"
 
@@ -65,13 +64,13 @@ typedef enum e_program_phase
 {
 	PHASE_PARSING,
 	PHASE_RENDERING
-}	t_program_phase;
+}					t_program_phase;
 
 typedef struct s_dvec
 {
-	double	x;
-	double	y;
-}	t_dvec;
+	double			x;
+	double			y;
+}					t_dvec;
 
 /**
  * @brief Contains player position information
@@ -81,19 +80,19 @@ typedef struct s_dvec
  */
 typedef struct s_player
 {
-	t_dvec	pos;
-	t_dvec	dir;
-	t_dvec	plane;
-}	t_player;
+	t_dvec			pos;
+	t_dvec			dir;
+	t_dvec			plane;
+}					t_player;
 
 // color is stored in rgba format encoded into an int
 // int get_rgba(int r, int g, int b, int a) can be used for encoding
 // int get_r(int rgba) for decoding a single channel, r in this case
 typedef struct s_color_data
 {
-	int	floor;
-	int	ceiling;
-}	t_color_data;
+	int				floor;
+	int				ceiling;
+}					t_color_data;
 
 typedef struct s_texture_data
 {
@@ -101,14 +100,14 @@ typedef struct s_texture_data
 	mlx_texture_t	*east;
 	mlx_texture_t	*south;
 	mlx_texture_t	*west;
-}	t_texture_data;
+}					t_texture_data;
 
 typedef struct s_map
 {
-	int	width;
-	int	height;
-	int	**content;
-}	t_map;
+	int				width;
+	int				height;
+	int				**content;
+}					t_map;
 
 typedef struct s_data
 {
@@ -118,20 +117,20 @@ typedef struct s_data
 	t_map			map;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
-}	t_data;
+}					t_data;
 
 typedef struct s_point
 {
-	int	x;
-	int	y;
-}	t_point;
+	int				x;
+	int				y;
+}					t_point;
 
 typedef struct s_line
 {
 	t_point			start;
 	t_point			end;
 	unsigned int	color;
-}	t_line;
+}					t_line;
 
 /**
  * @brief Represents a single cast ray
@@ -170,40 +169,46 @@ typedef struct s_ray
 	double			wall_hit_dec;
 	mlx_texture_t	*texture;
 	t_point			tex_pos;
-}	t_ray;
+}					t_ray;
 
 // Function declarations
-void			initialize_struct(t_file_data *structure_pointer);
-void			print_parsing_error_message(t_return_value error);
-t_return_value	check_file_type(t_file_data *data, const char **path_to_file);
-t_return_value	get_file_content_to_string(t_file_data *data, const char **path);
-void			clean_up_parsing(t_file_data *data);
-t_return_value	validate_scene_requirement(t_file_data *data);
-void			render(t_data *d);
-void			loop_hook(void *data_param);
-void			close_hook(void *data_param);
-void			key_hook(mlx_key_data_t keydata, void *data_param);
-void			clean_exit(t_data *d);
-double			deg_to_rad(double degrees);
-unsigned int	get_texture_pixel(mlx_texture_t *texture, unsigned int x, unsigned int y);
-void			init_player_dir_plane(t_data *d, int player_angle_deg, int fov);
-unsigned int	convert_abgr_to_rgba(unsigned int agbr);
-void			put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_t color);
-void			render_ceiling_floor(t_data *d);
-void			update_player_location(t_data *d);
-void			migrate_player_direction(t_file_data *file_data, t_data *render_data);
-void			cast_rays(t_data *d);
-void			draw_texture(t_data *d, t_ray *ray, int x);
-void			init_ray_base_values(t_data *d, t_ray *ray, int x);
-void			init_ray_delta(t_ray *ray);
-void			init_ray_side_distance(t_data *d, t_ray *ray);
-t_return_value	get_rgb_colors(t_file_data *data);
-unsigned int	migrate_colors_to_rgba(
-					unsigned int r, unsigned int g,
-					unsigned int b, unsigned int a);
-t_bool			ft_is_numerical(char *str);
+void				initialize_struct(t_file_data *structure_pointer);
+void				print_parsing_error_message(t_return_value error);
+t_return_value		check_file_type(t_file_data *data,
+						const char **path_to_file);
+t_return_value		get_file_content_to_string(t_file_data *data,
+						const char **path);
+void				clean_up_parsing(t_file_data *data);
+t_return_value		validate_scene_requirement(t_file_data *data);
+void				render(t_data *d);
+void				loop_hook(void *data_param);
+void				close_hook(void *data_param);
+void				key_hook(mlx_key_data_t keydata, void *data_param);
+void				clean_exit(t_data *d);
+double				deg_to_rad(double degrees);
+unsigned int		get_texture_pixel(mlx_texture_t *texture, unsigned int x,
+						unsigned int y);
+void				init_player_dir_plane(t_data *d, int player_angle_deg,
+						int fov);
+unsigned int		convert_abgr_to_rgba(unsigned int agbr);
+void				put_pixel(mlx_image_t *image, uint32_t x, uint32_t y,
+						uint32_t color);
+void				render_ceiling_floor(t_data *d);
+void				update_player_location(t_data *d);
+void				migrate_player_direction(t_file_data *file_data,
+						t_data *render_data);
+void				cast_rays(t_data *d);
+void				draw_texture(t_data *d, t_ray *ray, int x);
+void				init_ray_base_values(t_data *d, t_ray *ray, int x);
+void				init_ray_delta(t_ray *ray);
+void				init_ray_side_distance(t_data *d, t_ray *ray);
+t_return_value		get_rgb_colors(t_file_data *data);
+unsigned int		migrate_colors_to_rgba(
+						unsigned int r, unsigned int g, unsigned int b,
+						unsigned int a);
+t_bool				ft_is_numerical(char *str);
 
 // to be deleted
-void			print_struct(t_file_data *data);
-void			print_elements(t_file_data *data); 
+void				print_struct(t_file_data *data);
+void				print_elements(t_file_data *data);
 #endif

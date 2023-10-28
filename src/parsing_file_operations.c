@@ -6,7 +6,7 @@
 /*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:42:34 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 22:27:53 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/28 23:26:26 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
  * @return The exit code indicating success or failure.
  */
 static t_return_value	open_and_validate_file(t_file_data *data,
-		const char **path)
+												const char **path)
 {
 	data->file_descriptor = open(path[1], O_RDONLY);
 	if (data->file_descriptor == -1)
@@ -32,37 +32,6 @@ static t_return_value	open_and_validate_file(t_file_data *data,
 		data->return_value = FILE_OPEN_FAILURE;
 		close(data->file_descriptor);
 		return (data->return_value);
-	}
-	return (data->return_value);
-}
-
-/**
- * @brief Initialize string buffers for file content and line.
- *
- * This function initializes the string buffers for storing the file's content
- * and each line of the file. It allocates memory for these buffers and handles
- * memory allocation failures by setting the appropriate error code.
- *
- * @param line A pointer to the line buffer.
- * @param file_content_as_string A pointer to the file content buffer.
- * @param data A pointer to the t_file_data structure.
- * @return The exit code indicating success or failure.
- */
-static t_return_value	initialize_string_buffers(char **line_buffer,
-		t_file_data *data)
-{
-	*line_buffer = ft_strdup("");
-	if (data->file_content_as_string)
-		free(data->file_content_as_string);
-	data->file_content_as_string = ft_strdup("");
-	if (!*line_buffer || !data->file_content_as_string)
-	{
-		data->return_value = MALLOC_FAILURE;
-		if (*line_buffer)
-			free(*line_buffer);
-		if (data->file_content_as_string)
-			free(data->file_content_as_string);
-		close(data->file_descriptor);
 	}
 	return (data->return_value);
 }
@@ -80,7 +49,7 @@ static t_return_value	initialize_string_buffers(char **line_buffer,
  * @return The exit code indicating success or failure.
  */
 static t_return_value	concatenate_line_buffer_to_string(t_file_data *data,
-		char *line)
+														char *line)
 {
 	char	*temp;
 
@@ -150,7 +119,7 @@ t_return_value	get_file_content_to_string(t_file_data *data, const char **path)
  * @return The exit code indicating success or failure.
  */
 t_return_value	check_file_type(t_file_data *data,
-		const char **path_to_file)
+								const char **path_to_file)
 {
 	const char	*path;
 	char		*last_4_chars;

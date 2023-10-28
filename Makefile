@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+         #
+#    By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 15:25:10 by malaakso          #+#    #+#              #
-#    Updated: 2023/10/28 16:21:29 by malaakso         ###   ########.fr        #
+#    Updated: 2023/10/28 23:47:12 by lclerc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ FOLDER_LIST		=	$(H_FOLDER) $(C_FOLDER) $(OBJ_FOLDER) \
 					$(LIBFT_FOLDER) $(MINILIBX_FOLDER)
 
 H_FILES			=	main.h \
-					utils.h \
 					map_validation.h \
 					file_validation.h
 
@@ -42,7 +41,9 @@ C_FILES			=	main.c \
 					migration.c \
 					raycasting.c \
 					raycasting_init.c \
-					parsing_colors.c
+					parsing_colors.c \
+					parsing_utils.c \
+					parsing_map_and_player_import.c
 
 H_PATHS			=	$(addprefix $(H_FOLDER)/, $(H_FILES))
 C_PATHS			=	$(addprefix $(C_FOLDER)/, $(C_FILES))
