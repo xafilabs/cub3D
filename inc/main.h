@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/27 16:47:47 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 11:46:26 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 // Preprocessor definitions
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 720
+#  define WINDOW_WIDTH 1920
 # endif
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 480
+#  define WINDOW_HEIGHT 1080
 # endif
 # ifndef PLAYER_FOV
 #  define PLAYER_FOV 65
