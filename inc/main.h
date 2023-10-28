@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/28 17:02:47 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 18:03:41 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ t_return_value	get_rgb_colors(t_file_data *data);
 unsigned int	migrate_colors_to_rgba(
 					unsigned int r, unsigned int g,
 					unsigned int b, unsigned int a);
+t_bool			ft_is_numerical(char *str);
 
 // to be deleted
 void			print_struct(t_file_data *data);

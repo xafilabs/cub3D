@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 15:28:52 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 18:13:44 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,4 +174,22 @@ void	clean_up_parsing(t_file_data *data)
 		}
 		free(data->map_as_array);
 	}
+}
+
+// only returns true if all characters in the input string are digits
+// and if the string is not empty
+t_bool	ft_is_numerical(char *str)
+{
+	size_t	i;
+
+	if (!str || !str[0])
+		return (FALSE);
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
 }

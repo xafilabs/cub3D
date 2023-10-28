@@ -6,22 +6,27 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 16:21:07 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/28 16:56:42 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 18:11:07 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-static int	ret_grid_len(char **grid)
+static void	check_grid_len_and_validate(t_file_data *data, char **grid)
 {
 	int	i;
 
-	if (!grid)
-		return (-1);
 	i = 0;
 	while (grid[i])
 		i++;
-	return (i);
+	if (i != 3)
+	{
+		data->return_value = INVALID_COLORS;
+		return ;
+	}
+	if (!ft_is_numerical(grid[0])
+		|| !ft_is_numerical(grid[1]) || !ft_is_numerical(grid[2]))
+		data->return_value = INVALID_COLORS;
 }
 
 static t_bool	is_valid_color_value(int color)
@@ -39,11 +44,9 @@ static t_color	ret_colors(t_file_data *data, char **rgb)
 	colors.red = 0;
 	colors.green = 0;
 	colors.blue = 0;
-	if (ret_grid_len(rgb) != 3)
-	{
-		data->return_value = INVALID_COLORS;
+	check_grid_len_and_validate(data, rgb);
+	if (data->return_value != SUCCESS)
 		return (colors);
-	}
 	colors.red = ft_atoi(rgb[0]);
 	colors.green = ft_atoi(rgb[1]);
 	colors.blue = ft_atoi(rgb[2]);
