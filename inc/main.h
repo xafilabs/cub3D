@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/28 11:46:26 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 14:06:32 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
 # define HUGE_NUMBER 100000000
+# define NEGATIVE -1
+# define POSITIVE 1
 # define COLOR_BLACK 0x000000FF
 # define COLOR_WHITE 0xFFFFFFFF
 # define COLOR_GREEN 0x90FD90FF
@@ -190,6 +192,11 @@ void			put_pixel(mlx_image_t *image, uint32_t x, uint32_t y, uint32_t color);
 void			render_ceiling_floor(t_data *d);
 void			update_player_location(t_data *d);
 void			migrate_player_direction(t_file_data *file_data, t_data *render_data);
+void			cast_rays(t_data *d);
+void			draw_texture(t_data *d, t_ray *ray, int x);
+void			init_ray_base_values(t_data *d, t_ray *ray, int x);
+void			init_ray_delta(t_ray *ray);
+void			init_ray_side_distance(t_data *d, t_ray *ray);
 
 // to be deleted
 void			print_struct(t_file_data *data);

@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 11:47:12 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/27 11:57:00 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 14:39:07 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,80 +34,62 @@ static void	rotate_vectors_dir_plane(t_data *d, int left_right)
 		+ d->player.plane.y * cos(rot_speed);
 }
 
-void	update_player_location(t_data *d)
+// int direction 1 for moving in positive direction
+// -1 for moving in negative direction
+static void	move_with_direction_vector(t_data *d, int direction)
+{
+	if (d->map.content[(int)d->player.pos.y]
+		[(int)(d->player.pos.x
+			+ direction * d->player.dir.x * PLAYER_MOVE_SPEED)] == 0)
+	{
+		d->player.pos.x += direction * d->player.dir.x * PLAYER_MOVE_SPEED;
+	}
+	if (d->map.content[(int)(d->player.pos.y
+			+ direction * d->player.dir.y * PLAYER_MOVE_SPEED)]
+			[(int)d->player.pos.x] == 0)
+	{
+		d->player.pos.y += direction * d->player.dir.y * PLAYER_MOVE_SPEED;
+	}
+}
+
+// int direction 1 for moving in positive direction
+// -1 for moving in negative direction
+static void	move_with_direction_vector_perpendicular(t_data *d, int direction)
 {
 	t_dvec	rot;
 
+	rot.y = d->player.dir.x * -1;
+	rot.x = d->player.dir.y;
+	if (d->map.content[(int)d->player.pos.y][(int)(d->player.pos.x + direction * rot.x * PLAYER_MOVE_SPEED)] == 0)
+	{
+		d->player.pos.x += direction * rot.x * PLAYER_MOVE_SPEED;
+	}
+	if (d->map.content[(int)(d->player.pos.y + direction * rot.y * PLAYER_MOVE_SPEED)][(int)d->player.pos.x] == 0)
+	{
+		d->player.pos.y += direction * rot.y * PLAYER_MOVE_SPEED;
+	}
+}
+
+void	update_player_location(t_data *d)
+{
 	if (mlx_is_key_down(d->mlx, MLX_KEY_LEFT))
 		rotate_vectors_dir_plane(d, 0);
 	if (mlx_is_key_down(d->mlx, MLX_KEY_RIGHT))
 		rotate_vectors_dir_plane(d, 1);
 	if (mlx_is_key_down(d->mlx, MLX_KEY_W))
 	{
-		if (d->map.content[
-				(int)d->player.pos.y][
-			(int)(d->player.pos.x
-			+ d->player.dir.x * PLAYER_MOVE_SPEED)] == 0)
-		{
-			d->player.pos.x += d->player.dir.x * PLAYER_MOVE_SPEED;
-		}
-		if (d->map.content[
-				(int)(d->player.pos.y + d->player.dir.y * PLAYER_MOVE_SPEED)][
-			(int)d->player.pos.x] == 0)
-		{
-			d->player.pos.y += d->player.dir.y * PLAYER_MOVE_SPEED;
-		}
+		move_with_direction_vector(d, POSITIVE);
 	}
 	if (mlx_is_key_down(d->mlx, MLX_KEY_S))
 	{
-		if (d->map.content[
-				(int)d->player.pos.y][
-			(int)(d->player.pos.x
-			- d->player.dir.x * PLAYER_MOVE_SPEED)] == 0)
-		{
-			d->player.pos.x -= d->player.dir.x * PLAYER_MOVE_SPEED;
-		}
-		if (d->map.content[
-				(int)(d->player.pos.y - d->player.dir.y * PLAYER_MOVE_SPEED)][
-			(int)d->player.pos.x] == 0)
-		{
-			d->player.pos.y -= d->player.dir.y * PLAYER_MOVE_SPEED;
-		}
+		move_with_direction_vector(d, NEGATIVE);
 	}
 	if (mlx_is_key_down(d->mlx, MLX_KEY_A))
 	{
-		rot.y = d->player.dir.x * -1;
-		rot.x = d->player.dir.y;
-		if (d->map.content[
-				(int)d->player.pos.y][
-			(int)(d->player.pos.x
-			+ rot.x * PLAYER_MOVE_SPEED)] == 0)
-		{
-			d->player.pos.x += rot.x * PLAYER_MOVE_SPEED;
-		}
-		if (d->map.content[
-				(int)(d->player.pos.y + rot.y * PLAYER_MOVE_SPEED)][
-			(int)d->player.pos.x] == 0)
-		{
-			d->player.pos.y += rot.y * PLAYER_MOVE_SPEED;
-		}
+		move_with_direction_vector_perpendicular(d, POSITIVE);
 	}
 	if (mlx_is_key_down(d->mlx, MLX_KEY_D))
 	{
-		rot.y = d->player.dir.x * -1;
-		rot.x = d->player.dir.y;
-		if (d->map.content[
-				(int)d->player.pos.y][
-			(int)(d->player.pos.x
-			- rot.x * PLAYER_MOVE_SPEED)] == 0)
-		{
-			d->player.pos.x -= rot.x * PLAYER_MOVE_SPEED;
-		}
-		if (d->map.content[
-				(int)(d->player.pos.y - rot.y * PLAYER_MOVE_SPEED)][
-			(int)d->player.pos.x] == 0)
-		{
-			d->player.pos.y -= rot.y * PLAYER_MOVE_SPEED;
-		}
+		move_with_direction_vector_perpendicular(d, NEGATIVE);
 	}
 }
