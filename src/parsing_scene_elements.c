@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_scene_elements.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:17:58 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 23:41:55 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/29 17:40:52 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,11 @@ t_return_value
 				break ;
 		}
 		element_starts = element_ends;
+		if (!element_starts)
+		{
+			data->return_value = MAP_MISSING;
+			return (data->return_value);
+		}
 		if (*element_starts != '\0')
 			element_starts++;
 	}

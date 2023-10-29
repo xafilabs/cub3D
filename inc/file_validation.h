@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/29 17:24:31 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/29 17:38:47 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef enum e_return_value
 	MAP_CONTAINS_EMPTY_LINE,
 	WALL_IS_BREACHED,
 	INVALID_COLORS,
+	MAP_MISSING,
 }					t_return_value;
 
 // Structure to hold information extracted from the scene description file
