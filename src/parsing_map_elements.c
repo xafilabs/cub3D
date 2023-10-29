@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:12:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/29 15:34:34 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:34:55 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ t_bool	is_wall_or_floor(t_file_data *data, int line, int column, int map_width)
 	if (line != 0 && line != data->map_number_of_lines
 		&& column != 0 && column != map_width)
 	{
-		if (data->map_as_array[line - 1][column] == WALL
-			&& data->map_as_array[line + 1][column] != WALL
-			&& data->map_as_array[line][column - 1] != WALL
-			&& data->map_as_array[line][column + 1] != WALL)
+		if (data->map_as_array[line - 1][column] < 2
+			&& data->map_as_array[line + 1][column] < 2
+			&& data->map_as_array[line][column - 1] < 2
+			&& data->map_as_array[line][column + 1] < 2)
 		{
 			is_wall_or_floor = TRUE;
 		}
