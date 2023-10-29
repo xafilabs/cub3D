@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 17:08:10 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/29 12:09:12 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ static t_return_value
 	migrate_player_direction(file_data, render_data);
 	render_data->color.floor = migrate_colors_to_rgba(
 			(unsigned int)file_data->floor_rgb.red,
-			(unsigned int)file_data->floor_rgb.red,
-			(unsigned int)file_data->floor_rgb.red, 255);
+			(unsigned int)file_data->floor_rgb.green,
+			(unsigned int)file_data->floor_rgb.blue, 255);
 	render_data->color.ceiling = migrate_colors_to_rgba(
 			(unsigned int)file_data->ceiling_rgb.red,
-			(unsigned int)file_data->ceiling_rgb.red,
-			(unsigned int)file_data->ceiling_rgb.red, 255);
+			(unsigned int)file_data->ceiling_rgb.green,
+			(unsigned int)file_data->ceiling_rgb.blue, 255);
 	return (SUCCESS);
 }
 
