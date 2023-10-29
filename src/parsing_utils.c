@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:47:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 23:37:56 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/29 17:24:59 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  * @param map_as_string The map content as a string.
  * @return The number of lines in the map content.
  */
-int	get_map_amount_of_lines(t_file_data *data, char *map_as_string)
+t_return_value	get_map_amount_of_lines(t_file_data *data, char *map_as_string)
 {
 	char	*temp;
 
@@ -37,7 +37,7 @@ int	get_map_amount_of_lines(t_file_data *data, char *map_as_string)
 	}
 	if (data->map_number_of_lines < 3)
 		data->return_value = MAP_CONTENT_NOT_VALID;
-	return (data->map_number_of_lines + 1);
+	return (data->return_value);
 }
 
 /**
