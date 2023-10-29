@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:42:34 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/29 12:30:18 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/29 13:12:44 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ t_return_value	validate_scene_requirement(t_file_data *data)
 		return (data->return_value);
 	if (get_rgb_colors(data) != SUCCESS)
 		return (data->return_value);
-	printf("\n\n_______PRINT_STRUCT:\n");
+	//printf("\n\n_______PRINT_STRUCT:\n");
 	// if (data->return_value == SUCCESS)
 	// 	print_struct(data);
 	return (data->return_value);

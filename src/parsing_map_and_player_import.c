@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map_and_player_import.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 23:19:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 23:30:47 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/29 13:12:14 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,10 @@ t_return_value	map_import_and_preparation(t_file_data *data,
 			data->return_value = MISSING_ELEMENTS;
 		return (data->return_value);
 	}
-	printf("map as string after trimming :\n->%s\n:\n", map_as_string);
+	//printf("map as string after trimming :\n->%s\n:\n", map_as_string);
 	if (get_map_amount_of_lines(data, map_as_string) == MAP_CONTENT_NOT_VALID)
 		return (data->return_value);
-	printf("map_amount_of_lines :%d:\n", data->map_number_of_lines);
+	//printf("map_amount_of_lines :%d:\n", data->map_number_of_lines);
 	get_player_spawn_position_and_direction(data, map_as_string,
 		SPAWN_DIRECTION);
 	if (check_for_garbage_data_in_remaining_map(data,

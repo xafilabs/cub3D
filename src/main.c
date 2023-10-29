@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/29 12:09:12 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/29 13:11:40 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_return_value
 		free (data->file_content_as_string);
 		data->file_content_as_string = ft_strdup(temp);
 		free (temp);
-		printf("After trimming:\n%s\n", data->file_content_as_string);
+		//printf("After trimming:\n%s\n", data->file_content_as_string);
 	}
 	if (data->return_value == SUCCESS)
 		validate_scene_requirement(data);
