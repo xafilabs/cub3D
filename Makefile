@@ -6,7 +6,7 @@
 #    By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 15:25:10 by malaakso          #+#    #+#              #
-#    Updated: 2023/10/29 15:40:21 by malaakso         ###   ########.fr        #
+#    Updated: 2023/10/29 17:34:45 by malaakso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -122,7 +122,7 @@ fclean: clean
 re: fclean all
 
 .PHONY: debug
-debug: C_FLAGS_NAME += $(C_FLAGS_DEBUG)
+debug: C_FLAGS_OBJ += $(C_FLAGS_DEBUG)
 debug: debug_clean all
 
 .PHONY: debug_clean
