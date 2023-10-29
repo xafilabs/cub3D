@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 23:36:22 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/29 12:30:47 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
-
-void	print_elements(t_file_data *data)
-{
-	printf("\t\tNorth Texture: %s\n", data->north_texture);
-	printf("\t\tSouth Texture: %s\n", data->south_texture);
-	printf("\t\tWest Texture: %s\n", data->west_texture);
-	printf("\t\tEast Texture: %s\n", data->east_texture);
-	printf("\t\tFloor Color: %s\n", data->floor_color);
-	printf("\t\tCeiling Color: %s\n", data->ceiling_color);
-}
 
 void	print_struct(t_file_data *data)
 {

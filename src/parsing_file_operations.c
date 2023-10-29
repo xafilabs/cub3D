@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_file_operations.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:42:34 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 23:26:26 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/29 12:30:18 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ t_return_value	validate_scene_requirement(t_file_data *data)
 	if (get_rgb_colors(data) != SUCCESS)
 		return (data->return_value);
 	printf("\n\n_______PRINT_STRUCT:\n");
-	if (data->return_value == SUCCESS)
-		print_struct(data);
+	// if (data->return_value == SUCCESS)
+	// 	print_struct(data);
 	return (data->return_value);
 }
