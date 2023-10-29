@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:33:50 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/28 12:34:22 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:53:18 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ void	init_ray_base_values(t_data *d, t_ray *ray, int x)
 	ray->dir.x = d->player.dir.x + d->player.plane.x * ray->cam_x;
 	ray->dir.y = d->player.dir.y + d->player.plane.y * ray->cam_x;
 	ray->map.x = (int)d->player.pos.x;
+	if (ray->map.x < 0 || ray->map.x >= d->map.width)
+		exit(EXIT_FAILURE);
 	ray->map.y = (int)d->player.pos.y;
+	if (ray->map.y < 0 || ray->map.y >= d->map.height)
+		exit(EXIT_FAILURE);
 }
 
 void	init_ray_delta(t_ray *ray)

@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:18:42 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/28 12:51:19 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:54:11 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,16 @@ static void	perform_dda(t_data *d, t_ray *ray)
 		{
 			ray->side_dist.x += ray->delta_dist.x;
 			ray->map.x += ray->step.x;
+			if (ray->map.x < 0 || ray->map.x >= d->map.width)
+				exit(EXIT_FAILURE);
 			ray->side = 0;
 		}
 		else
 		{
 			ray->side_dist.y += ray->delta_dist.y;
 			ray->map.y += ray->step.y;
+			if (ray->map.y < 0 || ray->map.y >= d->map.height)
+				exit(EXIT_FAILURE);
 			ray->side = 1;
 		}
 		if (d->map.content[ray->map.y][ray->map.x] > 0)
