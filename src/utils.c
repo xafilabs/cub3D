@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/29 16:10:52 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:27:08 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ void	clean_up_parsing(t_file_data *data)
 	}
 }
 
-void	print_char_grid(char **grid, int height, int width)
+void	print_int_grid(int **grid, int height, int width)
 {
 	int	i;
 	int	j;
@@ -192,9 +192,10 @@ void	print_char_grid(char **grid, int height, int width)
 		i = 0;
 		while (i < width)
 		{
-			printf("%c", grid[j][i]);
+			printf(":%s:", ft_itoa(grid[j][i]));
 			i++;
 		}
+		printf("\n");
 		j++;
 	}
 	printf("FINISHED PRINTING\n");
