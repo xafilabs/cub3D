@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map_elements.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:12:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 23:31:57 by lclerc           ###   ########.fr       */
+/*   Updated: 2023/10/29 15:34:34 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,18 @@ t_bool	is_wall_or_floor(t_file_data *data, int line, int column, int map_width)
 {
 	t_bool	is_wall_or_floor;
 
-	is_wall_or_floor = TRUE;
-	if (line == 0 || data->map_as_array[line - 1][column] == EMPTY)
-		is_wall_or_floor = FALSE;
-	else if (line == data->map_number_of_lines || data->map_as_array[line
-			+ 1][column] == EMPTY)
-		is_wall_or_floor = FALSE;
-	else if (line == 0 || data->map_as_array[line][column - 1] == EMPTY)
-		is_wall_or_floor = FALSE;
-	else if (line == map_width || data->map_as_array[line][column + 1] == EMPTY)
-		is_wall_or_floor = FALSE;
+	is_wall_or_floor = FALSE;
+	if (line != 0 && line != data->map_number_of_lines
+		&& column != 0 && column != map_width)
+	{
+		if (data->map_as_array[line - 1][column] == WALL
+			&& data->map_as_array[line + 1][column] != WALL
+			&& data->map_as_array[line][column - 1] != WALL
+			&& data->map_as_array[line][column + 1] != WALL)
+		{
+			is_wall_or_floor = TRUE;
+		}
+	}
 	return (is_wall_or_floor);
 }
 
@@ -35,11 +37,10 @@ t_return_value	validate_map(t_file_data *data, int map_width)
 	int	column;
 
 	line = 0;
-	while (line < (data->map_number_of_lines - 1)
-		&& data->return_value == SUCCESS)
+	while (line < (data->map_number_of_lines))
 	{
 		column = 0;
-		while (column < map_width && line < data->map_number_of_lines - 1)
+		while (column < map_width)
 		{
 			if (data->map_as_array[line][column] == FLOOR)
 			{
