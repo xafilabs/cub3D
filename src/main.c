@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/29 13:11:40 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:37:12 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	main(int argc, char **argv)
 	(void)argv;
 	if (argc != 2)
 	{
-		printf("usage: ./cube3d map.cub\n");
+		printf("Error\nUsage: ./cub3D map.cub\n");
 		exit(NEED_MAP_CUB_FILE);
 	}
 	parsing_main(&file_data, argv);
