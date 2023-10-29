@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/29 12:30:42 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:03:23 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,4 +210,5 @@ t_bool				ft_is_numerical(char *str);
 
 // to be deleted
 void				print_struct(t_file_data *data);
+void				print_char_grid(char **grid, int height, int width);
 #endif

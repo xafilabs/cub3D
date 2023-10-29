@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/29 12:30:47 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:10:52 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,4 +178,24 @@ void	clean_up_parsing(t_file_data *data)
 		}
 		free(data->map_as_array);
 	}
+}
+
+void	print_char_grid(char **grid, int height, int width)
+{
+	int	i;
+	int	j;
+
+	printf("PrintingCharGrid! Height: %i and Width: %i\n", height, width);
+	j = 0;
+	while (j < height)
+	{
+		i = 0;
+		while (i < width)
+		{
+			printf("%c", grid[j][i]);
+			i++;
+		}
+		j++;
+	}
+	printf("FINISHED PRINTING\n");
 }
