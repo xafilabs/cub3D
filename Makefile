@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+         #
+#    By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 15:25:10 by malaakso          #+#    #+#              #
-#    Updated: 2023/10/28 23:47:12 by lclerc           ###   ########.fr        #
+#    Updated: 2023/10/29 15:40:21 by malaakso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,7 +123,11 @@ re: fclean all
 
 .PHONY: debug
 debug: C_FLAGS_NAME += $(C_FLAGS_DEBUG)
-debug: all
+debug: debug_clean all
+
+.PHONY: debug_clean
+debug_clean: clean
+	@rm -f $(NAME)
 
 .PHONY: lldb
 lldb: C_FLAGS_NAME += -g
