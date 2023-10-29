@@ -3,32 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   file_validation.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 16:25:56 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 23:45:16 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILE_VALIDATION_H
 # define FILE_VALIDATION_H
 
-// Structure to hold RGB color components
 typedef struct s_color
 {
-	int red;   // Red component (0-255)
-	int green; // Green component (0-255)
-	int blue;  // Blue component (0-255)
+	int	red;
+	int	green;
+	int	blue;
 }					t_color;
 
-# define ELEMENTS_NEEDED			6
-# define SPAWN_DIRECTION			"NSEW"
-# define SKIP_WHITE_SPACES			42
+# define ELEMENTS_NEEDED 6
+# define SPAWN_DIRECTION "NSEW"
+# define SKIP_WHITE_SPACES 42
 # define SKIP_CONSECUTIVE_NEW_LINES 24
-# define N							1
-# define S							2
-# define W							3
-# define E							4
+# define N 1
+# define S 2
+# define W 3
+# define E 4
 
 typedef enum e_map_tile
 {
@@ -66,8 +65,7 @@ typedef enum e_return_value
 	MAP_CONTAINS_EMPTY_LINE,
 	WALL_IS_BREACHED,
 	INVALID_COLORS,
-
-}						t_return_value;
+}					t_return_value;
 
 // Structure to hold information extracted from the scene description file
 typedef struct s_file_data
@@ -81,7 +79,11 @@ typedef struct s_file_data
 	char			*file_content_as_string;
 	t_map_tile		**map_as_array;
 	char			player_spawn_direction[1];
+	int				current_position;
+	int				last_new_line_position;
 	int				map_number_of_lines;
+	int				direction_index;
+	int				line_count;
 	int				elements_found;
 	double			player_x;
 	double			player_y;
@@ -92,10 +94,20 @@ typedef struct s_file_data
 	int				max_map_width;
 }					t_file_data;
 
-t_return_value	validate_cub_file(t_file_data *file_data, const char **path_to_file);
-t_return_value	get_scene_elements_and_map(t_file_data *data);
-t_return_value	validate_scene_requirement(t_file_data *data);
-int				get_map_amount_of_lines(t_file_data *data, char *map_as_string);
-char			*remove_leading_white_spaces(char *string_beginning);
-t_return_value	transfer_remaining_string_to_map_array(t_file_data *data, char *map_as_string);
+t_return_value		validate_cub_file(t_file_data *file_data,
+						const char **path_to_file);
+t_return_value		get_scene_elements_and_map(t_file_data *data);
+t_return_value		validate_scene_requirement(t_file_data *data);
+int					get_map_amount_of_lines(t_file_data *data,
+						char *map_as_string);
+char				*remove_leading_white_spaces(char *string_beginning);
+t_return_value		transfer_remaining_string_to_map_array(t_file_data *data,
+						char *map_as_string);
+t_return_value		initialize_string_buffers(char **line_buffer,
+						t_file_data *data);
+int					get_max_line_length(char *map_as_string);
+t_return_value		map_import_and_preparation(t_file_data *data,
+						char *map_as_string);
+t_return_value		check_map_does_not_contain_empty_lines(t_file_data *data,
+						char *map_as_string);
 #endif

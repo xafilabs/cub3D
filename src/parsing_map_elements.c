@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map_elements.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:12:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 15:34:30 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 23:31:57 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_bool	is_wall_or_floor(t_file_data *data, int line, int column, int map_width)
 	is_wall_or_floor = TRUE;
 	if (line == 0 || data->map_as_array[line - 1][column] == EMPTY)
 		is_wall_or_floor = FALSE;
-	else if (line == data->map_number_of_lines
-		|| data->map_as_array[line + 1][column] == EMPTY)
+	else if (line == data->map_number_of_lines || data->map_as_array[line
+			+ 1][column] == EMPTY)
 		is_wall_or_floor = FALSE;
 	else if (line == 0 || data->map_as_array[line][column - 1] == EMPTY)
 		is_wall_or_floor = FALSE;
@@ -51,67 +51,6 @@ t_return_value	validate_map(t_file_data *data, int map_width)
 		line++;
 	}
 	return (data->return_value);
-}
-
-/**
- * @brief Get the number of lines in the map content.
- *
- * This function calculates the number of lines in the map content by counting
- * the newline characters. It also validates that the map contains a minimum of
- * three lines.
- *
- * @param data A pointer to the t_file_data structure.
- * @param map_as_string The map content as a string.
- * @return The number of lines in the map content.
- */
-int	get_map_amount_of_lines(t_file_data *data, char *map_as_string)
-{
-	char	*temp;
-
-	temp = map_as_string;
-	data->map_number_of_lines++;
-	while (*temp)
-	{
-		if (*temp == '\n')
-			data->map_number_of_lines++;
-		temp++;
-	}
-	if (data->map_number_of_lines < 3)
-		data->return_value = MAP_CONTENT_NOT_VALID;
-	return (data->map_number_of_lines + 1);
-}
-
-/**
- * @brief Get the maximum line length in the map content.
- *
- * This function calculates the maximum line length in the map content by
- * iterating through the lines.
- *
- * @param map_as_string The map content as a string.
- * @return The maximum line length.
- */
-static int	get_max_line_length(char *map_as_string)
-{
-	int		max_line_length;
-	int		line_length;
-	char	*line_starts;
-	char	*line_ends;
-
-	max_line_length = 0;
-	line_starts = map_as_string;
-	while (*line_starts != '\0')
-	{
-		line_ends = ft_strchr(line_starts, '\n');
-		if (line_ends == NULL)
-			line_ends = line_starts + ft_strlen(line_starts);
-		line_length = line_ends - line_starts;
-		if (line_length > max_line_length)
-			max_line_length = line_length;
-		line_starts = line_ends;
-		if (line_starts)
-			line_starts++;
-	}
-	return (max_line_length);
 }
 
 /**
@@ -189,16 +128,13 @@ static t_return_value	allocate_map_array_and_copy_data(t_file_data *data,
  * @return A return code indicating success or failure.
  */
 t_return_value
-	transfer_remaining_string_to_map_array(
-	t_file_data *data, char *map_as_string)
+	transfer_remaining_string_to_map_array(t_file_data *data,
+		char *map_as_string)
 {
-	int		max_line_length;
 	char	*line_starts;
 	int		current_line;
 
-	max_line_length = get_max_line_length(map_as_string);
-	data->max_map_width = max_line_length;
-	printf("max_line_length :%d:\n", max_line_length);
+	data->max_map_width = get_max_line_length(map_as_string);
 	current_line = 0;
 	line_starts = map_as_string;
 	data->map_as_array = (t_map_tile **)
@@ -207,7 +143,7 @@ t_return_value
 		return (data->return_value = MALLOC_FAILURE);
 	while (*line_starts != '\0' && current_line < data->map_number_of_lines)
 	{
-		if (allocate_map_array_and_copy_data(data, max_line_length,
+		if (allocate_map_array_and_copy_data(data, data->max_map_width,
 				current_line, line_starts) != SUCCESS)
 			return (data->return_value);
 		line_starts = ft_strchr(line_starts, '\n');
@@ -217,6 +153,6 @@ t_return_value
 		current_line++;
 	}
 	data->map_as_array[data->map_number_of_lines] = NULL;
-	validate_map(data, max_line_length);
+	validate_map(data, data->max_map_width);
 	return (data->return_value);
 }

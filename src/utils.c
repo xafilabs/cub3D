@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 18:13:44 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 23:36:22 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,27 @@ void	initialize_struct(t_file_data *structure_pointer)
 	ft_bzero(structure_pointer, sizeof(*structure_pointer));
 }
 
+void	print_parsing_error_message_2(t_return_value error)
+{
+	if (error == NO_ELEMENT_FOUND)
+		ft_putstr_fd(
+			"Error\nCub file not properly formatted\n", 2);
+	else if (error == PLAYER_DATA_INCORRECT_OR_MISSING)
+		ft_putstr_fd(
+			"Error\nPlayer data incorrect or missing\n", 2);
+	else if (error == GARBAGE_DATA)
+		ft_putstr_fd("Error\nMap contains garbage data\n",
+			2);
+	else if (error == MAP_CONTAINS_EMPTY_LINE)
+		ft_putstr_fd(
+			"Error\nMap contains at least an empty line\n",
+			2);
+	else if (error == WALL_IS_BREACHED)
+		ft_putstr_fd("Error\nWall is breached\n", 2);
+	else if (error == INVALID_COLORS)
+		ft_putstr_fd("Error\nInvalid RGB values\n", 2);
+}
+
 /**
  * @brief Prints an error message based on the error code.
  *
@@ -114,38 +135,31 @@ void	initialize_struct(t_file_data *structure_pointer)
 void	print_parsing_error_message(t_return_value error)
 {
 	if (error == MALLOC_FAILURE)
-		ft_putstr_fd("Error\n\x1b[31mMemory allocation failed\x1b[0m\n", 2);
+		ft_putstr_fd("Error\nMemory allocation failed\n", 2);
 	else if (error == NEED_MAP_CUB_FILE)
-		ft_putstr_fd("Error\n\x1b[31mUsage: use cub file\x1b[0m\n", 2);
+		ft_putstr_fd("Error\nUsage: use cub file\n", 2);
 	else if (error == FILE_IS_EMPTY)
-		ft_putstr_fd("Error\n\x1b[31mError: file is empty\x1b[0m\n", 2);
+		ft_putstr_fd("Error\nfile is empty\n", 2);
 	else if (error == FILE_OPEN_FAILURE)
-		ft_putstr_fd("Error\n\x1b[31mError: file open failure\x1b[0m\n", 2);
+		ft_putstr_fd("Error\nfile open failure\n", 2);
 	else if (error == MAP_CONTENT_NOT_VALID)
-		ft_putstr_fd("Error\n\x1b[31mError: file content not valid\x1b[0m\n",
+		ft_putstr_fd("Error\nfile content not valid\n",
 			2);
 	else if (error == INVALID_ARGUMENT)
-		ft_putstr_fd("Error\n\x1b[31mUsage: use cub file\x1b[0m\n", 2);
+		ft_putstr_fd("Error\nUsage: use cub file\n", 2);
 	else if (error == MISSING_ELEMENTS)
-		ft_putstr_fd("Error\n\x1b[31mError: Some elements are missing\x1b[0m\n",
-			2);
-	else if (error == NO_ELEMENT_FOUND)
-		ft_putstr_fd(
-			"Error\n\x1b[31mError: Cub file not properly formatted\x1b[0m\n", 2);
-	else if (error == PLAYER_DATA_INCORRECT_OR_MISSING)
-		ft_putstr_fd(
-			"Error\n\x1b[31mError: Player data incorrect or missing\x1b[0m\n", 2);
-	else if (error == GARBAGE_DATA)
-		ft_putstr_fd("Error\n\x1b[31mError: Map contains garbage data\x1b[0m\n",
-			2);
-	else if (error == MAP_CONTAINS_EMPTY_LINE)
-		ft_putstr_fd(
-			"Error\n\x1b[31mError: Map contains at least an empty line\x1b[0m\n",
-			2);
-	else if (error == WALL_IS_BREACHED)
-		ft_putstr_fd("Error\n\x1b[31mError: Wall is breached\x1b[0m\n", 2);
+		ft_putstr_fd("Error\nSome elements are missing\n", 2);
+	else 
+		print_parsing_error_message_2(error);
 }
-
+/**
+ * @brief Frees memory allocated for parsed data.
+ *
+ * This function is responsible for cleaning up memory allocated during the
+ * parsing process, including textures, colors, file content, and the map array.
+ *
+ * @param data A pointer to the t_file_data structure.
+ */
 void	clean_up_parsing(t_file_data *data)
 {
 	int	i;
@@ -174,22 +188,4 @@ void	clean_up_parsing(t_file_data *data)
 		}
 		free(data->map_as_array);
 	}
-}
-
-// only returns true if all characters in the input string are digits
-// and if the string is not empty
-t_bool	ft_is_numerical(char *str)
-{
-	size_t	i;
-
-	if (!str || !str[0])
-		return (FALSE);
-	i = 0;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (FALSE);
-		i++;
-	}
-	return (TRUE);
 }

@@ -3,157 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_scene_elements.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lclerc <lclerc@hive.student.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:17:58 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/28 15:39:23 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/10/28 23:41:55 by lclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
-
-static t_return_value
-	check_map_does_not_contain_empty_lines(
-		t_file_data *data, char *map_as_string)
-{
-	t_bool	empty_line;
-
-	empty_line = FALSE;
-	while (*map_as_string != '\0')
-	{
-		if (*map_as_string != ' ' && *map_as_string != '\n')
-		{
-			empty_line = FALSE;
-		}
-		else if (*map_as_string == '\n')
-		{
-			if (empty_line)
-			{
-				data->return_value = MAP_CONTAINS_EMPTY_LINE;
-				return (data->return_value);
-			}
-			empty_line = TRUE;
-		}
-		map_as_string++;
-	}
-	return (data->return_value);
-}
-
-/**
- * @brief Get player spawn position and direction.
- *
- * This function extracts the player's spawn position and direction from the
- * scene description.
- *
- * @param data The structure to store player data.
- * @param map_string_contains_player_position The string with player data.
- * @param spawn_direction_delimiter Delimiter for spawn direction.
- * @return A return code indicating success or failure.
- */
-static t_return_value
-	get_player_spawn_position_and_direction(
-		t_file_data *data,
-		char *map_string_contains_player_position,
-		const char *spawn_direction_delimiter)
-{
-	int	spawn_location;
-	int	index_relative_to_last_new_line_found;
-	int	spawn_direction_index;
-	int	new_lines_found;
-
-	spawn_location = 0;
-	new_lines_found = 0;
-	while (map_string_contains_player_position[spawn_location] != '\0')
-	{
-		if (map_string_contains_player_position[spawn_location] == '\n')
-		{
-			new_lines_found++;
-			index_relative_to_last_new_line_found = spawn_location;
-		}
-		spawn_direction_index = 0;
-		while (spawn_direction_delimiter[spawn_direction_index] != '\0')
-		{
-			if (map_string_contains_player_position[spawn_location]
-				== spawn_direction_delimiter[spawn_direction_index])
-			{
-				data->player_x = spawn_location
-					- index_relative_to_last_new_line_found;
-				data->player_y = new_lines_found;
-				*data->player_spawn_direction
-					= spawn_direction_delimiter[spawn_direction_index];
-				map_string_contains_player_position[spawn_location] = '0';
-				return (data->return_value);
-			}
-			spawn_direction_index++;
-		}
-		spawn_location++;
-	}
-	data->return_value = PLAYER_DATA_INCORRECT_OR_MISSING;
-	return (data->return_value);
-}
-
-/**
- * @brief Check for garbage data before the map in the input string.
- *
- * This function checks for invalid characters or data before the map content
- * in the input string.
- *
- * @param map_as_string The string with map data.
- * @return A return code indicating the presence of garbage data.
- */
-static t_return_value
-	check_for_garbage_data_in_remaining_map(
-		t_file_data *data, char *map_as_string)
-{
-	while (*map_as_string && *map_as_string != '\0')
-	{
-		if (*map_as_string != ' ' && *map_as_string != '0'
-			&& *map_as_string != '1' && *map_as_string != '\n')
-		{
-			data->return_value = GARBAGE_DATA;
-			return (data->return_value);
-		}
-		map_as_string++;
-	}
-	return (data->return_value);
-}
-
-/**
- * @brief Import and prepare map elements from a text file.
- *
- * This function parses the input scene description
- * and prepares map elements for use.
- *
- * @param data The structure to store imported data.
- * @param map_as_string The string with map data.
- * @return A return code indicating success or failure.
- */
-static t_return_value
-	map_import_and_preparation(t_file_data *data, char *map_as_string)
-{
-	if (data->elements_found != 6)
-	{
-		if (data->elements_found == 0)
-			data->return_value = NO_ELEMENT_FOUND;
-		else
-			data->return_value = MISSING_ELEMENTS;
-		return (data->return_value);
-	}
-	printf("map as string after trimming :\n->%s\n:\n", map_as_string);
-	if (get_map_amount_of_lines(data, map_as_string) == MAP_CONTENT_NOT_VALID)
-		return (data->return_value);
-	printf("map_amount_of_lines :%d:\n", data->map_number_of_lines);
-	get_player_spawn_position_and_direction(data, map_as_string,
-		SPAWN_DIRECTION);
-	if (check_for_garbage_data_in_remaining_map(data,
-			map_as_string) == GARBAGE_DATA)
-		return (data->return_value);
-	if (check_map_does_not_contain_empty_lines(data,
-			map_as_string) == MAP_CONTAINS_EMPTY_LINE)
-		return (data->return_value);
-	transfer_remaining_string_to_map_array(data, map_as_string);
-	return (data->return_value);
-}
 
 /**
  * @brief Get the texture element content from the provided string.
@@ -185,11 +42,11 @@ static t_return_value
  * @brief Find and extract map elements from a string.
  *
  * This function identifies and extracts various map elements from a string,
-	such as textures, floor color, and ceiling color.
+ * such as textures, floor color, and ceiling color.
  *
  * @param element The string to analyze and extract elements from.
- * @param data The structure to store the extracted elements.
- * @return A return code indicating success or failure.
+ * @param data A pointer to the t_file_data structure.
+ * @return The exit code indicating success or failure.
  */
 static t_return_value
 	find_and_get_element(char *element, t_file_data *data)
@@ -220,14 +77,53 @@ static t_return_value
 }
 
 /**
+ * @brief Check if the map contains empty lines.
+ *
+ * This function checks if the map contains empty lines and sets the appropriate
+ * error code in the t_file_data structure if it does.
+ *
+ * @param data A pointer to the t_file_data structure.
+ * @param map_as_string The string representing the map.
+ * @return The exit code indicating success or failure.
+ */
+t_return_value
+	check_map_does_not_contain_empty_lines(t_file_data *data,
+										char *map_as_string)
+{
+	t_bool	empty_line;
+
+	empty_line = FALSE;
+	while (*map_as_string != '\0')
+	{
+		if (*map_as_string != ' ' && *map_as_string != '\n')
+		{
+			empty_line = FALSE;
+		}
+		else if (*map_as_string == '\n')
+		{
+			if (empty_line)
+			{
+				data->return_value = MAP_CONTAINS_EMPTY_LINE;
+				return (data->return_value);
+			}
+			empty_line = TRUE;
+		}
+		map_as_string++;
+	}
+	return (data->return_value);
+}
+
+/**
  * @brief Get map elements from the input scene description.
  *
- * This function parses the input scene description and extracts map elements.
+ * This function parses the input scene description and extracts map elements
+ * such as textures, floor color, ceiling color, and the map itself.
  *
- * @param data The structure to store the extracted elements.
- * @return A return code indicating success or failure.
+ * @param data A pointer to the t_file_data structure.
+ * @return The exit code indicating success or failure.
  */
-t_return_value	get_scene_elements_and_map(t_file_data *data)
+t_return_value
+	get_scene_elements_and_map(t_file_data *data)
 {
 	char	*element_starts;
 	char	*element_ends;
@@ -238,7 +134,7 @@ t_return_value	get_scene_elements_and_map(t_file_data *data)
 	{
 		element_starts = remove_leading_white_spaces(element_starts);
 		element_ends = ft_strchr(element_starts, '\n');
-		if (element_ends != element_starts)
+		if (element_starts != element_ends)
 		{
 			if (*element_starts == '1' || *element_starts == '0')
 				break ;
