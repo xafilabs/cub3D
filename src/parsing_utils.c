@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lionel <lionel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:47:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/29 17:24:59 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/01 08:37:00 by lionel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	get_max_line_length(char *map_as_string)
 		if (line_length > max_line_length)
 			max_line_length = line_length;
 		line_starts = line_ends;
-		if (line_starts)
+		if (line_starts && *line_starts != '\0')
 			line_starts++;
 	}
 	return (max_line_length);
