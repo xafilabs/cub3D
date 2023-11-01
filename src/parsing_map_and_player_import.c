@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map_and_player_import.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lionel <lionel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 23:19:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/11/01 14:23:30 by lionel           ###   ########.fr       */
+/*   Updated: 2023/11/01 17:51:22 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void
 	set_player_data(t_file_data *data, char *input_string,
 		char player_spawn_direction)
 {
-	data->player_x = data->current_position - data->last_new_line_position;
+	data->player_x = data->current_position - data->last_new_line_position - 1;
 	data->player_y = data->line_count;
 	*data->player_spawn_direction = player_spawn_direction;
 	input_string[data->current_position] = '0';
