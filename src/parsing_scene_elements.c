@@ -6,7 +6,7 @@
 /*   By: lionel <lionel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:17:58 by lclerc            #+#    #+#             */
-/*   Updated: 2023/11/01 12:20:26 by lionel           ###   ########.fr       */
+/*   Updated: 2023/11/01 12:33:19 by lionel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static t_return_value
 	while (element_content[element_length] != '\n'
 		&& element_content[element_length] != '\0')
 		element_length++;
-	if (element_type != NULL)
+	if (*element_type != NULL)
 		return (DUPLICATE_ELEMENT);
 	*element_type = (char *)calloc(element_length + 1, sizeof(char));
 	if (*element_type == NULL)
