@@ -6,7 +6,7 @@
 /*   By: lionel <lionel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 23:19:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/11/01 11:57:36 by lionel           ###   ########.fr       */
+/*   Updated: 2023/11/01 14:23:30 by lionel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ t_return_value	map_import_and_preparation(t_file_data *data,
 	if (check_map_does_not_contain_empty_lines(data,
 			map_as_string) == MAP_CONTAINS_EMPTY_LINE)
 		return (data->return_value);
-	printf (" youhou \n");
 	transfer_remaining_string_to_map_array(data, map_as_string);
 	return (data->return_value);
 }

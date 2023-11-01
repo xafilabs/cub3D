@@ -6,7 +6,7 @@
 /*   By: lionel <lionel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:47:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/11/01 11:59:11 by lionel           ###   ########.fr       */
+/*   Updated: 2023/11/01 15:35:15 by lionel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_return_value	get_map_amount_of_lines(t_file_data *data, char *map_as_string)
             temp++;
           }
     }
-	if (data->map_number_of_lines < 4)
+	if (data->map_number_of_lines < 3)
 	 {
 		data->return_value = MAP_CONTENT_NOT_VALID;
 

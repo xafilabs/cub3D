@@ -1,13 +1,11 @@
-   WE                            textures/wolfenstein/eagle.xpm
-NO      textures/wolfenstein/eagle.xpm
-
-
-
-SO textures/wolfenstein/eagle.xpm
+NO textures/brick.png
+WE textures/wood.png
+SO textures/grass.png
+EA textures/dirt.png
 
 F      69,222,199
 
-EA textures/wolfenstein/eagle.xpm
+
 
 
 

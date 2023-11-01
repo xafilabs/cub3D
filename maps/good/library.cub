@@ -1,10 +1,10 @@
 F 139,99,58
 C 171,154,137
 
-NO textures/simonkraft/bookshelf.xpm
-SO textures/simonkraft/bookshelf_01.xpm
-WE textures/simonkraft/bookshelf_02.xpm
-EA textures/simonkraft/bookshelf_03.xpm
+NO textures/brick.png
+WE textures/wood.png
+SO textures/grass.png
+EA textures/dirt.png
 
 
 111            1111
