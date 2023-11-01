@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_validation.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lionel <lionel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:28:44 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/29 17:24:31 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/01 12:11:58 by lionel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef enum e_return_value
 	ELEMENT,
 	ELEMENT_FOUND,
 	MISSING_ELEMENTS,
+	DUPLICATE_ELEMENT,
 	NO_ELEMENT_FOUND,
 	ALL_ELEMENTS_FOUND,
 	PLAYER_DATA_INCORRECT_OR_MISSING,
@@ -100,7 +101,7 @@ t_return_value		get_scene_elements_and_map(t_file_data *data);
 t_return_value		validate_scene_requirement(t_file_data *data);
 t_return_value		get_map_amount_of_lines(t_file_data *data,
 						char *map_as_string);
-char				*remove_leading_white_spaces(char *string_beginning);
+char				*skip_leading_white_spaces(char *string_beginning);
 t_return_value		transfer_remaining_string_to_map_array(t_file_data *data,
 						char *map_as_string);
 t_return_value		initialize_string_buffers(char **line_buffer,

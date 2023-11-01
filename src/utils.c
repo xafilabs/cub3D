@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lionel <lionel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/29 16:27:08 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/01 12:11:17 by lionel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	print_struct(t_file_data *data)
  * @param string The string to process.
  * @return A pointer to the string with leading white spaces removed.
  */
-char	*remove_leading_white_spaces(char *string)
+char	*skip_leading_white_spaces(char *string)
 {
 	while (string && *string != '\0' && (*string == '\t' || *string == '\v'
 			|| *string == '\f' || *string == '\r' || *string == ' '
@@ -110,6 +110,8 @@ void	print_parsing_error_message_2(t_return_value error)
 		ft_putstr_fd("Error\nWall is breached\n", 2);
 	else if (error == INVALID_COLORS)
 		ft_putstr_fd("Error\nInvalid RGB values\n", 2);
+	else if (error == DUPLICATE_ELEMENT)
+		ft_putstr_fd("Error\nDuplicate element\n", 2);
 }
 
 /**
