@@ -15,10 +15,10 @@
 
 // Preprocessor definitions
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 1920
+#  define WINDOW_WIDTH 720
 # endif
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 1080
+#  define WINDOW_HEIGHT 480
 # endif
 # ifndef PLAYER_FOV
 #  define PLAYER_FOV 65
