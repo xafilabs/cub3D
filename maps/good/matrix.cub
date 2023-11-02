@@ -1,7 +1,7 @@
-NO textures/brick.png
-WE textures/wood.png
-SO textures/grass.png
-EA textures/dirt.png
+NO textures/short/black.png
+WE textures/short/blue.png
+SO textures/short/green.png
+EA textures/short/red.png
 
 F 0,0,0
 C 0,0,0

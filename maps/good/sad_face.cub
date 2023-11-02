@@ -1,10 +1,10 @@
-NO textures/brick.png
-WE textures/wood.png
-SO textures/grass.png
-EA textures/dirt.png
+NO textures/1_color/black.png
+WE textures/1_color/red.png
+SO textures/1_color/blue.png
+EA textures/1_color/green.png
 
-C 53,41,34
-F 45,33,27
+C 40,40,40
+F 255,255,255
 
 111111111111111
 111111000111111

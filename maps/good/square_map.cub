@@ -1,15 +1,15 @@
-NO textures/brick.png
-WE textures/wood.png
-SO textures/grass.png
-EA textures/dirt.png
+NO textures/64pxl_grey/east.png
+WE textures/64pxl_grey/west.png
+SO textures/64pxl_grey/north.png
+EA textures/64pxl_grey/south.png
 
-F      69,222,199
-
-
+F      0,0,0
 
 
 
-C 235,198,52
+
+
+C 255,255,255
 
 111111111111111111111111
 1000N0000000000000000001
