@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lionel <lionel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:47:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/11/01 15:35:15 by lionel           ###   ########.fr       */
+/*   Updated: 2023/11/02 13:16:36 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,19 @@ t_return_value	get_map_amount_of_lines(t_file_data *data, char *map_as_string)
 
 	if (map_as_string)
 	{
-          temp = map_as_string;
-          data->map_number_of_lines++;
-          while (*temp) 
-		  {
-            if (*temp == '\n')
-              data->map_number_of_lines++;
-            temp++;
-          }
-    }
+		temp = map_as_string;
+		data->map_number_of_lines++;
+		while (*temp)
+		{
+			if (*temp == '\n')
+				data->map_number_of_lines++;
+			temp++;
+		}
+	}
 	if (data->map_number_of_lines < 3)
-	 {
+	{
 		data->return_value = MAP_CONTENT_NOT_VALID;
-
-	 }
+	}
 	return (data->return_value);
 }
 
@@ -91,8 +90,7 @@ int	get_max_line_length(char *map_as_string)
  * @param data A pointer to the t_file_data structure.
  * @return The exit code indicating success or failure.
  */
-t_return_value	initialize_string_buffers(char **line_buffer,
-		t_file_data *data)
+t_return_value	initialize_string_buffers(char **line_buffer, t_file_data *data)
 {
 	*line_buffer = ft_strdup("");
 	if (data->file_content_as_string)
@@ -111,14 +109,14 @@ t_return_value	initialize_string_buffers(char **line_buffer,
 }
 
 /**
- * @brief Checks if all characters in the input string are digits and the 
+ * @brief Checks if all characters in the input string are digits and the
  * string is not empty.
  *
- * This function returns true if all characters in the input string are 
+ * This function returns true if all characters in the input string are
  * digits (0-9) and if the string is not empty. Otherwise, it returns false.
  *
  * @param str The input string to be checked.
- * @return TRUE if the string consists of only digits and is not empty, FALSE 
+ * @return TRUE if the string consists of only digits and is not empty, FALSE
  * otherwise.
  */
 t_bool	ft_is_numerical(char *str)

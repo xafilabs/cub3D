@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:17:58 by lclerc            #+#    #+#             */
-/*   Updated: 2023/11/02 08:47:33 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:22:00 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,16 +140,16 @@ t_return_value
 		element_ends = ft_strchr(element_starts, '\n');
 		if (element_starts != element_ends)
 		{
-			if (*element_starts == '1' || *element_starts == '0')
-				break ;
-			if (find_and_get_element(element_starts, data) == MALLOC_FAILURE)
+			if (*element_starts == '1' || *element_starts == '0'
+				|| find_and_get_element(element_starts, data) == MALLOC_FAILURE)
 				break ;
 		}
 		element_starts = element_ends;
 		if (element_starts && *element_starts != '\0')
 			element_starts++;
 	}
-	while (element_starts && *element_starts != '\0' && *element_starts == '\n')
+	while (element_starts
+		&& *element_starts != '\0' && *element_starts == '\n')
 		element_starts++;
 	if (data->return_value == SUCCESS)
 		map_import_and_preparation(data, element_starts);

@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 23:19:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/11/01 17:51:22 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:23:01 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static t_return_value
 		data->direction_index = 0;
 		while (spawn_direction_delimiter[data->direction_index] != '\0')
 		{
-			if (input_string[data->current_position] 
+			if (input_string[data->current_position]
 				== spawn_direction_delimiter[data->direction_index])
 			{
 				set_player_data(data, input_string,

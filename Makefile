@@ -6,7 +6,7 @@
 #    By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 15:25:10 by malaakso          #+#    #+#              #
-#    Updated: 2023/10/29 17:34:45 by malaakso         ###   ########.fr        #
+#    Updated: 2023/11/02 13:46:45 by malaakso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,6 @@ C_FILES			=	main.c \
 					render_utils.c \
 					mlx_hooks.c \
 					raycasting_movement.c \
-					error.c \
 					migration.c \
 					raycasting.c \
 					raycasting_init.c \

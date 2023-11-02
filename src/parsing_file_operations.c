@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_file_operations.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lionel <lionel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:42:34 by lclerc            #+#    #+#             */
-/*   Updated: 2023/11/01 15:21:54 by lionel           ###   ########.fr       */
+/*   Updated: 2023/11/02 13:23:52 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
  * @return The exit code indicating success or failure.
  */
 static t_return_value	open_and_validate_file(t_file_data *data,
-												const char **path)
+		const char **path)
 {
 	data->file_descriptor = open(path[1], O_RDONLY);
 	if (data->file_descriptor == -1)
@@ -49,7 +49,7 @@ static t_return_value	open_and_validate_file(t_file_data *data,
  * @return The exit code indicating success or failure.
  */
 static t_return_value	concatenate_line_buffer_to_string(t_file_data *data,
-														char *line)
+		char *line)
 {
 	char	*temp;
 
@@ -118,8 +118,7 @@ t_return_value	get_file_content_to_string(t_file_data *data, const char **path)
  * to the scene description file.
  * @return The exit code indicating success or failure.
  */
-t_return_value	check_file_type(t_file_data *data,
-								const char **path_to_file)
+t_return_value	check_file_type(t_file_data *data, const char **path_to_file)
 {
 	const char	*path;
 	char		*last_4_chars;
@@ -156,8 +155,5 @@ t_return_value	validate_scene_requirement(t_file_data *data)
 		return (data->return_value);
 	if (get_rgb_colors(data) != SUCCESS)
 		return (data->return_value);
-	printf("\n\n_______PRINT_STRUCT:\n");
-	if (data->return_value == SUCCESS)
-	 	print_struct(data);
 	return (data->return_value);
 }

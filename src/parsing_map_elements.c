@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map_elements.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lionel <lionel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:12:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/11/01 11:21:18 by lionel           ###   ########.fr       */
+/*   Updated: 2023/11/02 13:22:31 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ t_return_value	validate_map(t_file_data *data, int map_width)
 		{
 			if (data->map_as_array[line][column] == FLOOR)
 			{
-				if (line == (data->map_number_of_lines - 1) ||
-				 !is_wall_or_floor(data, line, column, map_width))
+				if (line == (data->map_number_of_lines - 1)
+					|| !is_wall_or_floor(data, line, column, map_width))
 					data->return_value = WALL_IS_BREACHED;
 			}
 			column++;

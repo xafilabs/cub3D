@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lionel <lionel@student.42.fr>              +#+  +:+       +#+        */
+/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/11/01 15:01:07 by lionel           ###   ########.fr       */
+/*   Updated: 2023/11/02 13:26:34 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ void				render(t_data *d);
 void				loop_hook(void *data_param);
 void				close_hook(void *data_param);
 void				key_hook(mlx_key_data_t keydata, void *data_param);
-void				clean_exit(t_data *d);
+void				clean_exit(t_data *d, int exit_status);
 double				deg_to_rad(double degrees);
 unsigned int		get_texture_pixel(mlx_texture_t *texture, unsigned int x,
 						unsigned int y);
@@ -208,8 +208,4 @@ unsigned int		migrate_colors_to_rgba(
 						unsigned int a);
 t_bool				ft_is_numerical(char *str);
 
-// to be deleted
-void				print_elements(t_file_data *data);
-void				print_struct(t_file_data *data);
-void				print_int_grid(int **grid, int height, int width);
 #endif

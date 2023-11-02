@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/29 16:37:12 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:45:55 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static t_return_value
 		free (data->file_content_as_string);
 		data->file_content_as_string = ft_strdup(temp);
 		free (temp);
-		//printf("After trimming:\n%s\n", data->file_content_as_string);
 	}
 	if (data->return_value == SUCCESS)
 		validate_scene_requirement(data);
@@ -98,7 +97,7 @@ int	main(int argc, char **argv)
 	(void)argv;
 	if (argc != 2)
 	{
-		printf("Error\nUsage: ./cub3D map.cub\n");
+		ft_putstr_fd("Error\nUsage: ./cub3D map.cub\n", 2);
 		exit(NEED_MAP_CUB_FILE);
 	}
 	parsing_main(&file_data, argv);
@@ -120,6 +119,6 @@ int	main(int argc, char **argv)
 	mlx_close_hook(render_data.mlx, close_hook, &render_data);
 	mlx_key_hook(render_data.mlx, key_hook, &render_data);
 	mlx_loop(render_data.mlx);
-	clean_exit(&render_data);
+	clean_exit(&render_data, EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }

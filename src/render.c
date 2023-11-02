@@ -6,17 +6,16 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/11/02 09:39:21 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 13:25:45 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
 
-void	clean_exit(t_data *d)
+void	clean_exit(t_data *d, int exit_status)
 {
 	int		i;
 
-	printf("Exit called, cleaning up!\n");
 	mlx_terminate(d->mlx);
 	if (d->map.content)
 	{
@@ -29,7 +28,7 @@ void	clean_exit(t_data *d)
 		}
 		free(d->map.content);
 	}
-	exit(EXIT_SUCCESS);
+	exit(exit_status);
 }
 
 void	init_player_dir_plane(t_data *d, int player_angle_deg, int fov_deg)
