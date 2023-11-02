@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/11/02 08:48:10 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 08:50:34 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	print_parsing_error_message(t_return_value error)
 	else if (error == FILE_OPEN_FAILURE)
 		ft_putstr_fd("Error\nfile open failure\n", 2);
 	else if (error == MAP_CONTENT_NOT_VALID)
-		ft_putstr_fd("Error\nfile content not valid\n",
+		ft_putstr_fd("Error\nFile content not valid\n",
 			2);
 	else if (error == INVALID_ARGUMENT)
 		ft_putstr_fd("Error\nUsage: use cub file\n", 2);
