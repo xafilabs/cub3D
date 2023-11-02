@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lionel <lionel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/29 16:26:26 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/01 15:01:07 by lionel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 // Preprocessor definitions
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 1920
+#  define WINDOW_WIDTH 720
 # endif
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 1080
+#  define WINDOW_HEIGHT 480
 # endif
 # ifndef PLAYER_FOV
 #  define PLAYER_FOV 65
@@ -209,6 +209,7 @@ unsigned int		migrate_colors_to_rgba(
 t_bool				ft_is_numerical(char *str);
 
 // to be deleted
+void				print_elements(t_file_data *data);
 void				print_struct(t_file_data *data);
 void				print_int_grid(int **grid, int height, int width);
 #endif

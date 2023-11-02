@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lionel <lionel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:47:42 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/29 17:24:59 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/01 15:35:15 by lionel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,22 @@ t_return_value	get_map_amount_of_lines(t_file_data *data, char *map_as_string)
 {
 	char	*temp;
 
-	temp = map_as_string;
-	data->map_number_of_lines++;
-	while (*temp)
+	if (map_as_string)
 	{
-		if (*temp == '\n')
-			data->map_number_of_lines++;
-		temp++;
-	}
+          temp = map_as_string;
+          data->map_number_of_lines++;
+          while (*temp) 
+		  {
+            if (*temp == '\n')
+              data->map_number_of_lines++;
+            temp++;
+          }
+    }
 	if (data->map_number_of_lines < 3)
+	 {
 		data->return_value = MAP_CONTENT_NOT_VALID;
+
+	 }
 	return (data->return_value);
 }
 
@@ -67,7 +73,7 @@ int	get_max_line_length(char *map_as_string)
 		if (line_length > max_line_length)
 			max_line_length = line_length;
 		line_starts = line_ends;
-		if (line_starts)
+		if (line_starts && *line_starts != '\0')
 			line_starts++;
 	}
 	return (max_line_length);

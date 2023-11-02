@@ -6,11 +6,21 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:42:51 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/29 17:39:48 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 08:48:10 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
+
+void	print_elements(t_file_data *data)
+{
+	printf("\t\tNorth Texture: %s\n", data->north_texture);
+	printf("\t\tSouth Texture: %s\n", data->south_texture);
+	printf("\t\tWest Texture: %s\n", data->west_texture);
+	printf("\t\tEast Texture: %s\n", data->east_texture);
+	printf("\t\tFloor Color: %s\n", data->floor_color);
+	printf("\t\tCeiling Color: %s\n", data->ceiling_color);
+}
 
 void	print_struct(t_file_data *data)
 {
@@ -68,7 +78,7 @@ void	print_struct(t_file_data *data)
  * @param string The string to process.
  * @return A pointer to the string with leading white spaces removed.
  */
-char	*remove_leading_white_spaces(char *string)
+char	*skip_leading_white_spaces(char *string)
 {
 	while (string && *string != '\0' && (*string == '\t' || *string == '\v'
 			|| *string == '\f' || *string == '\r' || *string == ' '
@@ -110,10 +120,8 @@ void	print_parsing_error_message_2(t_return_value error)
 		ft_putstr_fd("Error\nWall is breached\n", 2);
 	else if (error == INVALID_COLORS)
 		ft_putstr_fd("Error\nInvalid RGB values\n", 2);
-	else if (error == MAP_MISSING)
-		ft_putstr_fd("Error\nMissing map\n", 2);
-	else
-		ft_putstr_fd("Error\nUnknown error\n", 2);
+	else if (error == DUPLICATE_ELEMENT)
+		ft_putstr_fd("Error\nDuplicate element\n", 2);
 }
 
 /**

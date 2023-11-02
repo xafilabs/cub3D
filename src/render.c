@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lionel <lionel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/10/28 12:19:02 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:08:08 by lionel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,16 @@ void	set_ray_texture(t_data	*d, t_ray *ray)
 	if (ray->side == 0)
 	{
 		if (ray->dir.x < 0)
-			ray->texture = d->texture.east;
-		else
 			ray->texture = d->texture.west;
+		else
+			ray->texture = d->texture.east;
 	}
 	else
 	{
 		if (ray->dir.y < 0)
-			ray->texture = d->texture.south;
-		else
 			ray->texture = d->texture.north;
+		else
+			ray->texture = d->texture.south;
 	}
 }
 

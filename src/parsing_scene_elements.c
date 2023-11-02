@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:17:58 by lclerc            #+#    #+#             */
-/*   Updated: 2023/10/29 17:40:52 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 08:47:33 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ static t_return_value
 	size_t	element_length;
 
 	element_length = 0;
-	element_content = remove_leading_white_spaces(element_content);
+	element_content = skip_leading_white_spaces(element_content);
 	while (element_content[element_length] != '\n'
 		&& element_content[element_length] != '\0')
 		element_length++;
+	if (*element_type != NULL)
+		return (DUPLICATE_ELEMENT);
 	*element_type = (char *)calloc(element_length + 1, sizeof(char));
 	if (*element_type == NULL)
 		return (MALLOC_FAILURE);
@@ -53,7 +55,7 @@ static t_return_value
 {
 	t_return_value	return_value;
 
-	element = remove_leading_white_spaces(element);
+	element = skip_leading_white_spaces(element);
 	return_value = ELEMENT_NOT_FOUND;
 	if (ft_strncmp("NO ", element, 3) == 0)
 		return_value = get_element_texture(&data->north_texture, element + 3);
@@ -69,6 +71,8 @@ static t_return_value
 		return_value = get_element_texture(&data->ceiling_color, element + 2);
 	if (return_value == MALLOC_FAILURE)
 		data->return_value = MALLOC_FAILURE;
+	else if (return_value == DUPLICATE_ELEMENT)
+		data->return_value = DUPLICATE_ELEMENT;
 	else if (return_value == ELEMENT_FOUND)
 		data->elements_found++;
 	if (data->elements_found == ELEMENTS_NEEDED)
@@ -132,7 +136,7 @@ t_return_value
 	while (element_starts && *element_starts != '\0'
 		&& data->elements_found < ELEMENTS_NEEDED)
 	{
-		element_starts = remove_leading_white_spaces(element_starts);
+		element_starts = skip_leading_white_spaces(element_starts);
 		element_ends = ft_strchr(element_starts, '\n');
 		if (element_starts != element_ends)
 		{
@@ -142,12 +146,7 @@ t_return_value
 				break ;
 		}
 		element_starts = element_ends;
-		if (!element_starts)
-		{
-			data->return_value = MAP_MISSING;
-			return (data->return_value);
-		}
-		if (*element_starts != '\0')
+		if (element_starts && *element_starts != '\0')
 			element_starts++;
 	}
 	while (element_starts && *element_starts != '\0' && *element_starts == '\n')
