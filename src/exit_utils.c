@@ -6,25 +6,11 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:29:18 by malaakso          #+#    #+#             */
-/*   Updated: 2023/11/02 15:03:28 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:39:28 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
-
-void	free_cub3d_textures(t_data *d)
-{
-	if (!d)
-		return ;
-	if (d->texture.north)
-		free(d->texture.north);
-	if (d->texture.east)
-		free(d->texture.east);
-	if (d->texture.south)
-		free(d->texture.south);
-	if (d->texture.west)
-		free(d->texture.west);
-}
 
 void	free_file_data_not_map(t_file_data *data)
 {

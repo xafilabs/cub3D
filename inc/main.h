@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/11/02 15:11:43 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:40:26 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,8 +205,7 @@ t_return_value		get_rgb_colors(t_file_data *data);
 t_bool				ft_is_numerical(char *str);
 void				exit_parsing(t_file_data *file_data, int return_value);
 void				exit_mlx_parsing(t_file_data *file_data,
-						t_data	*render_data, int return_value, mlx_t *mlx);
-void				free_cub3d_textures(t_data *d);
+						int return_value, mlx_t *mlx);
 void				free_file_data_not_map(t_file_data *data);
 void				migrate_colors(t_file_data *file_data, t_data *render_data);
 

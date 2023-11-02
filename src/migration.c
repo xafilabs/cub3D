@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:22:21 by malaakso          #+#    #+#             */
-/*   Updated: 2023/11/02 15:06:08 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:40:16 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,10 @@ void	exit_parsing(t_file_data *file_data, int return_value)
 }
 
 void
-	exit_mlx_parsing(t_file_data *file_data, t_data	*render_data,
+	exit_mlx_parsing(t_file_data *file_data,
 		int return_value, mlx_t *mlx)
 {
 	mlx_terminate(mlx);
-	free_cub3d_textures(render_data);
 	exit_parsing(file_data, return_value);
 }
 

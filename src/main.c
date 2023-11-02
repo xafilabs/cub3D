@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/11/02 15:10:41 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:40:53 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ void	init_game(t_file_data *file_data, t_data *render_data)
 	render_data->img = mlx_new_image(
 			render_data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!render_data->img)
-		exit_mlx_parsing(file_data, render_data, FAILURE, render_data->mlx);
+		exit_mlx_parsing(file_data, FAILURE, render_data->mlx);
 	if (migrate_data_file_to_render(file_data, render_data) == FAILURE)
-		exit_mlx_parsing(file_data, render_data, FAILURE, render_data->mlx);
+		exit_mlx_parsing(file_data, FAILURE, render_data->mlx);
 	if (mlx_image_to_window(render_data->mlx, render_data->img, 0, 0) < 0)
-		exit_mlx_parsing(file_data, render_data, FAILURE, render_data->mlx);
+		exit_mlx_parsing(file_data, FAILURE, render_data->mlx);
 	free_file_data_not_map(file_data);
 	mlx_loop_hook(render_data->mlx, loop_hook, render_data);
 	mlx_close_hook(render_data->mlx, close_hook, render_data);
