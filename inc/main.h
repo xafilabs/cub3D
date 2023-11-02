@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/11/02 13:26:34 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:11:43 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/libft.h"
 # include "file_validation.h"
-# include "map_validation.h"
 
 // Type definitions
 typedef enum e_program_phase
@@ -203,9 +202,12 @@ void				init_ray_base_values(t_data *d, t_ray *ray, int x);
 void				init_ray_delta(t_ray *ray);
 void				init_ray_side_distance(t_data *d, t_ray *ray);
 t_return_value		get_rgb_colors(t_file_data *data);
-unsigned int		migrate_colors_to_rgba(
-						unsigned int r, unsigned int g, unsigned int b,
-						unsigned int a);
 t_bool				ft_is_numerical(char *str);
+void				exit_parsing(t_file_data *file_data, int return_value);
+void				exit_mlx_parsing(t_file_data *file_data,
+						t_data	*render_data, int return_value, mlx_t *mlx);
+void				free_cub3d_textures(t_data *d);
+void				free_file_data_not_map(t_file_data *data);
+void				migrate_colors(t_file_data *file_data, t_data *render_data);
 
 #endif

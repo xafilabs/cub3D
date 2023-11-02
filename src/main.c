@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/11/02 13:45:55 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:10:41 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,7 @@ static void	parsing_main(t_file_data *file_data, char **argv)
 	file_data->return_value = SUCCESS;
 	validate_cub_and_map_file(file_data, (const char **)argv);
 	if (file_data->return_value != SUCCESS)
-	{
-		print_parsing_error_message(file_data->return_value);
-		clean_up_parsing(file_data);
-		exit(1);
-	}
+		exit_parsing(file_data, file_data->return_value);
 }
 
 static t_return_value
@@ -65,15 +61,27 @@ static t_return_value
 	render_data->player.pos.x = file_data->player_x + 0.5;
 	render_data->player.pos.y = file_data->player_y + 0.5;
 	migrate_player_direction(file_data, render_data);
-	render_data->color.floor = migrate_colors_to_rgba(
-			(unsigned int)file_data->floor_rgb.red,
-			(unsigned int)file_data->floor_rgb.green,
-			(unsigned int)file_data->floor_rgb.blue, 255);
-	render_data->color.ceiling = migrate_colors_to_rgba(
-			(unsigned int)file_data->ceiling_rgb.red,
-			(unsigned int)file_data->ceiling_rgb.green,
-			(unsigned int)file_data->ceiling_rgb.blue, 255);
+	migrate_colors(file_data, render_data);
 	return (SUCCESS);
+}
+
+void	init_game(t_file_data *file_data, t_data *render_data)
+{
+	render_data->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
+	if (!render_data->mlx)
+		exit_parsing(file_data, MALLOC_FAILURE);
+	render_data->img = mlx_new_image(
+			render_data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!render_data->img)
+		exit_mlx_parsing(file_data, render_data, FAILURE, render_data->mlx);
+	if (migrate_data_file_to_render(file_data, render_data) == FAILURE)
+		exit_mlx_parsing(file_data, render_data, FAILURE, render_data->mlx);
+	if (mlx_image_to_window(render_data->mlx, render_data->img, 0, 0) < 0)
+		exit_mlx_parsing(file_data, render_data, FAILURE, render_data->mlx);
+	free_file_data_not_map(file_data);
+	mlx_loop_hook(render_data->mlx, loop_hook, render_data);
+	mlx_close_hook(render_data->mlx, close_hook, render_data);
+	mlx_key_hook(render_data->mlx, key_hook, render_data);
 }
 
 /**
@@ -101,23 +109,7 @@ int	main(int argc, char **argv)
 		exit(NEED_MAP_CUB_FILE);
 	}
 	parsing_main(&file_data, argv);
-	render_data.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", false);
-	if (!render_data.mlx)
-		return (EXIT_FAILURE);
-	render_data.img = mlx_new_image(
-			render_data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	if (!render_data.img)
-		exit(EXIT_FAILURE);
-	if (migrate_data_file_to_render(&file_data, &render_data) == FAILURE)
-	{
-		clean_up_parsing(&file_data);
-		exit(1);
-	}
-	if (mlx_image_to_window(render_data.mlx, render_data.img, 0, 0) < 0)
-		exit(EXIT_FAILURE);
-	mlx_loop_hook(render_data.mlx, loop_hook, &render_data);
-	mlx_close_hook(render_data.mlx, close_hook, &render_data);
-	mlx_key_hook(render_data.mlx, key_hook, &render_data);
+	init_game(&file_data, &render_data);
 	mlx_loop(render_data.mlx);
 	clean_exit(&render_data, EXIT_SUCCESS);
 	return (EXIT_SUCCESS);

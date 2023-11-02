@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/11/02 13:25:45 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 14:34:37 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	clean_exit(t_data *d, int exit_status)
 		}
 		free(d->map.content);
 	}
+	free_cub3d_textures(d);
 	exit(exit_status);
 }
 
