@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/11/02 16:51:45 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:21:32 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	init_game(t_file_data *file_data, t_data *render_data)
 	if (mlx_image_to_window(render_data->mlx, render_data->img, 0, 0) < 0)
 		exit_mlx_parsing(file_data, FAILURE, render_data->mlx);
 	free_file_data_not_map(file_data);
+	validate_textures(render_data);
 	mlx_loop_hook(render_data->mlx, loop_hook, render_data);
 	mlx_close_hook(render_data->mlx, close_hook, render_data);
 	mlx_key_hook(render_data->mlx, key_hook, render_data);

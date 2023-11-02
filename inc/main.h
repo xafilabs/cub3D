@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/11/02 16:51:21 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:21:03 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define PLAYER_MOVE_SPEED 0.025
 // PLAYER_ROTATE_SPEED in radians
 # define PLAYER_ROTATE_SPEED 0.03
+# define TEXTURE_SIZE_MIN 1
+# define TEXTURE_SIZE_MAX 64
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
 # define HUGE_NUMBER 100000000
@@ -199,5 +201,6 @@ void				exit_mlx_parsing(t_file_data *file_data,
 void				free_file_data_not_map(t_file_data *data);
 void				migrate_colors(t_file_data *file_data, t_data *render_data);
 void				exit_invalid_argc(void);
+void				validate_textures(t_data *render_data);
 
 #endif
