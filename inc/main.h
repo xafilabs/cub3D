@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/11/02 15:40:26 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:48:46 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,13 @@
 # define MAIN_H
 
 // Preprocessor definitions
-# ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 720
-# endif
-# ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 480
-# endif
-# ifndef PLAYER_FOV
-#  define PLAYER_FOV 65
-# endif
+# define WINDOW_WIDTH 720
+# define WINDOW_HEIGHT 480
+# define PLAYER_FOV 65
 // PLAYER_MOVE_SPEED in map squares
-# ifndef PLAYER_MOVE_SPEED
-#  define PLAYER_MOVE_SPEED 0.025
-# endif
+# define PLAYER_MOVE_SPEED 0.025
 // PLAYER_ROTATE_SPEED in radians
-# ifndef PLAYER_ROTATE_SPEED
-#  define PLAYER_ROTATE_SPEED 0.03
-# endif
+# define PLAYER_ROTATE_SPEED 0.03
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
 # define HUGE_NUMBER 100000000
