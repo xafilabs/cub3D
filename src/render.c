@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 18:19:30 by malaakso          #+#    #+#             */
-/*   Updated: 2023/11/02 16:38:04 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:42:36 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	draw_texture(t_data *d, t_ray *ray, int x)
 	y = ray->draw_start;
 	while (y <= ray->draw_end)
 	{
-		ray->tex_pos.y = (int)(tex_start_pos);
+		ray->tex_pos.y = (int)round(tex_start_pos);
 		if (ray->tex_pos.y >= (int)ray->texture->height)
 			ray->tex_pos.y = (int)ray->texture->height - 1;
 		tex_start_pos += step;
