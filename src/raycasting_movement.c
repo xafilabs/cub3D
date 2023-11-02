@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 11:47:12 by malaakso          #+#    #+#             */
-/*   Updated: 2023/11/02 10:02:28 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 10:19:52 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ static void	move_player_in_direction_parallel(t_data *d, int direction)
 {
 	if (d->map.content[(int)d->player.pos.y]
 		[(int)(d->player.pos.x
-			+ direction * d->player.dir.x * (PLAYER_MOVE_SPEED * 1.01))] == 0)
+			+ direction * d->player.dir.x * (PLAYER_MOVE_SPEED * 1.001))] == 0)
 	{
 		d->player.pos.x += direction * d->player.dir.x * PLAYER_MOVE_SPEED;
 	}
 	if (d->map.content[(int)(d->player.pos.y
-			+ direction * d->player.dir.y * (PLAYER_MOVE_SPEED * 1.01))]
+			+ direction * d->player.dir.y * (PLAYER_MOVE_SPEED * 1.001))]
 			[(int)d->player.pos.x] == 0)
 	{
 		d->player.pos.y += direction * d->player.dir.y * PLAYER_MOVE_SPEED;
@@ -62,12 +62,12 @@ static void	move_player_in_direction_perpendicular(t_data *d, int direction)
 	rot.x = d->player.dir.y;
 	if (d->map.content[(int)d->player.pos.y]
 		[(int)(d->player.pos.x
-			+ direction * rot.x * (PLAYER_MOVE_SPEED * 1.01))] == 0)
+			+ direction * rot.x * (PLAYER_MOVE_SPEED * 1.001))] == 0)
 	{
 		d->player.pos.x += direction * rot.x * PLAYER_MOVE_SPEED;
 	}
 	if (d->map.content[(int)(d->player.pos.y
-			+ direction * rot.y * (PLAYER_MOVE_SPEED * 1.01))]
+			+ direction * rot.y * (PLAYER_MOVE_SPEED * 1.001))]
 			[(int)d->player.pos.x] == 0)
 	{
 		d->player.pos.y += direction * rot.y * PLAYER_MOVE_SPEED;
