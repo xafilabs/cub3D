@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/11/02 16:48:46 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:51:21 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,5 +198,6 @@ void				exit_mlx_parsing(t_file_data *file_data,
 						int return_value, mlx_t *mlx);
 void				free_file_data_not_map(t_file_data *data);
 void				migrate_colors(t_file_data *file_data, t_data *render_data);
+void				exit_invalid_argc(void);
 
 #endif

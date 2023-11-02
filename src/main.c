@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:29:06 by lclerc            #+#    #+#             */
-/*   Updated: 2023/11/02 15:40:53 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:51:45 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,8 @@ int	main(int argc, char **argv)
 	t_data			render_data;
 	t_file_data		file_data;
 
-	(void)argv;
 	if (argc != 2)
-	{
-		ft_putstr_fd("Error\nUsage: ./cub3D map.cub\n", 2);
-		exit(NEED_MAP_CUB_FILE);
-	}
+		exit_invalid_argc();
 	parsing_main(&file_data, argv);
 	init_game(&file_data, &render_data);
 	mlx_loop(render_data.mlx);

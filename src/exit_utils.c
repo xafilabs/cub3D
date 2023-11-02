@@ -6,11 +6,17 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:29:18 by malaakso          #+#    #+#             */
-/*   Updated: 2023/11/02 15:39:28 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:51:02 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/main.h"
+
+void	exit_invalid_argc(void)
+{
+	ft_putstr_fd("Error\nUsage: ./cub3D map.cub\n", 2);
+	exit(EXIT_FAILURE);
+}
 
 void	free_file_data_not_map(t_file_data *data)
 {
