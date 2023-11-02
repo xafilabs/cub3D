@@ -6,7 +6,7 @@
 #    By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 15:25:10 by malaakso          #+#    #+#              #
-#    Updated: 2023/10/12 17:16:44 by malaakso         ###   ########.fr        #
+#    Updated: 2023/11/02 16:58:17 by malaakso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,14 +25,25 @@ FOLDER_LIST		=	$(H_FOLDER) $(C_FOLDER) $(OBJ_FOLDER) \
 					$(LIBFT_FOLDER) $(MINILIBX_FOLDER)
 
 H_FILES			=	main.h \
-					utils.h \
-					map_validation.h \
 					file_validation.h
 
 C_FILES			=	main.c \
 					utils.c \
-					validate_file_and_import_data.c \
-					validate_map_elements.c
+					parsing_file_operations.c \
+					parsing_map_elements.c \
+					parsing_scene_elements.c \
+					render.c \
+					render_utils.c \
+					mlx_hooks.c \
+					raycasting_movement.c \
+					migration.c \
+					raycasting.c \
+					raycasting_init.c \
+					parsing_colors.c \
+					parsing_utils.c \
+					parsing_map_and_player_import.c \
+					exit_utils.c \
+					validate_textures.c
 
 H_PATHS			=	$(addprefix $(H_FOLDER)/, $(H_FILES))
 C_PATHS			=	$(addprefix $(C_FOLDER)/, $(C_FILES))
@@ -40,12 +51,15 @@ OBJ_PATHS		=	$(addprefix $(OBJ_FOLDER)/, \
 					$(patsubst %.c, %.o, $(C_FILES)))
 
 C_FLAGS_OBJ		=	-Wall -Wextra -Werror \
-					-Wpedantic -Wunreachable-code -Wtype-limits
+					-Wpedantic -Wunreachable-code -Wtype-limits \
+					-Ofast
 
 C_FLAGS_MLX42	=	-framework Cocoa -framework OpenGL -framework IOKit \
 					-lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 
 C_FLAGS_NAME	=	$(C_FLAGS_OBJ) $(C_FLAGS_MLX42) -lm
+
+C_FLAGS_DEBUG	=	-g -fsanitize=address,undefined
 
 .PHONY: all
 all: $(NAME)
@@ -106,3 +120,15 @@ fclean: clean
 
 .PHONY: re
 re: fclean all
+
+.PHONY: debug
+debug: C_FLAGS_OBJ += $(C_FLAGS_DEBUG)
+debug: debug_clean all
+
+.PHONY: debug_clean
+debug_clean: clean
+	@rm -f $(NAME)
+
+.PHONY: lldb
+lldb: C_FLAGS_NAME += -g
+lldb: all

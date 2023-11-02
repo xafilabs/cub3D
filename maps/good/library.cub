@@ -1,10 +1,10 @@
-F 139,99,58
-C 171,154,137
+F 0,0,0
+C 255,255,255
 
-NO textures/simonkraft/bookshelf.xpm
-SO textures/simonkraft/bookshelf_01.xpm
-WE textures/simonkraft/bookshelf_02.xpm
-EA textures/simonkraft/bookshelf_03.xpm
+NO textures/32pxl/east.png
+WE textures/32pxl/north.png
+SO textures/32pxl/south.png
+EA textures/32pxl/west.png
 
 
 111            1111

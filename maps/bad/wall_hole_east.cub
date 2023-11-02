@@ -1,0 +1,21 @@
+NO textures/wolfenstein/greystone.png
+SO textures/wolfenstein/purplestone.png
+WE textures/wolfenstein/redbrick.png
+EA textures/wolfenstein/wood.png
+
+F 20,20,20
+C 200,200,200
+
+11111
+10001
+10S01
+10001
+10001
+10001
+11000
+10001
+10001
+10001
+10001
+10001
+11111
