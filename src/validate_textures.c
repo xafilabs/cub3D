@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:58:02 by malaakso          #+#    #+#             */
-/*   Updated: 2023/11/02 17:28:27 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:42:55 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static t_return_value	validate_one_texture(mlx_texture_t *texture)
 		ft_putnbr_fd(TEXTURE_SIZE_MIN, 2);
 		ft_putstr_fd(" and ", 2);
 		ft_putnbr_fd(TEXTURE_SIZE_MAX, 2);
-		ft_putstr_fd(" pixels in side length", 2);
+		ft_putstr_fd(" pixels in side length\n", 2);
 		return (FAILURE);
 	}
 	return (SUCCESS);
