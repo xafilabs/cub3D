@@ -1,0 +1,21 @@
+F 0,0,0
+C 255,0,0
+
+NO textures/twinpeaks/horizontal_red_and_black.png
+WE textures/twinpeaks/horizontal_red_and_black_inverted.png
+SO textures/twinpeaks/horizontal_red_and_black.png
+EA textures/twinpeaks/horizontal_red_and_black_inverted.png
+
+1111111111111111111
+1001001001001000001
+1011000001000001001
+1001001001111101111
+1001111000001001001
+10E0000000000001001
+1001111111111001001
+1111000000000001011
+1000000001000000001
+1111111111111111111
+
+
+
