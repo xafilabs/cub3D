@@ -1,10 +1,10 @@
 F 50,50,250
 C 50,250,50
 
-NO textures/test_large_png/east.png
-WE textures/test_large_png/north.png
-SO textures/test_large_png/south.png
-EA textures/test_large_png/west.png
+NO textures/large_png/east.png
+WE textures/large_png/north.png
+SO textures/large_png/south.png
+EA textures/large_png/west.png
 
 1111111111111111111
 1001001001001000001
