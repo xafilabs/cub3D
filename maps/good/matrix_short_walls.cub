@@ -3,8 +3,8 @@ WE textures/short/blue.png
 SO textures/short/green.png
 EA textures/short/red.png
 
-F 0,0,0
-C 0,0,0
+C 255,255,255
+F 255,255,0
 
 111111111111111111111
 101000001000000000001
