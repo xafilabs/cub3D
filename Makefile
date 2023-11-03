@@ -6,7 +6,7 @@
 #    By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 15:25:10 by malaakso          #+#    #+#              #
-#    Updated: 2023/11/02 16:58:17 by malaakso         ###   ########.fr        #
+#    Updated: 2023/11/03 16:14:47 by malaakso         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ C_FILES			=	main.c \
 					parsing_utils.c \
 					parsing_map_and_player_import.c \
 					exit_utils.c \
-					validate_textures.c
+					validate_textures.c \
+					validate_colors.c
 
 H_PATHS			=	$(addprefix $(H_FOLDER)/, $(H_FILES))
 C_PATHS			=	$(addprefix $(C_FOLDER)/, $(C_FILES))

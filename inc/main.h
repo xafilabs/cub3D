@@ -6,7 +6,7 @@
 /*   By: malaakso <malaakso@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 18:06:41 by malaakso          #+#    #+#             */
-/*   Updated: 2023/11/02 17:21:03 by malaakso         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:13:29 by malaakso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,5 +202,6 @@ void				free_file_data_not_map(t_file_data *data);
 void				migrate_colors(t_file_data *file_data, t_data *render_data);
 void				exit_invalid_argc(void);
 void				validate_textures(t_data *render_data);
+t_return_value		validate_color_strings(t_file_data *data);
 
 #endif
